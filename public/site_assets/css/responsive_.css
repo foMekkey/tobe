@@ -1,0 +1,653 @@
+@charset "utf-8";
+/* CSS Document */
+
+@media (max-width:1200px){
+    .top{padding: 20px;}
+    .header{padding: 10px 20px;}
+    .slider,.about{padding: 50px 20px;}
+    .slider .slider_text{padding: 50px 0;}
+    .sections{padding: 10px 20px;}
+    .advice,.client{padding: 30px 20px;}
+    footer .top_footer,footer .bottom{padding: 0 20px;}
+    footer .news_block img{width: 90px;margin-right: 10px;}
+    footer .news_block h4{font-size: 12px;line-height: 24px;margin-bottom: 5px;}
+    .blog{padding: 100px 20px;padding-bottom: 0;}
+    .connect form .form-group .btn {  width: auto;}
+    .connect{padding: 100px 20px;}
+    .advice .content img{margin-right: 20px;}
+    .advice .content h1{margin-left: 0;}
+    .services{padding: 80px 0;}
+    .sections .section_block h3{font-size: 31px;}
+    .about h1{font-size: 35px;}
+    .Subscribe h1{font-size: 29px;}
+    .Subscribe h3{font-size: 16px;}
+    .navigation .navbar-default .navbar-nav li a, .navigation .navbar-default .nav-right li a{font-size: 15px;padding: 0 2px}
+    .navigation .navbar-default .nav-right li a.btn {
+        font-size: 14px;
+        padding: 0 10px !important;
+    }
+    .main_service .myService .img_container img{height: 220px;}
+    .single_service .other_services{padding: 15px;}
+    .single_service .word{padding: 15px;}
+    .single_service .other_services h1{font-size: 30px;margin: 0;}
+    .single_service .other_services ul li a{font-size: 22px;line-height: 45px;}
+    .single_service ul{margin: 0;}
+    .single_service .serv_name img{height: 344px;}
+    .single_service .serv_name p,.single_service .serv_name ul li{font-size: 20px;line-height: 35px;}
+    .single_service .word .info img {
+    width: 80px;
+    height: 80px;
+    margin-right: 9px;
+}
+.contact form{width: 100%;}
+.article_search .form-control{font-size: 12px;}
+.last_news .news_item a{margin: 10px 15px;}
+.article {
+    padding: 80px 40px;
+}
+.article_search{padding: 20px 15px;}
+.last_news h1{padding: 0 15px;font-size: 20px;}
+.last_news .news_item img {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+}
+.article .article_text h3{font-size: 25px;}
+.single_course .course_detail .serv_name .right .info_box{width: 300px;margin-left: 0 !important;margin-right: 0 !important;}
+.single_course .course_detail .word{padding: 20px;}
+
+}
+
+@media (max-width:991px){
+	.clicker {
+    display: table !important;
+    cursor: pointer;
+    font-size: 18px;
+    float: right;
+    color: #0e3452;
+    transition: all .3s;
+    z-index: 9999;
+    margin: auto 0;
+}
+	.clicker span{display: none;}
+	.clicker:hover{color: #FF7F00;}
+    .navigation .logo img{height: 100px;}
+	.navbar-default{padding-bottom: 0 !important;}
+	
+	#body-overlay{
+		height: 100%;
+		width: 100%;
+		position: fixed;
+		z-index: 999999999;
+		right: 0;
+		top: 0;
+		transition: 0.5s;
+		background-color: rgba(0,0,0,0.72);
+		display: none;
+	}
+    .navigation .logo2 img {
+    height: 100px;
+    margin: 10px auto;
+    display: table;
+    margin-bottom: 40px;
+}
+	.navigation .navbar-default .navbar-nav li a:hover{color: #fff !important;}
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 999999999999;
+    left: 0;
+    top: 0;
+    background-position: center;
+    background-color: #1F1A16  !important;
+    overflow-y: auto;
+    transition: 0.5s;
+    padding: 0;
+    min-height: 0;
+	border-radius: 0;
+}
+.navigation .search .search_sec{background-color: #1F1A16  !important;}
+
+/* Position the content inside the overlay */
+.overlay-content {
+    position: relative;
+    top: 20px;
+    width: 100%;
+    text-align: left;
+    margin-top: 20px;
+    padding-right: 0 !important;
+    margin: 0 !important;
+}
+
+/* The navigation links inside the overlay */
+.overlay a {
+    padding: 6px 15px !important;
+    text-decoration: none;
+    font-size: 36px;
+    color: #fff !important;
+    display: block; /* Display block instead of inline */
+    transition: 0.3s; /* Transition effects on hover (color) */
+}
+	.navigation .navbar-default .navbar-nav li:hover a{
+		padding-left: 30px !important;
+	}
+	.navigation .navbar-default .navbar-nav li:hover:after{
+		left: -12px;
+	}
+	.navigation .navbar-default .navbar-nav li:hover{
+		background-color: rgba(255, 255, 255, 0.1);
+	}
+
+	.navigation .navbar-default .navbar-nav li:after {
+    content: "";
+    height: 37px;
+    width: 20px;
+    background-color: #fff;
+    position: absolute;
+    top: 0;
+    left: -23px;
+	transition: all .3s;
+}
+	.navigation .navbar-default .navbar-nav li{margin: 0;width: 100%;}
+	.navigation .navbar-default .navbar-nav li a{padding: 0 15px !important;line-height: 37px !important;}
+/* When you mouse over the navigation links, change their color */
+.overlay a:hover, .overlay a:focus {
+    color: #fff !important;
+	background-color: transparent;
+}
+
+/* Position the close button (top right corner) */
+.overlay .closebtn {
+    display: block;
+    padding: 0 !important;
+    font-size: 30px !important;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    font-size: 25px;
+    color: #fff !important;
+    z-index: 99999;
+    /* display: none; */
+}
+	.width{width: 0 !important;}
+	
+	.navigation .navbar-default .nav-left {
+    float: none;
+    margin: 0;
+    width: 100%;
+    background-color: #fff;
+}
+	.navigation .navbar-default .nav-left li a{
+		color: #000 !important;
+		padding: 0 13px !important;
+	}
+	.navigation .navbar-default{margin-top: 0;}
+	.menu-item-has-children span {
+    color: #fff;
+    font-size: 10px;
+    line-height: 37px;
+    position: absolute;
+    top: 0;
+    left: 160px;
+    transition: all .3s;
+}
+	.navigation .navbar-default .navbar-nav li.menu-item-has-children:hover span{
+		left: 160px;
+		color: #fff !important;
+	}
+	.sub-menu{top: 30px;}
+	.navigation .navbar-default .navbar-nav li .sub-menu li:after{
+		display: none !important;
+	}
+	.navigation .navbar-default .navbar-nav li .sub-menu>li>a{padding: 0 15px !important;}
+	.navigation .navbar-default .navbar-nav li .sub-menu>li>a:hover {
+    background-color: #FF7F00 !important;
+    color: #fff !important;
+    padding: 0 15px !important;
+}
+.navigation .navbar-default .nav-right {
+    float: right;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    height: 86px;
+    overflow: hidden;
+}
+.navigation .navbar-default .nav-right li:first-child {
+    display: block;
+}
+.navigation .navbar-default .nav-right li{
+    height: 40px;
+    overflow: hidden;
+}
+.navigation .navbar-default .nav-right li .btn {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 15px !important;
+    width: auto;
+    margin: 0 5px;
+    display: inline-block;
+}
+	.navigation .navbar-default .navbar-nav li a, .navigation .navbar-default .nav-right li a{line-height: 35px;}
+
+    .top .left{width: 75%;}
+    .top .left .btn{margin-left: 0;}
+    .top .left p{font-size: 14px;}
+    .top .right ul li{margin: 0 2px;}
+    .slider .slider_text h1,.output span.word{font-size: 25px;line-height: 35px;}
+    .slider .slider_text hr{height: 10px;margin: 0;}
+    .slider .slider_text p{font-size: 18px;margin: 20px 0;}
+    .btn {
+        height: 50px;
+        line-height: 50px;
+        padding: 0 15px !important;
+        font-size: 18px;
+    }
+    .slider .slider_text .btn{font-size: 18px;width: 200px;}
+    .slider .slider_text .btn_white{width: 50px;margin-top: 0;}
+    .about h1 {
+    font-size: 25px;
+    line-height: 35px;
+}
+.about h3 {
+    font-size: 18px;
+    line-height: 28px;
+    margin: 10px 0;
+}
+.about .img_container .event_name{padding: 20px 15px;}
+.about .img_container .event_name h3{font-size: 16px;}
+.about .line h3{font-size: 22px;}
+.sections .section_block h3{font-size: 22px;line-height: 20px;}
+.sections .section_block p{font-size: 14px;line-height: 23px;}
+.sections .section_block{margin-bottom: 50px;width: 70%;}
+.services,.courses,.connect{padding: 30px 0;}
+.services .service_block p {
+    font-size: 16px;
+    line-height: 25px;
+}
+.services .service_block h1{line-height: 35px;}
+.services .service_block img{margin-top: 10px;}
+.advice .content img{max-width: 100px;}
+.advice .content h1{font-size: 25px;line-height: 35px;}
+.course_block .text{width: 95%;padding: 40px 5px;}
+#courses_slider .owl-dots{bottom: -20px;}
+.client .client_block{padding: 20px 15px;}
+.client .client_block .info img {
+    width: 100px !important;
+    height: 100px;
+    margin-right: 10px;
+}
+.client .client_block .info .text h3{font-size: 18px;line-height: 28px;}
+.client .client_block .info .text h4{font-size: 16px;line-height: 26px;}
+.client .client_block p {
+    font-size: 14px;
+    line-height: 28px;
+    color: #292929;
+    padding-left: 0;
+    margin: 15px 0;
+}
+.main_title h1{font-size: 30px;}
+.connect .main_title p {
+    font-size: 14px;
+    line-height: 24px;
+    margin: 0px auto;
+    width: 70%;
+}
+.connect form .form-control {
+    height: 50px;
+    padding: 0 10px;
+    font-size: 14px;
+}
+.connect form .form-group .btn{font-size: 14px;}
+.connect form{margin-top: 30px;}
+.blog {
+    padding: 30px 20px;
+    padding-bottom: 0;
+}
+.blog .main_title p{font-size: 14px;line-height: 24px;}
+.blog .blog_block img{height: 250px;}
+.blog .blog_block h3.date {
+    width: 90px;
+    height: 30px;
+    font-size: 13px;
+    line-height: 30px;
+    top: 10px;
+    left: 10px;
+}
+.blog .blog_block .blog_info {
+    width: 100%;
+    margin-left: 10px;
+    padding: 10px;
+}
+.blog .blog_block .blog_info h1 {
+    font-size: 13px;
+    line-height: 23px;
+    margin: 10px 0;
+}
+.blog .blog_block .blog_info a{font-size: 14px;}
+.Subscribe {
+    width: 100%;
+    align-items: center;
+    margin-top: 40px;
+    padding: 30px 20px;
+    margin-bottom: -70px;
+}
+.Subscribe h1 {
+    font-size: 20px;
+    line-height: 32px;
+}
+.Subscribe h3 {
+    font-size: 14px;
+    line-height: 35px;
+}
+.Subscribe form .form-control {
+    height: 50px;
+    padding: 0 10px;
+    font-size: 16px;
+    margin-right: 10px;
+}
+footer .middle{flex-direction: column;}
+footer .footer_title{margin-top: 40px;margin-bottom: 10px;}
+footer .middle ul li a{line-height: 30px;}
+.sub_head .sub_title h3{font-size: 17px;}
+.sub_head{padding: 150px 60px;}
+.single_service{padding: 50px 0;}
+.single_service .other_services ul li img{margin-right: 10px;}
+.single_service .other_services h1{font-size: 27px;}
+.contact,.article{padding: 40px 0;}
+.single_course .course_detail h2{font-size: 30px;line-height: 40px;margin: 10px 0;}
+.book_now h1{font-size: 40px;line-height: 50px;}
+.single_course .course_detail .word p{font-size: 16px;}
+.single_course .course_detail .word img{width: 110px;height: 110px;}
+.single_course .course_detail .add_comment .form-group:last-child {
+    float: none !important;
+    margin-bottom: 0;
+}
+.single_course .course_detail .add_comment .btn{
+    margin: 0 auto;
+    display: table;
+    width: 220px;
+}
+.book_now{padding: 60px 20px;}
+.single_course{padding: 50px 0;}
+.single_course .course_detail .serv_name{flex-direction: column;}
+.single_course .course_detail .serv_name{flex-wrap: wrap;}
+
+}
+
+
+@media (max-width:767px){
+    .sections .section_block:before,.sections .section_block:after{display: none;}
+    .sections .section_block {
+        width: 80%;
+        margin: 0 auto;
+        margin-bottom: 0;
+    }
+    .advice .content h1 {
+    font-size: 18px;
+    line-height: 25px;
+}
+.advice .content img{max-width: 70px;}
+.main_title h1{font-size: 25px;line-height: 45px;}
+.main_title h3{font-size: 16px;}
+.blog .blog_block {
+    position: relative;
+    margin: 0 auto;
+    width: 60%;
+    margin-bottom: 20px;
+}
+.Subscribe{flex-direction: column;padding: 20px;text-align: center;}
+.Subscribe form {
+    flex-basis: 100%;
+    width: 100%;
+    margin-top: 20px;
+}
+.about .img_container .event_name {
+    padding: 50px 45px;
+}
+#courses_slider {
+    width: 100%;
+    margin-left: 0;
+}
+.about .row {
+    flex-direction: column;
+}
+.about .line{
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.sections .section_block .pie-wrapper{display: none;}
+.sub_head{padding: 50px 0;}
+.sub_head .sub_title{float: none !important;text-align: center;}
+.sub_head ul{float: none !important;text-align: center;margin-bottom: 0;}
+.sub_head ul li{padding: 0 7px !important;}
+.sub_head ul li:after{right: -6px;}
+.main_service .myService{width: 80%;margin: 20px auto;}
+.main_service .myService .services_title{width: 90%;}
+.main_service .myService .services_title p{margin: 10px 0;}
+.single_service .serv_name img{height: auto;}
+.single_service .other_services ul {
+    display: inline-flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+.single_service .other_services{margin-bottom: 20px;}
+.single_service .word span {
+    font-size: 90px;
+    line-height: 10px;
+    margin-top: 0;
+    margin-bottom: 50px;
+}
+.contact form p{width: 100%;}
+.single_course .course_detail .serv_name .right .info_box{width: 100%;}
+
+}
+
+@media (max-width:640px){
+
+.top {
+    padding: 10px;
+}
+.top .right{float: none;width: 100%;text-align: center;}
+.connect form{flex-wrap: wrap;}
+.connect form .form-group {
+    margin: 5px 0;
+    width: 100%;
+    text-align: center;
+}
+.top .left {
+    float: none;
+    text-align: center;
+    margin-top: 5px;
+    display: none;
+}
+.slider .slider_text{padding: 0;}
+.slider #main_slider{width: 100%;}
+.owl-carousel .owl-dots{display: none !important;}
+.about .img_container{height: auto;}
+.course_block .text h1{font-size: 18px;line-height: 28px;}
+.course_block .text p{font-size: 16px;}
+.course_block .text {
+    width: 100%;
+    padding: 20px 5px;
+}
+.course_block .text .img_container {
+    top: -130px;
+    right: -120px;
+}
+.course_block .text .img_container img {
+    left: 40px;
+    width: 30px !important;
+}
+.course_block{margin-bottom: 0;}
+.blog .main_title{text-align: center;display: block;}
+.blog .main_title h1 {
+    padding-left: 0;
+    display: inline-block;
+}
+.blog .main_title h1:before{left: -40px;}
+.blog .main_title h1:after{display: block;}
+.blog .blog_block{width: 80%;}
+footer .bottom p{font-size: 12px;}
+footer .bottom ul li i{font-size: 14px;}
+footer .bottom ul li{padding-right: 0;}
+
+.main_service{padding: 40px 0;padding-bottom: 0;}
+.course_page .col-xs-6{width: 100% !important;}
+.article .article_text ul.detail li{font-size: 18px;margin-right: 10px;}
+.article .article_text ul.detail li span {font-size: 18px;margin-right: 5px;}
+.article .article_text h3{font-size: 20px;line-height: 30px;margin: 10px 0;}
+.article .article_text p,.article .article_text p + ul li{font-size: 18px;line-height: 30px;margin-bottom: 10px;}
+.single_course .course_detail .reviews ul li span{width: 140px;}
+.single_course .course_detail .reviews h1 {
+    width: 100px;
+    height: 120px;
+    line-height: 120px;
+    font-size: 30px;
+    margin-right: 40px;
+}
+.single_course .course_detail .add_comment textarea.form-control{height: 140px;}
+.single_course .course_detail .add_comment .form-control{height: 50px;}
+.single_course .course_detail .word{flex-direction: column;}
+.single_course .course_detail .word div{width: 100%;}
+
+}
+
+@media (max-width:460px){
+    .top .left .btn,.top .left p{font-size: 12px;}
+    .top .left img{display: none;}
+    .slider .slider_text h1,.output span.word {
+    font-size: 18px;
+    line-height: 25px;
+    text-shadow: 0 0 5px #000;
+}
+.slider .slider_text p {
+    font-size: 14px;
+    line-height: 24px;
+    margin: 10px 0;
+}
+.slider .slider_text hr{height: 5px;}
+.slider .slider_text .btn {
+    font-size: 14px;
+    width: 180px;
+    margin-right: -10px;
+}
+.slider .slider_text .btn_white{width: 40px;}
+.slider, .about {
+    padding: 30px 20px;
+}.about h1 span {
+    font-size: 16px;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 10px;
+    margin-left: 10px;
+}
+.about h1 {
+    font-size: 14px;
+    line-height: 26px;
+}
+.about h3 {
+    font-size: 14px;
+    line-height: 24px;
+}
+.about .info .text h3 {
+    font-size: 14px;
+    line-height: 24px;
+}
+.about .info .text h4 {
+    font-size: 12px;
+    line-height: 25px;
+}
+.about .info .image img{width: 70px;}
+.about .line h3{font-size: 16px;}
+.about .img_container .event_name{padding: 10px;}
+.about .img_container .event_name h1{font-size: 18px;line-height: 26px;}
+.sections .section_block{width: 100%;}
+.advice .content{flex-direction: column;text-align: center;}
+.advice .content img{max-width: 50px;}
+.advice .content h1 {
+    font-size: 16px;
+    line-height: 23px;
+    margin: 10px 0;
+}
+.btn{
+    height: 40px;
+    line-height: 40px;
+}
+.blog .blog_block{width: 100%;}
+.Subscribe h3{line-height: 24px;}
+.Subscribe form{flex-direction: column;}
+.Subscribe form .form-control {
+    height: 40px;
+    margin-right: 0;
+    margin-bottom: 10px;
+}
+footer{padding-top: 100px;}
+footer .footer_logo {
+    height: 95px;
+    width: 95px;
+}
+footer p {
+    font-size: 14px;
+    line-height: 24px;
+    margin: 10px 0;
+}
+footer ul li, footer ul li a{font-size: 14px;}
+footer .bottom_content{flex-direction: column;}
+.main_title h1:after {
+    width: 20px;
+    right: -30px;
+}
+.main_title h1:before {
+    width: 20px;
+    left: -30px;
+}
+.sub_head .sub_title h1{font-size: 30px;line-height: 40px;}
+.sub_head .sub_title h3{font-size: 14px;}
+.sub_head ul li a{font-size: 16px;}
+.main_service .myService{width: 100%;}
+.pagination li a {width: 50px;height: 50px;line-height: 48px;}
+.single_service .serv_name h3 {
+    font-size: 30px;
+    line-height: 40px;
+    color: #000;
+    margin-top: 20px;
+}
+.single_service .serv_name p, .single_service .serv_name ul li{font-size: 18px;line-height: 28px;}
+.single_service .other_services ul li a{font-size: 20px;}
+.contact form .form-group textarea.form-control{height: 150px;}
+.contact form p{font-size: 14px;}
+.contact form .btn{margin-top: 20px;width: 100%;}
+.single_course .course_detail .reviews{flex-direction: column;padding: 20px 0;}
+.single_course .course_detail .reviews h1{margin-right: 0;margin-bottom: 30px;margin-left: 0 !important;}
+.single_course .course_detail .course_subscribe{flex-direction: column;}
+.single_course .course_detail .course_subscribe .btn{width: 100%;}
+
+}
+
+@media (max-width:360px){
+    .main_title h1:before,.main_title h1:after{display: none;}
+    footer .bottom p {font-size: 10px;}
+    footer .bottom p img{width: 45px;}
+    .course_page .course_block .main_img{height: 210px;}
+    .last_news .news_item a{flex-direction: column;align-items: baseline;}
+    .last_news .news_item a img{margin-bottom: 10px;}
+    .article .article_text ul.detail li,.article .article_text h3{font-size: 16px;}
+    .article .article_text p, .article .article_text p + ul li{font-size: 14px;}
+    .article_search h1{margin-top: 0;}
+    .article_search .form-group{margin-bottom: 10px;}
+    .single_course .course_detail h2{font-size: 20px;line-height: 30px;}
+    .single_course .course_detail .add_comment h4 {
+    font-size: 16px;
+    line-height: 25px;
+    color: #474747;
+    width: 70px;
+    margin-right: 5px;
+}
+
+
+}
+

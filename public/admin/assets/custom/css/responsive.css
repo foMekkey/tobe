@@ -1,0 +1,21 @@
+@charset "utf-8";
+/* CSS Document */
+
+@media (max-width:991px){
+	.accordion a.course_link .link_right{flex-basis: 75%;}
+	.accordion a.course_link .link_left{flex-basis: 30%;}
+}
+
+@media (max-width:640px){
+	.course_content .course_content-heading h1{font-size: 20px;}
+	.course_content .course_content-heading .desc h2{font-size: 14px;}
+	.accordion .link h3{font-size: 16px;}
+	.accordion a.course_link .link_right h2{font-size: 14px;line-height: 28px;}
+	.accordion a.course_link .link_right h2 i{font-size: 12px;margin-left: 10px;}
+	.accordion a.course_link .link_left .btn {
+    width: 70px;
+    height: 25px;
+    font-size: 12px;
+}
+	.accordion a.course_link .link_left span{font-size: 12px;margin-right: 4px;}
+}

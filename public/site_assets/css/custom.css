@@ -1,0 +1,56 @@
+.blog .blog_block .blog_info ul:after {
+    display: none;
+}
+
+.pagination li span {
+    width: 60px;
+    height: 60px;
+    line-height: 58px;
+    padding: 0;
+    text-align: center;
+    border-radius: 50px !important;
+    font-size: 24px;
+    margin: 0 10px;
+    transition: all .3s;
+}
+.pagination li.active span {
+    background-color: #FF7F00 !important;
+    border: 1px solid #FF7F00 !important;
+    color: #fff;
+    margin-left: 0;
+}
+.pagination li a {
+    margin-left: 0;
+}
+.pagination>li:last-child>a, .pagination>li:last-child>span {
+    margin-right: 10px !important;
+}
+.single_course .course_detail .word img {
+    border-radius: 50%;
+}
+.single_course .course_detail .add_comment .form-group:first-child h4 {
+    width: 150px;
+}
+.my-rating {
+    width: 100%;
+}
+label.error {
+    color: red;
+}
+
+#add_newsletter-alert {
+    margin-left: 12px;
+    margin-top: 20px;
+}
+
+footer .middle ul li a {
+    line-height: 30px;
+}
+footer ul > li > ul {
+    list-style: square;
+    padding-right: 50px;
+}
+footer ul > li > ul > li > ul {
+    list-style: circle;
+    padding-right: 30px;
+}

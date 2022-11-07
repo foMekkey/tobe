@@ -1,0 +1,134 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+@font-face{font-family: Bahij_Light ; src: url(../fonts/Bahij_TheSansArabic-Light.ttf)}
+@font-face{font-family: Bahij_Bold ; src: url(../fonts/Bahij_TheSansArabic-Bold.ttf)}
+
+body, p, .btn, h3{font-family: "Bahij_Light";}
+h1,h2{font-family: "Bahij_Bold";}
+.navigation .navbar-default .navbar-nav li a,
+.navigation .navbar-default .nav-right li a{font-family: "Bahij_Bold";}
+
+
+.top .left{float: right;}
+.top .right{float: left;}
+.navigation .navbar-default .nav-right{float: left;}
+.navigation .navbar-default .navbar-nav{float: right;}
+.navigation .navbar-default .nav-right li a i{margin-right: 0;margin-left: 8px;}
+.menu-item-has-children a{padding-right: 8px !important;padding-left: 12px !important;}
+.menu-item-has-children span{right: auto;left: 2px;}
+.navigation .navbar-default .navbar-nav li a img {
+    margin-left: 0;
+    margin-right: -31px;
+}
+.navigation .navbar-default .navbar-nav li a:hover img {
+    margin-left: 0;
+    margin-right: 5px;
+}
+.slider .slider_text{text-align: right;padding-right: 20px;}
+.slider .slider_text .btn,.slider .slider_text hr{float: right;}
+.slider .slider_text .btn_white{margin-left: 0;margin-right: 20px;}
+.slider .slider_text .btn_white i{transform: rotateY(180deg);}
+.output span.word{margin-right: 0;margin-left: 10px;font-family: "Bahij_Bold";}
+.about h1 span{margin-left: 0;margin-right: 10px;}
+.about h1 span:before{left: auto;right: -20px;transform: translateY(-50%) rotateY(180deg);}
+.about h3 img{margin-right: 0;margin-left: 5px;}
+.about .info .image{margin-left: 15px;margin-right: 0;}
+.about .line{text-align: left;}
+.about .img_container .event_name{right: auto;left: 0;}
+.about .img_container .event_name h3 span{margin-right: 5px;margin-left: 0;transform: rotateY(0deg);}
+.services .service_block a i {
+    margin-left: 0;
+    float: left;
+    margin-right: 5px;
+}
+.advice .content a.btn i{margin-left: 0;margin-right: 20px;}
+.course_block .text .img_container{left: -100px;right: auto;}
+.course_block .text .img_container img{left: auto;right: 38px;}
+.course_block .text{text-align: right;padding-right: 15px;padding-left: 0;}
+.client .client_block{direction: rtl;}
+.client .client_block .info img{margin-left: 20px;margin-right: 0;}
+.connect form .form-group{text-align: left;}
+.blog .main_title{text-align: right;}
+.blog .blog_block h3.date{left: auto;right: 30px;}
+.blog .blog_block .blog_info{margin-right: 40px;margin-left: 0;}
+.blog .main_title h1:before {
+    left: auto;
+    right: 0;
+}
+.blog .main_title h1 {
+    margin: 0;
+    padding-left: 0;
+    padding-right: 40px;
+}
+.Subscribe form .form-control{margin-left: 15px;margin-right: 0;}
+footer ul li i{margin-left: 10px;margin-right: 0;}
+footer .news_block img{margin-left: 20px;margin-right: 0;}
+.clicker,.navigation .search .search_sec .close_search{float: left;}
+.navigation .search .search_sec form{float: right;}
+#courses_slider .owl-dots{left: 55%;}
+
+.sub_head .sub_title{float: right;}
+.sub_head ul{float: left;}
+.sub_head ul li{padding-left: 0;padding-right: 20px;}
+.sub_head ul li:after{right: auto;left: -15px;}
+.single_service .serv_name ul li,.article .article_text p + ul li{font-family: "Bahij_Light";}
+.single_service .other_services ul li img{margin-right: 0;margin-left: 20px;}
+.single_service .serv_name ul li i{margin-right: 0;margin-left: 5px;}
+.single_service .word .info img{margin-right: 0;margin-left: 25px;}
+.contact form .form-group .form-control{padding-left: 12px;padding-right: 50px;}
+.contact form .form-group span{left: auto;right: 15px;}
+.article .article_text ul.detail li{margin-right: 0;margin-left: 30px;}
+.article .article_text ul.detail li span{margin-right: 0;margin-left: 15px;}
+.article_search .form-group span{right: auto;left: 15px;}
+.last_news .news_item img{margin-right: 0 !important;margin-left: 20px;}
+.single_course .course_detail .course_subscribe img{margin-right: 0;margin-left: 15px;}
+.single_course .course_detail .serv_name .right .info_box{margin-left: 0;margin-right: 70px;}
+.single_course .course_detail .word span{text-align: left;}
+.single_course .course_detail .reviews h1{margin-right: 0;margin-left: 100px;}
+.single_course .course_detail .add_comment h4{margin-right: 0;margin-left: 30px;}
+.single_course .course_detail .add_comment .form-group:last-child{float: left;}
+
+
+@media (max-width: 1200px){
+.navigation .navbar-default .navbar-nav li a, .navigation .navbar-default .nav-right li a{padding: 0 5px;}
+.last_news .news_item img{margin-left: 10px;}
+}
+
+@media (max-width: 991px){
+.overlay {right: 0;}
+.overlay-content{text-align: right;}
+.navigation .navbar-default .navbar-nav li:after{right: -23px;left: auto;}
+.navigation .navbar-default .navbar-nav li:hover a{padding-right: 30px !important;padding-left: 0 !important;}
+.navigation .navbar-default .navbar-nav li:hover:after{right: -12px;left: auto;}
+.overlay .closebtn{left: 10px;right: auto;}
+.blog .blog_block .blog_info{margin-right: 10px;}
+.blog .main_title h1:before{right: 0;left: auto;}
+.blog .main_title h1{padding-right: 40px;padding-left: 0;}
+.navigation .navbar-default .navbar-nav li.menu-item-has-children span {right: 125px;left: auto;}
+}
+
+
+@media (max-width: 767px){
+    .sub_head ul li:after{right: auto;left: -6px;}
+    .single_service .other_services ul li a{font-size: 25px;}
+}
+
+
+@media (max-width: 640px){
+.slider{background-image: url(../images/slider_bg-ar.png);background-position: left;}
+.connect form .form-group {  text-align: center;}
+.blog .main_title{text-align: center;}
+.blog .main_title h1:after{left: -40px;right: auto;}
+.blog .main_title h1{padding-right: 0;}
+.blog .main_title h1:before{right: -40px;}
+.course_block .text .img_container{left: -120px;}
+.course_block .text .img_container img{right: 40px;}
+.single_service .other_services ul li a{font-size: 20px;}
+}
+
+@media (max-width: 360px){
+.single_course .course_detail .add_comment h4{margin-left: 5px;}
+
+}
