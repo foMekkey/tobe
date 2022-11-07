@@ -1,47 +1,46 @@
-@extends('layouts.app')
+@extends('site.layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
-
-                <div class="card-body">
+    <section class="sub_head">
+        <div class="container-fluid">
+            <div class="sub_title">
+                <h1>{{ __('site.forgot_password_message') }}</h1>
+                <h3>{{ __('site.blog_slugan') }}</h3>
+            </div>
+            <ul class="list-inline">
+                <li><a href="{{ url('site') }}">{{ __('site.home') }}</a></li>
+                <li><a href="{{ url('forgotPassword') }}">{{ __('site.forgot_password_message') }}</a></li>
+            </ul>
+        </div>
+    </section>
+    <section class="login">
+        <div class="container-fluid">
+            <div class="login_content">
+                <h3>{{ __('site.forgot_password_message') }}</h3>
+                <form action="{{ route('password.email') }}" method="post">
+                    {{csrf_field()}}
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
-
-                        <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
+                    <div class="form-group">
+                        <label>{{ __('site.email') }}</label>
+                        <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus name="email" placeholder="{{ __('site.email') }}">
+                        <span class="fa fa-envelope"></span>
+                        @error('email')
+                            <div class="invalid-feedback text-center text-danger" role="alert">
+                                <strong>{{ $message }}</strong>
                             </div>
-                        </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Send Password Reset Link') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" name="referrer_url" value="{{ Session::get('referrer_url') ?? '' }}" />
+                        <input type="submit" class="btn black_hover" value="{{ __('site.forgot_password_message') }}">
+                        <h5 class="register">{{ __('site.do_not_have_account') }} <a href="{{route('register')}}">{{ __('site.register_account') }}</a></h5>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 @endsection

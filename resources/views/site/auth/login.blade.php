@@ -39,7 +39,7 @@
                             <input type="checkbox"><i>Auto save</i>
                             <span class="checkmark"></span>
                         </label> --}}
-                        <a href="#" class="forgot_pw">{{ __('site.forgot_password') }}</a>
+                        <a href="{{route('forgotPassword')}}" class="forgot_pw">{{ __('site.forgot_password') }}</a>
                         <div class="clearfix"></div>
                     </div>
                     <div class="form-group">

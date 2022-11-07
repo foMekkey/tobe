@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great! guest
-|
-*/
-
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
@@ -19,52 +8,53 @@ Route::post('upload', 'HomeController@upload')->name('upload');
 
 Route::group(['prefix' => 'site'], function () {
     Route::get('switch_language/{locale}', function ($locale) {
-        if (! in_array($locale, ['en', 'ar'])) {
+        if (!in_array($locale, ['en', 'ar'])) {
             abort(400);
         }
 
         Session::put('lang', $locale);
-        
+
         $referrer = Request::server('HTTP_REFERER');
         if (!$referrer || ($referrer && is_numeric(substr($referrer, -1)))) {
             return redirect(url('site'));
         }
-        
+
         return redirect()->back();
     });
 
     Route::get('/', 'Site\HomeController@index')->name('site-home');
-    
+
     Route::get('blog/{id}', 'Site\BlogController@show')->name('site-blog-view');
     Route::get('blog', 'Site\BlogController@index')->name('site-blog-index');
-    
+
     Route::get('course/{id}', 'Site\CourseController@show')->name('site-courses-view');
     Route::post('course/store_review', 'Site\CourseController@storeReview')->name('site-courses-storeReview');
     Route::get('courses/category/{catId}', 'Site\CourseController@index')->name('site-courses-index_category');
     Route::get('courses', 'Site\CourseController@index')->name('site-courses-index');
-    
+
     Route::get('service/{id}', 'Site\ServiceController@show')->name('site-services-view');
     Route::get('services', 'Site\ServiceController@index')->name('site-services-index');
-    
+
     Route::get('contact', 'Site\HomeController@contact')->name('site-contact');
     Route::post('contact', 'Site\HomeController@storeContact')->name('site-courses-storeContact');
-    
+
     Route::get('consult', 'Site\HomeController@consult')->name('site-consult');
     Route::post('consult', 'Site\HomeController@storeConsult')->name('site-courses-storeConsult');
-    
+
     Route::get('about', 'Site\HomeController@about')->name('site-about');
     Route::get('know', 'Site\HomeController@know')->name('site-know');
     Route::get('discover', 'Site\HomeController@discover')->name('site-discover');
     Route::get('page/{key}', 'Site\HomeController@showPage')->name('site-pages-view');
-    
+
     Route::post('newsletter', 'Site\HomeController@storeNewsletter')->name('site-storeNewsletter');
 });
 
 Route::get('login', 'Site\UserController@getLogin')->name('login')->middleware('guest');
-Route::post('do-login','Site\UserController@doLogin')->name('do-login');
+Route::get('forgotPassword', 'Site\UserController@showLinkRequestForm')->name('forgotPassword')->middleware('guest');
+Route::post('do-login', 'Site\UserController@doLogin')->name('do-login');
 Route::get('logout', 'Site\UserController@logout')->name('logout');
 Route::get('register', 'Site\UserController@getRegister')->name('register')->middleware('guest');
-Route::post('do-register','Site\UserController@doRegister')->name('do-register');
+Route::post('do-register', 'Site\UserController@doRegister')->name('do-register');
 
 /*Route::get('login', 'Admin\Auth\LoginController@getLogin')->name('login')->middleware('guest');
 Route::post('do-login','Admin\Auth\LoginController@doLogin')->name('do-login');
@@ -75,564 +65,555 @@ Route::post('do-register','Admin\Auth\LoginController@doRegister')->name('do-reg
 //Route::group(['prefix' => 'admin','middleware' => ['auth','checkRole']], function () {
 
 // files group
-    Route::group(['prefix' => 'files', 'middleware' => ['auth', 'checkRole']], function () {
+Route::group(['prefix' => 'files', 'middleware' => ['auth', 'checkRole']], function () {
 
-        # files postupdate
-        Route::post('postupdate/{id}/{group}', [
-            'uses' => 'Admin\FilesController@update',
-            'as' => 'postupdatefiles',
-            'title' => __('pages.edit-files'),
-            'child' => [
-                'destroyfile'
-            ]
-        ]);
+    # files postupdate
+    Route::post('postupdate/{id}/{group}', [
+        'uses' => 'Admin\FilesController@update',
+        'as' => 'postupdatefiles',
+        'title' => __('pages.edit-files'),
+        'child' => [
+            'destroyfile'
+        ]
+    ]);
 
 
-        # files delete
-        Route::get('/delete/{id}', [
-            'uses' => 'Admin\FilesController@destroy',
-            'as' => 'destroyfile',
-            'title' => __('pages.delete-files'),
-        ]);
-
-    });
+    # files delete
+    Route::get('/delete/{id}', [
+        'uses' => 'Admin\FilesController@destroy',
+        'as' => 'destroyfile',
+        'title' => __('pages.delete-files'),
+    ]);
+});
 
 // users group
-    Route::group(['prefix' => 'users', 'middleware' => ['auth', 'checkRole']], function () {
+Route::group(['prefix' => 'users', 'middleware' => ['auth', 'checkRole']], function () {
 
-        # users index
-        Route::get('/', [
-            'uses' => 'Admin\UsersController@index',
-            'as' => 'users',
-            'title' => __('pages.user-list'),
-            'child' => [
-                'addusers',
-                'postadduser',
-                'getupdateuser',
-                'postupdateuser',
-                'destroyuser',
-                'DatatableCourses',
-                'DatatableGroups',
-                'DatatableUsersFiles',
-                'destroyCourseFromList',
-                'destroyGroupFromList',
-                'postadduserfiles',
-                'postupdatefilesUsers',
-            ]
-        ]);
+    # users index
+    Route::get('/', [
+        'uses' => 'Admin\UsersController@index',
+        'as' => 'users',
+        'title' => __('pages.user-list'),
+        'child' => [
+            'addusers',
+            'postadduser',
+            'getupdateuser',
+            'postupdateuser',
+            'destroyuser',
+            'DatatableCourses',
+            'DatatableGroups',
+            'DatatableUsersFiles',
+            'destroyCourseFromList',
+            'destroyGroupFromList',
+            'postadduserfiles',
+            'postupdatefilesUsers',
+        ]
+    ]);
 
-        # users add
-        Route::get('create', [
-            'uses' => "Admin\UsersController@create",
-            'as' => 'addusers',
-            'title' => __('pages.add-user'),
-        ]);
+    # users add
+    Route::get('create', [
+        'uses' => "Admin\UsersController@create",
+        'as' => 'addusers',
+        'title' => __('pages.add-user'),
+    ]);
 
-        # users postadd
-        Route::post('post-user', [
-            'uses' => 'Admin\UsersController@store',
-            'as' => 'postadduser',
-            'title' => __('pages.store-user'),
-        ]);
+    # users postadd
+    Route::post('post-user', [
+        'uses' => 'Admin\UsersController@store',
+        'as' => 'postadduser',
+        'title' => __('pages.store-user'),
+    ]);
 
-        # users update
-        Route::get('/edit/{id}', [
-            'uses' => 'Admin\UsersController@edit',
-            'as' => 'getupdateuser',
-            'title' => __('pages.edit-user'),
-        ]);
+    # users update
+    Route::get('/edit/{id}', [
+        'uses' => 'Admin\UsersController@edit',
+        'as' => 'getupdateuser',
+        'title' => __('pages.edit-user'),
+    ]);
 
-        # users postupdate
-        Route::post('postupdate/{id}', [
-            'uses' => 'Admin\UsersController@update',
-            'as' => 'postupdateuser',
-            'title' => __('pages.update-user'),
-        ]);
+    # users postupdate
+    Route::post('postupdate/{id}', [
+        'uses' => 'Admin\UsersController@update',
+        'as' => 'postupdateuser',
+        'title' => __('pages.update-user'),
+    ]);
 
-        # users delete
-        Route::get('/delete/{id}', [
-            'uses' => 'Admin\UsersController@destroy',
-            'as' => 'destroyuser',
-            'title' => __('pages.delete-user'),
-        ]);
-
-
-        # users courses datatable
-        Route::get('/datatable-course/{id}', [
-            'uses' => 'Admin\UsersController@DatatableCourses',
-            'as' => 'DatatableCourses',
-            'title' => __('pages.user-courses'),
-        ]);
-
-        # users groups datatable
-        Route::get('/datatable-groups/{id}', [
-            'uses' => 'Admin\UsersController@DatatableUsersGroups',
-            'as' => 'DatatableGroups',
-            'title' => __('pages.user-groups'),
-        ]);
+    # users delete
+    Route::get('/delete/{id}', [
+        'uses' => 'Admin\UsersController@destroy',
+        'as' => 'destroyuser',
+        'title' => __('pages.delete-user'),
+    ]);
 
 
-        # users files datatable
-        Route::get('/datatable-files/{id}', [
-            'uses' => 'Admin\UsersController@DatatableUsersFiles',
-            'as' => 'DatatableUsersFiles',
-            'title' => __('pages.user-files'),
-        ]);
+    # users courses datatable
+    Route::get('/datatable-course/{id}', [
+        'uses' => 'Admin\UsersController@DatatableCourses',
+        'as' => 'DatatableCourses',
+        'title' => __('pages.user-courses'),
+    ]);
+
+    # users groups datatable
+    Route::get('/datatable-groups/{id}', [
+        'uses' => 'Admin\UsersController@DatatableUsersGroups',
+        'as' => 'DatatableGroups',
+        'title' => __('pages.user-groups'),
+    ]);
 
 
-        Route::get('/destroy-courseFrom-List/{user_id}/{course_id}', [
-            'uses' => 'Admin\UsersController@destroyCourseFromList',
-            'as' => 'destroyCourseFromList',
-            'title' => __('pages.delete-course-from-user'),
-        ]);
-
-        Route::get('/destroy-groupFrom-List/{user_id}/{group_id}', [
-            'uses' => 'Admin\UsersController@destroyGroupFromList',
-            'as' => 'destroyGroupFromList',
-            'title' => __('pages.delete-group-user'),
-        ]);
+    # users files datatable
+    Route::get('/datatable-files/{id}', [
+        'uses' => 'Admin\UsersController@DatatableUsersFiles',
+        'as' => 'DatatableUsersFiles',
+        'title' => __('pages.user-files'),
+    ]);
 
 
-        # users postadd
-        Route::post('post-file/{user_id}/', [
-            'uses' => 'Admin\UsersController@UploadFile',
-            'as' => 'postadduserfiles',
-            'title' => __('pages.delete-file-from-user'),
-        ]);
+    Route::get('/destroy-courseFrom-List/{user_id}/{course_id}', [
+        'uses' => 'Admin\UsersController@destroyCourseFromList',
+        'as' => 'destroyCourseFromList',
+        'title' => __('pages.delete-course-from-user'),
+    ]);
+
+    Route::get('/destroy-groupFrom-List/{user_id}/{group_id}', [
+        'uses' => 'Admin\UsersController@destroyGroupFromList',
+        'as' => 'destroyGroupFromList',
+        'title' => __('pages.delete-group-user'),
+    ]);
 
 
-        # files postupdate
-        Route::post('postupdate/{id}/{user}', [
-            'uses' => 'Admin\UsersController@updateFile',
-            'as' => 'postupdatefilesUsers',
-            'title' => __('pages.update-file-user'),
-        ]);
+    # users postadd
+    Route::post('post-file/{user_id}/', [
+        'uses' => 'Admin\UsersController@UploadFile',
+        'as' => 'postadduserfiles',
+        'title' => __('pages.delete-file-from-user'),
+    ]);
 
 
-    });
+    # files postupdate
+    Route::post('postupdate/{id}/{user}', [
+        'uses' => 'Admin\UsersController@updateFile',
+        'as' => 'postupdatefilesUsers',
+        'title' => __('pages.update-file-user'),
+    ]);
+});
 
 // courses group
-    Route::group(['prefix' => 'courses', 'middleware' => ['auth', 'checkRole']], function () {
+Route::group(['prefix' => 'courses', 'middleware' => ['auth', 'checkRole']], function () {
 
-        # courses index
-        Route::get('/', [
-            'uses' => 'Admin\CoursesController@index',
-            'as' => 'courses',
-            'title' => __('pages.courses'),
-            'child' => [
-                'addcourses',
-                'showAll',
-                'postaddcourses',
-                'getupdatecourses',
-                'postupdatecourses',
-                'destroycourses',
-                'DatatableUsersCourses',
-                'DatatableCoursesGroups',
-                'destroyUserFromList',
-                'addUserFromList',
-                'destroyGroupFromList',
-                'addGroupFromList',
+    # courses index
+    Route::get('/', [
+        'uses' => 'Admin\CoursesController@index',
+        'as' => 'courses',
+        'title' => __('pages.courses'),
+        'child' => [
+            'addcourses',
+            'showAll',
+            'postaddcourses',
+            'getupdatecourses',
+            'postupdatecourses',
+            'destroycourses',
+            'DatatableUsersCourses',
+            'DatatableCoursesGroups',
+            'destroyUserFromList',
+            'addUserFromList',
+            'destroyGroupFromList',
+            'addGroupFromList',
 
-            ]
-        ]);
+        ]
+    ]);
 
-        # courses add
-        Route::get('create', [
-            'uses' => "Admin\CoursesController@create",
-            'as' => 'addcourses',
-            'title' => __('pages.create-course'),
-        ]);
-        
-        Route::get('show-all/{id}', [
-            'uses' => "Admin\CoursesController@show",
-            'as' => 'showAll',
-            'title' => __('pages.show-all-course'),
-        ]);
+    # courses add
+    Route::get('create', [
+        'uses' => "Admin\CoursesController@create",
+        'as' => 'addcourses',
+        'title' => __('pages.create-course'),
+    ]);
 
-        # courses postadd
-        Route::post('post-course', [
-            'uses' => 'Admin\CoursesController@store',
-            'as' => 'postaddcourses',
-            'title' => __('pages.store-course'),
-        ]);
+    Route::get('show-all/{id}', [
+        'uses' => "Admin\CoursesController@show",
+        'as' => 'showAll',
+        'title' => __('pages.show-all-course'),
+    ]);
 
-        # courses update
-        Route::get('/edit/{id}', [
-            'uses' => 'Admin\CoursesController@edit',
-            'as' => 'getupdatecourses',
-            'title' => __('pages.edit-course'),
-        ]);
+    # courses postadd
+    Route::post('post-course', [
+        'uses' => 'Admin\CoursesController@store',
+        'as' => 'postaddcourses',
+        'title' => __('pages.store-course'),
+    ]);
 
-        # courses postupdate
-        Route::post('postupdate/{id}', [
-            'uses' => 'Admin\CoursesController@update',
-            'as' => 'postupdatecourses',
-            'title' => __('pages.update-course'),
-        ]);
+    # courses update
+    Route::get('/edit/{id}', [
+        'uses' => 'Admin\CoursesController@edit',
+        'as' => 'getupdatecourses',
+        'title' => __('pages.edit-course'),
+    ]);
 
-        # courses delete
-        Route::get('/delete/{id}', [
-            'uses' => 'Admin\CoursesController@destroy',
-            'as' => 'destroycourses',
-            'title' => __('pages.delete-course'),
-        ]);
+    # courses postupdate
+    Route::post('postupdate/{id}', [
+        'uses' => 'Admin\CoursesController@update',
+        'as' => 'postupdatecourses',
+        'title' => __('pages.update-course'),
+    ]);
 
-        # users groups datatable
-        Route::get('/datatable-users/{id}', [
-            'uses' => 'Admin\CoursesController@DatatableUsersCourses',
-            'as' => 'DatatableUsersCourses',
-            'title' => __('pages.show-user-course'),
-        ]);
+    # courses delete
+    Route::get('/delete/{id}', [
+        'uses' => 'Admin\CoursesController@destroy',
+        'as' => 'destroycourses',
+        'title' => __('pages.delete-course'),
+    ]);
 
-//    # courses user datatable
-//    Route::get('/datatable-user/{id}', [
-//        'uses' => 'Admin\CoursesController@datatableUsers',
-//        'as' => 'datatableUsers',
-//        'title' => ' ',
-//    ]);
+    # users groups datatable
+    Route::get('/datatable-users/{id}', [
+        'uses' => 'Admin\CoursesController@DatatableUsersCourses',
+        'as' => 'DatatableUsersCourses',
+        'title' => __('pages.show-user-course'),
+    ]);
 
-        # users groups datatable
-        Route::get('/datatable-groups/{id}', [
-            'uses' => 'Admin\CoursesController@DatatableCoursesGroups',
-            'as' => 'DatatableCoursesGroups',
-            'title' => __('pages.show-group-relate-course'),
-        ]);
+    //    # courses user datatable
+    //    Route::get('/datatable-user/{id}', [
+    //        'uses' => 'Admin\CoursesController@datatableUsers',
+    //        'as' => 'datatableUsers',
+    //        'title' => ' ',
+    //    ]);
 
-
-        Route::get('/destroy-courseFrom-List/{user_id}/{course_id}', [
-            'uses' => 'Admin\CoursesController@destroyUserFromList',
-            'as' => 'destroyUserFromList',
-            'title' => __('pages.delete-user-from-course'),
-        ]);
+    # users groups datatable
+    Route::get('/datatable-groups/{id}', [
+        'uses' => 'Admin\CoursesController@DatatableCoursesGroups',
+        'as' => 'DatatableCoursesGroups',
+        'title' => __('pages.show-group-relate-course'),
+    ]);
 
 
-        Route::get('/add-courseFrom-List/{user_id}/{course_id}', [
-            'uses' => 'Admin\CoursesController@addUserFromList',
-            'as' => 'addUserFromList',
-            'title' => __('pages.add-user-to-course'),
-        ]);
+    Route::get('/destroy-courseFrom-List/{user_id}/{course_id}', [
+        'uses' => 'Admin\CoursesController@destroyUserFromList',
+        'as' => 'destroyUserFromList',
+        'title' => __('pages.delete-user-from-course'),
+    ]);
 
 
-        Route::get('/destroy-groupFrom-List/{group_id}/{course_id}', [
-            'uses' => 'Admin\CoursesController@destroyGroupFromList',
-            'as' => 'destroyGroupFromList',
-            'title' => __('pages.delete-group-from-course'),
-        ]);
+    Route::get('/add-courseFrom-List/{user_id}/{course_id}', [
+        'uses' => 'Admin\CoursesController@addUserFromList',
+        'as' => 'addUserFromList',
+        'title' => __('pages.add-user-to-course'),
+    ]);
 
 
-        Route::get('/add-groupFrom-List/{group_id}/{course_id}', [
-            'uses' => 'Admin\CoursesController@addGroupFromList',
-            'as' => 'addGroupFromList',
-            'title' => __('pages.add-group-to-course'),
-        ]);
+    Route::get('/destroy-groupFrom-List/{group_id}/{course_id}', [
+        'uses' => 'Admin\CoursesController@destroyGroupFromList',
+        'as' => 'destroyGroupFromList',
+        'title' => __('pages.delete-group-from-course'),
+    ]);
 
 
-    });
-    
-    Route::group(['prefix' => 'lessons', 'middleware' => ['auth', 'checkRole']], function () {
+    Route::get('/add-groupFrom-List/{group_id}/{course_id}', [
+        'uses' => 'Admin\CoursesController@addGroupFromList',
+        'as' => 'addGroupFromList',
+        'title' => __('pages.add-group-to-course'),
+    ]);
+});
 
-        # groups index
-        Route::get('/', [
-            'uses' => 'Admin\CoursesLessonsController@index',
-            'as' => 'Lessons',
-            'title' => __('pages.lessons'),
-            'child' => [
-                'addlessons',
-                'showLesson',
-                'postaddlessons',
-                'getupdatelessons',
-                'postupdatelessons',
-                'destroylessons',
-                'DatatableUsersCoursesLesson',
-                'postaddlessonsTrams'
-            ]
-        ]);
+Route::group(['prefix' => 'lessons', 'middleware' => ['auth', 'checkRole']], function () {
 
-
-        Route::get('/datatable-users-lesson/{id}', [
-            'uses' => 'Admin\CoursesLessonsController@DatatableUsersCourses',
-            'as' => 'DatatableUsersCoursesLesson',
-            'title' => __('pages.show-lesson-course'),
-        ]);
+    # groups index
+    Route::get('/', [
+        'uses' => 'Admin\CoursesLessonsController@index',
+        'as' => 'Lessons',
+        'title' => __('pages.lessons'),
+        'child' => [
+            'addlessons',
+            'showLesson',
+            'postaddlessons',
+            'getupdatelessons',
+            'postupdatelessons',
+            'destroylessons',
+            'DatatableUsersCoursesLesson',
+            'postaddlessonsTrams'
+        ]
+    ]);
 
 
-        # lessons add
-        Route::get('create/{id}', [
-            'uses' => "Admin\CoursesLessonsController@create",
-            'as' => 'addlessons',
-            'title' => __('pages.add-lessons'),
-        ]);
-
-        # lessons show
-        Route::get('show/{id}', [
-            'uses' => "Admin\CoursesLessonsController@show",
-            'as' => 'showLesson',
-            'title' => __('pages.show-lesson-course'),
-        ]);
-
-        # lessons postadd
-        Route::post('post-lesson', [
-            'uses' => 'Admin\CoursesLessonsController@store',
-            'as' => 'postaddlessons',
-            'title' => __('pages.store-lessons'),
-        ]);
+    Route::get('/datatable-users-lesson/{id}', [
+        'uses' => 'Admin\CoursesLessonsController@DatatableUsersCourses',
+        'as' => 'DatatableUsersCoursesLesson',
+        'title' => __('pages.show-lesson-course'),
+    ]);
 
 
-        # lessons postadd
-        Route::post('post-lesson-terms/{id}', [
-            'uses' => 'Admin\CoursesLessonsController@trams',
-            'as' => 'postaddlessonsTrams',
-            'title' => __('pages.store-lessons-terms'),
-        ]);
+    # lessons add
+    Route::get('create/{id}', [
+        'uses' => "Admin\CoursesLessonsController@create",
+        'as' => 'addlessons',
+        'title' => __('pages.add-lessons'),
+    ]);
+
+    # lessons show
+    Route::get('show/{id}', [
+        'uses' => "Admin\CoursesLessonsController@show",
+        'as' => 'showLesson',
+        'title' => __('pages.show-lesson-course'),
+    ]);
+
+    # lessons postadd
+    Route::post('post-lesson', [
+        'uses' => 'Admin\CoursesLessonsController@store',
+        'as' => 'postaddlessons',
+        'title' => __('pages.store-lessons'),
+    ]);
 
 
-        # lessons edit
-        Route::get('/edit/{course_id}/{lesson_id}', [
-            'uses' => 'Admin\CoursesLessonsController@edit',
-            'as' => 'getupdatelessons',
-            'title' => __('pages.edit-lessons'),
-        ]);
+    # lessons postadd
+    Route::post('post-lesson-terms/{id}', [
+        'uses' => 'Admin\CoursesLessonsController@trams',
+        'as' => 'postaddlessonsTrams',
+        'title' => __('pages.store-lessons-terms'),
+    ]);
 
-        # lessons postupdate
-        Route::post('postupdate/{course_id}/{lesson_id}', [
-            'uses' => 'Admin\CoursesLessonsController@update',
-            'as' => 'postupdatelessons',
-            'title' => __('pages.update-lessons'),
-        ]);
-    });
-    
-    Route::group(['prefix' => 'surveys/{courseId}', 'middleware' => ['auth', 'checkRole']], function () {
-        # surveys
-        Route::get('/', [
-            'uses' => 'Admin\SurveyController@index',
-            'as' => 'Surveys',
-            'title' => __('pages.surveys'),
-            'child' => [
-                'addsurveys',
-                'postaddsurveys',
-                'editsurveys',
-                'updatesurveys',
-                'SurveysResults'
-            ]
-        ]);
 
-        # surveys add
-        Route::get('/create', [
-            'uses' => "Admin\SurveyController@create",
-            'as' => 'addsurveys',
-            'title' => __('pages.create-survey'),
-        ]);
+    # lessons edit
+    Route::get('/edit/{course_id}/{lesson_id}', [
+        'uses' => 'Admin\CoursesLessonsController@edit',
+        'as' => 'getupdatelessons',
+        'title' => __('pages.edit-lessons'),
+    ]);
 
-        # surveys postadd
-        Route::post('/post-survey', [
-            'uses' => 'Admin\SurveyController@store',
-            'as' => 'postaddsurveys',
-            'title' => __('pages.store-survey'),
-        ]);
-		
-		# surveys edit
-        Route::get('/edit/{id}', [
-            'uses' => "Admin\SurveyController@edit",
-            'as' => 'editsurveys',
-            'title' => __('pages.edit-survey'),
-        ]);
+    # lessons postupdate
+    Route::post('postupdate/{course_id}/{lesson_id}', [
+        'uses' => 'Admin\CoursesLessonsController@update',
+        'as' => 'postupdatelessons',
+        'title' => __('pages.update-lessons'),
+    ]);
+});
 
-        # surveys update
-        Route::post('/update-survey/{id}', [
-            'uses' => 'Admin\SurveyController@update',
-            'as' => 'updatesurveys',
-            'title' => __('pages.update-survey'),
-        ]);
+Route::group(['prefix' => 'surveys/{courseId}', 'middleware' => ['auth', 'checkRole']], function () {
+    # surveys
+    Route::get('/', [
+        'uses' => 'Admin\SurveyController@index',
+        'as' => 'Surveys',
+        'title' => __('pages.surveys'),
+        'child' => [
+            'addsurveys',
+            'postaddsurveys',
+            'editsurveys',
+            'updatesurveys',
+            'SurveysResults'
+        ]
+    ]);
 
-        # surveys results
-        Route::get('/results/{id}', [
-            'uses' => 'Admin\SurveyController@results',
-            'as' => 'SurveysResults',
-            'title' => __('pages.surveys-results'),
-        ]);
-    });
+    # surveys add
+    Route::get('/create', [
+        'uses' => "Admin\SurveyController@create",
+        'as' => 'addsurveys',
+        'title' => __('pages.create-survey'),
+    ]);
+
+    # surveys postadd
+    Route::post('/post-survey', [
+        'uses' => 'Admin\SurveyController@store',
+        'as' => 'postaddsurveys',
+        'title' => __('pages.store-survey'),
+    ]);
+
+    # surveys edit
+    Route::get('/edit/{id}', [
+        'uses' => "Admin\SurveyController@edit",
+        'as' => 'editsurveys',
+        'title' => __('pages.edit-survey'),
+    ]);
+
+    # surveys update
+    Route::post('/update-survey/{id}', [
+        'uses' => 'Admin\SurveyController@update',
+        'as' => 'updatesurveys',
+        'title' => __('pages.update-survey'),
+    ]);
+
+    # surveys results
+    Route::get('/results/{id}', [
+        'uses' => 'Admin\SurveyController@results',
+        'as' => 'SurveysResults',
+        'title' => __('pages.surveys-results'),
+    ]);
+});
 
 // groups group
-    Route::group(['prefix' => 'groups', 'middleware' => ['auth', 'checkRole']], function () {
+Route::group(['prefix' => 'groups', 'middleware' => ['auth', 'checkRole']], function () {
 
-        # groups index
-        Route::get('/', [
-            'uses' => 'Admin\GroupsController@index',
-            'as' => 'groups',
-            'title' => __('pages.groups'),
-            'child' => [
-                'addgroups',
-                'postaddgroups',
-                'getupdategroups',
-                'postupdategroups',
-                'destroygroups',
-                'DatatableUsersGroups',
-                'destroyGroupFromList',
-                'addGroupFromList',
-                'DatatableCoursesGroups',
-                'destroyCourseFromList',
-                'addCourseFromList',
-                'postaddgroupsfile',
-                'DatatableUsersFiles'
-            ]
-        ]);
+    # groups index
+    Route::get('/', [
+        'uses' => 'Admin\GroupsController@index',
+        'as' => 'groups',
+        'title' => __('pages.groups'),
+        'child' => [
+            'addgroups',
+            'postaddgroups',
+            'getupdategroups',
+            'postupdategroups',
+            'destroygroups',
+            'DatatableUsersGroups',
+            'destroyGroupFromList',
+            'addGroupFromList',
+            'DatatableCoursesGroups',
+            'destroyCourseFromList',
+            'addCourseFromList',
+            'postaddgroupsfile',
+            'DatatableUsersFiles'
+        ]
+    ]);
 
-        # groups add
-        Route::get('create', [
-            'uses' => "Admin\GroupsController@create",
-            'as' => 'addgroups',
-            'title' => __('pages.add-group'),
-        ]);
+    # groups add
+    Route::get('create', [
+        'uses' => "Admin\GroupsController@create",
+        'as' => 'addgroups',
+        'title' => __('pages.add-group'),
+    ]);
 
-        # groups postadd
-        Route::post('post-group', [
-            'uses' => 'Admin\GroupsController@store',
-            'as' => 'postaddgroups',
-            'title' => __('pages.store-group'),
-        ]);
+    # groups postadd
+    Route::post('post-group', [
+        'uses' => 'Admin\GroupsController@store',
+        'as' => 'postaddgroups',
+        'title' => __('pages.store-group'),
+    ]);
 
-        # groups update
-        Route::get('/edit/{id}', [
-            'uses' => 'Admin\GroupsController@edit',
-            'as' => 'getupdategroups',
-            'title' => __('pages.edit-group'),
-        ]);
+    # groups update
+    Route::get('/edit/{id}', [
+        'uses' => 'Admin\GroupsController@edit',
+        'as' => 'getupdategroups',
+        'title' => __('pages.edit-group'),
+    ]);
 
-        # groups postupdate
-        Route::post('postupdate/{id}', [
-            'uses' => 'Admin\GroupsController@update',
-            'as' => 'postupdategroups',
-            'title' => __('pages.update-group'),
-        ]);
+    # groups postupdate
+    Route::post('postupdate/{id}', [
+        'uses' => 'Admin\GroupsController@update',
+        'as' => 'postupdategroups',
+        'title' => __('pages.update-group'),
+    ]);
 
-        # groups delete
-        Route::get('/delete/{id}', [
-            'uses' => 'Admin\GroupsController@destroy',
-            'as' => 'destroygroups',
-            'title' => __('pages.delete-group'),
-        ]);
-
-
-        # users groups datatable
-        Route::get('/datatable-users/{id}', [
-            'uses' => 'Admin\GroupsController@DatatableUsersGroups',
-            'as' => 'DatatableUsersGroups',
-            'title' => __('pages.show-user-relate-group'),
-        ]);
+    # groups delete
+    Route::get('/delete/{id}', [
+        'uses' => 'Admin\GroupsController@destroy',
+        'as' => 'destroygroups',
+        'title' => __('pages.delete-group'),
+    ]);
 
 
-        Route::get('/destroy-groupFrom-List/{group_id}/{student_id}', [
-            'uses' => 'Admin\GroupsController@destroyGroupFromList',
-            'as' => 'destroyGroupFromList',
-            'title' => __('pages.delete-user-from-group'),
-        ]);
+    # users groups datatable
+    Route::get('/datatable-users/{id}', [
+        'uses' => 'Admin\GroupsController@DatatableUsersGroups',
+        'as' => 'DatatableUsersGroups',
+        'title' => __('pages.show-user-relate-group'),
+    ]);
 
 
-        Route::get('/add-groupFrom-List/{group_id}/{student_id}', [
-            'uses' => 'Admin\GroupsController@addGroupFromList',
-            'as' => 'addGroupFromList',
-            'title' => __('pages.add-user-to-group'),
-        ]);
+    Route::get('/destroy-groupFrom-List/{group_id}/{student_id}', [
+        'uses' => 'Admin\GroupsController@destroyGroupFromList',
+        'as' => 'destroyGroupFromList',
+        'title' => __('pages.delete-user-from-group'),
+    ]);
 
 
-        //courses groups datatable
-        Route::get('/datatable-courses/{id}', [
-            'uses' => 'Admin\GroupsController@DatatableCoursesGroups',
-            'as' => 'DatatableCoursesGroups',
-            'title' => __('pages.show-course-relate-group'),
-        ]);
+    Route::get('/add-groupFrom-List/{group_id}/{student_id}', [
+        'uses' => 'Admin\GroupsController@addGroupFromList',
+        'as' => 'addGroupFromList',
+        'title' => __('pages.add-user-to-group'),
+    ]);
 
 
-        Route::get('/destroy-courseFrom-List/{group_id}/{course_id}', [
-            'uses' => 'Admin\GroupsController@destroyCourseFromList',
-            'as' => 'destroyCourseFromList',
-            'title' => __('pages.delete-course-from-group'),
-        ]);
+    //courses groups datatable
+    Route::get('/datatable-courses/{id}', [
+        'uses' => 'Admin\GroupsController@DatatableCoursesGroups',
+        'as' => 'DatatableCoursesGroups',
+        'title' => __('pages.show-course-relate-group'),
+    ]);
 
 
-        Route::get('/add-courseFrom-List/{group_id}/{course_id}', [
-            'uses' => 'Admin\GroupsController@addCourseFromList',
-            'as' => 'addCourseFromList',
-            'title' => __('pages.add-course-to-group'),
-        ]);
+    Route::get('/destroy-courseFrom-List/{group_id}/{course_id}', [
+        'uses' => 'Admin\GroupsController@destroyCourseFromList',
+        'as' => 'destroyCourseFromList',
+        'title' => __('pages.delete-course-from-group'),
+    ]);
 
 
-        # users postadd
-        Route::post('post-file-upload/{group_id}', [
-            'uses' => 'Admin\GroupsController@uploadFile',
-            'as' => 'postaddgroupsfile',
-            'title' => __('pages.add-file-form-group'),
-        ]);
+    Route::get('/add-courseFrom-List/{group_id}/{course_id}', [
+        'uses' => 'Admin\GroupsController@addCourseFromList',
+        'as' => 'addCourseFromList',
+        'title' => __('pages.add-course-to-group'),
+    ]);
 
 
-        # groups files datatable
-        Route::get('/datatable-files/{id}', [
-            'uses' => 'Admin\GroupsController@DatatableUsersFiles',
-            'as' => 'DatatableUsersFiles',
-            'title' => __('pages.show-file-form-group'),
-        ]);
+    # users postadd
+    Route::post('post-file-upload/{group_id}', [
+        'uses' => 'Admin\GroupsController@uploadFile',
+        'as' => 'postaddgroupsfile',
+        'title' => __('pages.add-file-form-group'),
+    ]);
 
 
-    });
+    # groups files datatable
+    Route::get('/datatable-files/{id}', [
+        'uses' => 'Admin\GroupsController@DatatableUsersFiles',
+        'as' => 'DatatableUsersFiles',
+        'title' => __('pages.show-file-form-group'),
+    ]);
+});
 
-    Route::group(['prefix' => 'categories', 'middleware' => ['auth', 'checkRole']], function () {
+Route::group(['prefix' => 'categories', 'middleware' => ['auth', 'checkRole']], function () {
 
-        # groups index
-        Route::get('/', [
-            'uses' => 'Admin\CategoriesCoursesController@index',
-            'as' => 'categories',
-            'title' => __('pages.catogries'),
-            'child' => [
-                'addcategories',
-                'postaddcategories',
-                'getupdatecategories',
-                'postupdatecategories',
-                'destroycategories',
-            ]
-        ]);
+    # groups index
+    Route::get('/', [
+        'uses' => 'Admin\CategoriesCoursesController@index',
+        'as' => 'categories',
+        'title' => __('pages.catogries'),
+        'child' => [
+            'addcategories',
+            'postaddcategories',
+            'getupdatecategories',
+            'postupdatecategories',
+            'destroycategories',
+        ]
+    ]);
 
-        # groups add
-        Route::get('create', [
-            'uses' => "Admin\CategoriesCoursesController@create",
-            'as' => 'addcategories',
-            'title' => __('pages.add-category'),
-        ]);
+    # groups add
+    Route::get('create', [
+        'uses' => "Admin\CategoriesCoursesController@create",
+        'as' => 'addcategories',
+        'title' => __('pages.add-category'),
+    ]);
 
-        # groups postadd
-        Route::post('post-categorie', [
-            'uses' => 'Admin\CategoriesCoursesController@store',
-            'as' => 'postaddcategories',
-            'title' => __('pages.store-category'),
-        ]);
+    # groups postadd
+    Route::post('post-categorie', [
+        'uses' => 'Admin\CategoriesCoursesController@store',
+        'as' => 'postaddcategories',
+        'title' => __('pages.store-category'),
+    ]);
 
-        # groups update
-        Route::get('/edit/{id}', [
-            'uses' => 'Admin\CategoriesCoursesController@edit',
-            'as' => 'getupdatecategories',
-            'title' => __('pages.edit-category'),
-        ]);
+    # groups update
+    Route::get('/edit/{id}', [
+        'uses' => 'Admin\CategoriesCoursesController@edit',
+        'as' => 'getupdatecategories',
+        'title' => __('pages.edit-category'),
+    ]);
 
-        # groups postupdate
-        Route::post('postupdate/{id}', [
-            'uses' => 'Admin\CategoriesCoursesController@update',
-            'as' => 'postupdatecategories',
-            'title' => __('pages.update-category'),
-        ]);
+    # groups postupdate
+    Route::post('postupdate/{id}', [
+        'uses' => 'Admin\CategoriesCoursesController@update',
+        'as' => 'postupdatecategories',
+        'title' => __('pages.update-category'),
+    ]);
 
-        # groups delete
-        Route::get('/delete/{id}', [
-            'uses' => 'Admin\CategoriesCoursesController@destroy',
-            'as' => 'destroycategories',
-            'title' => __('pages.delete-category'),
-        ]);
-
-
-    });
+    # groups delete
+    Route::get('/delete/{id}', [
+        'uses' => 'Admin\CategoriesCoursesController@destroy',
+        'as' => 'destroycategories',
+        'title' => __('pages.delete-category'),
+    ]);
+});
 
 // events group
-    Route::post('events/store_for_student', 'Admin\EventsController@storeForStudent');
-    
-    /*Route::group(['prefix' => 'events', 'middleware' => ['auth', 'checkRole']], function () {
+Route::post('events/store_for_student', 'Admin\EventsController@storeForStudent');
+
+/*Route::group(['prefix' => 'events', 'middleware' => ['auth', 'checkRole']], function () {
 
         # events index
         Route::get('/', [
@@ -759,239 +740,236 @@ Route::post('do-register','Admin\Auth\LoginController@doRegister')->name('do-reg
     });*/
 
 // setting group
-    Route::group(['prefix' => 'setting', 'middleware' => ['auth', 'checkRole']], function () {
-        # setting page
-        Route::get('/', [
-            'uses' => 'Admin\SettingController@index',
-            'as' => 'setting',
-            'title' => __('pages.setting'),
-            'child' => [
-                'updatefirsttap',
-                'updatesecondtap',
-                'updatethirdtap'
+Route::group(['prefix' => 'setting', 'middleware' => ['auth', 'checkRole']], function () {
+    # setting page
+    Route::get('/', [
+        'uses' => 'Admin\SettingController@index',
+        'as' => 'setting',
+        'title' => __('pages.setting'),
+        'child' => [
+            'updatefirsttap',
+            'updatesecondtap',
+            'updatethirdtap'
 
-            ]
-        ]);
+        ]
+    ]);
 
-        # update first tap
-        Route::post('update-first-tap', [
-            'uses' => 'Admin\SettingController@UpdateFristTap',
-            'as' => 'updatefirsttap',
-            'title' => __('pages.update-first-setting'),
-        ]);
+    # update first tap
+    Route::post('update-first-tap', [
+        'uses' => 'Admin\SettingController@UpdateFristTap',
+        'as' => 'updatefirsttap',
+        'title' => __('pages.update-first-setting'),
+    ]);
 
-        # update second tap
-        Route::post('update-second-tap', [
-            'uses' => 'Admin\SettingController@UpdateSecondTap',
-            'as' => 'updatesecondtap',
-            'title' => __('pages.update-second-setting'),
-        ]);
+    # update second tap
+    Route::post('update-second-tap', [
+        'uses' => 'Admin\SettingController@UpdateSecondTap',
+        'as' => 'updatesecondtap',
+        'title' => __('pages.update-second-setting'),
+    ]);
 
-        # update third tap
-        Route::post('update-third-tap', [
-            'uses' => 'Admin\SettingController@UpdateThirdTap',
-            'as' => 'updatethirdtap',
-            'title' => __('pages.update-games'),
-        ]);
-
-    });
+    # update third tap
+    Route::post('update-third-tap', [
+        'uses' => 'Admin\SettingController@UpdateThirdTap',
+        'as' => 'updatethirdtap',
+        'title' => __('pages.update-games'),
+    ]);
+});
 
 // permissions group
-    Route::group(['prefix' => 'permissions', 'middleware' => ['auth', 'checkRole']], function () {
-        # add permissions page
-        Route::get('/', [
-            'uses' => 'Admin\PermissionsController@PermissionsPage',
-            'as' => 'permissions',
-            'title' => __('pages.permissions'),
-            'child' => [
-                'storepermissions',
-                'editpermissionpage',
-                'updatepermission',
-                'deletepermission'
-            ]
-        ]);
+Route::group(['prefix' => 'permissions', 'middleware' => ['auth', 'checkRole']], function () {
+    # add permissions page
+    Route::get('/', [
+        'uses' => 'Admin\PermissionsController@PermissionsPage',
+        'as' => 'permissions',
+        'title' => __('pages.permissions'),
+        'child' => [
+            'storepermissions',
+            'editpermissionpage',
+            'updatepermission',
+            'deletepermission'
+        ]
+    ]);
 
-        # store permissions
-        Route::post('store-permission', [
-            'uses' => 'Admin\PermissionsController@AddPermissions',
-            'as' => 'storepermissions',
-            'title' => __('pages.store-permission'),
-        ]);
+    # store permissions
+    Route::post('store-permission', [
+        'uses' => 'Admin\PermissionsController@AddPermissions',
+        'as' => 'storepermissions',
+        'title' => __('pages.store-permission'),
+    ]);
 
-        # edit permission
-        Route::get('edit-permission/{id}', [
-            'uses' => 'Admin\PermissionsController@EditPermissions',
-            'as' => 'editpermissionpage',
-            'title' => __('pages.edit-permission'),
-        ]);
+    # edit permission
+    Route::get('edit-permission/{id}', [
+        'uses' => 'Admin\PermissionsController@EditPermissions',
+        'as' => 'editpermissionpage',
+        'title' => __('pages.edit-permission'),
+    ]);
 
-        #update permission
-        Route::post('update-permission', [
-            'uses' => 'Admin\PermissionsController@UpdatePermission',
-            'as' => 'updatepermission',
-            'title' => __('pages.update-permission')
-        ]);
-
-
-        # permission delete
-        Route::get('/delete/{id}', [
-            'uses' => 'Admin\PermissionsController@DeletePermission',
-            'as' => 'deletepermission',
-            'title' => __('pages.delete-permission'),
-        ]);
+    #update permission
+    Route::post('update-permission', [
+        'uses' => 'Admin\PermissionsController@UpdatePermission',
+        'as' => 'updatepermission',
+        'title' => __('pages.update-permission')
+    ]);
 
 
-    });
+    # permission delete
+    Route::get('/delete/{id}', [
+        'uses' => 'Admin\PermissionsController@DeletePermission',
+        'as' => 'deletepermission',
+        'title' => __('pages.delete-permission'),
+    ]);
+});
 
 //});
 
-    // services group
-    Route::group(['prefix' => 'services', 'middleware' => ['auth', 'checkRole']], function () {
+// services group
+Route::group(['prefix' => 'services', 'middleware' => ['auth', 'checkRole']], function () {
 
-        # services index
-        Route::get('/', [
-            'uses' => 'Admin\ServiceController@index',
-            'as' => 'services',
-            'title' => __('pages.services'),
-            'child' => [
-                'addservices',
-                'postaddservices',
-                'getupdateservices',
-                'postupdateservices',
-                'destroyservices'
-            ]
-        ]);
+    # services index
+    Route::get('/', [
+        'uses' => 'Admin\ServiceController@index',
+        'as' => 'services',
+        'title' => __('pages.services'),
+        'child' => [
+            'addservices',
+            'postaddservices',
+            'getupdateservices',
+            'postupdateservices',
+            'destroyservices'
+        ]
+    ]);
 
-        # services add
-        Route::get('create', [
-            'uses' => "Admin\ServiceController@create",
-            'as' => 'addservices',
-            'title' => __('pages.add-new-service'),
-        ]);
+    # services add
+    Route::get('create', [
+        'uses' => "Admin\ServiceController@create",
+        'as' => 'addservices',
+        'title' => __('pages.add-new-service'),
+    ]);
 
-        # services postadd
-        Route::post('post-service', [
-            'uses' => 'Admin\ServiceController@store',
-            'as' => 'postaddservices',
-            'title' => __('pages.store-service'),
-        ]);
+    # services postadd
+    Route::post('post-service', [
+        'uses' => 'Admin\ServiceController@store',
+        'as' => 'postaddservices',
+        'title' => __('pages.store-service'),
+    ]);
 
-        # services update
-        Route::get('/edit/{id}', [
-            'uses' => 'Admin\ServiceController@edit',
-            'as' => 'getupdateservices',
-            'title' => __('pages.edit-service'),
-        ]);
+    # services update
+    Route::get('/edit/{id}', [
+        'uses' => 'Admin\ServiceController@edit',
+        'as' => 'getupdateservices',
+        'title' => __('pages.edit-service'),
+    ]);
 
-        # services postupdate
-        Route::post('postupdate/{id}', [
-            'uses' => 'Admin\ServiceController@update',
-            'as' => 'postupdateservices',
-            'title' => __('pages.update-service'),
-        ]);
+    # services postupdate
+    Route::post('postupdate/{id}', [
+        'uses' => 'Admin\ServiceController@update',
+        'as' => 'postupdateservices',
+        'title' => __('pages.update-service'),
+    ]);
 
-        # services delete
-        Route::get('/delete/{id}', [
-            'uses' => 'Admin\ServiceController@destroy',
-            'as' => 'destroyservices',
-            'title' => __('pages.delete-service'),
-        ]);
-    });
+    # services delete
+    Route::get('/delete/{id}', [
+        'uses' => 'Admin\ServiceController@destroy',
+        'as' => 'destroyservices',
+        'title' => __('pages.delete-service'),
+    ]);
+});
 
-    // blog group
-    Route::group(['prefix' => 'blog', 'middleware' => ['auth', 'checkRole']], function () {
+// blog group
+Route::group(['prefix' => 'blog', 'middleware' => ['auth', 'checkRole']], function () {
 
-        # blog index
-        Route::get('/', [
-            'uses' => 'Admin\BlogController@index',
-            'as' => 'blog',
-            'title' => __('pages.blog'),
-            'child' => [
-                'addblog',
-                'postaddblog',
-                'getupdateblog',
-                'postupdateblog',
-                'destroyblog'
-            ]
-        ]);
+    # blog index
+    Route::get('/', [
+        'uses' => 'Admin\BlogController@index',
+        'as' => 'blog',
+        'title' => __('pages.blog'),
+        'child' => [
+            'addblog',
+            'postaddblog',
+            'getupdateblog',
+            'postupdateblog',
+            'destroyblog'
+        ]
+    ]);
 
-        # blog add
-        Route::get('create', [
-            'uses' => "Admin\BlogController@create",
-            'as' => 'addblog',
-            'title' => __('pages.add-new-blog'),
-        ]);
+    # blog add
+    Route::get('create', [
+        'uses' => "Admin\BlogController@create",
+        'as' => 'addblog',
+        'title' => __('pages.add-new-blog'),
+    ]);
 
-        # blog postadd
-        Route::post('post-blog', [
-            'uses' => 'Admin\BlogController@store',
-            'as' => 'postaddblog',
-            'title' => __('pages.store-blog'),
-        ]);
+    # blog postadd
+    Route::post('post-blog', [
+        'uses' => 'Admin\BlogController@store',
+        'as' => 'postaddblog',
+        'title' => __('pages.store-blog'),
+    ]);
 
-        # blog update
-        Route::get('/edit/{id}', [
-            'uses' => 'Admin\BlogController@edit',
-            'as' => 'getupdateblog',
-            'title' => __('pages.edit-blog'),
-        ]);
+    # blog update
+    Route::get('/edit/{id}', [
+        'uses' => 'Admin\BlogController@edit',
+        'as' => 'getupdateblog',
+        'title' => __('pages.edit-blog'),
+    ]);
 
-        # blog postupdate
-        Route::post('postupdate/{id}', [
-            'uses' => 'Admin\BlogController@update',
-            'as' => 'postupdateblog',
-            'title' => __('pages.update-blog'),
-        ]);
+    # blog postupdate
+    Route::post('postupdate/{id}', [
+        'uses' => 'Admin\BlogController@update',
+        'as' => 'postupdateblog',
+        'title' => __('pages.update-blog'),
+    ]);
 
-        # blog delete
-        Route::get('/delete/{id}', [
-            'uses' => 'Admin\BlogController@destroy',
-            'as' => 'destroyblog',
-            'title' => __('pages.delete-blog'),
-        ]);
-    });
-    
-    // setting group
-    Route::group(['prefix' => 'site_setting', 'middleware' => ['auth', 'checkRole']], function () {
-        # setting page
-        Route::get('/', [
-            'uses' => 'Admin\SiteSettingController@index',
-            'as' => 'site_setting',
-            'title' => __('pages.site_setting'),
-            'child' => [
-                'updateSiteSetting',
-                'contact_messages',
-                'consultations'
-            ]
-        ]);
+    # blog delete
+    Route::get('/delete/{id}', [
+        'uses' => 'Admin\BlogController@destroy',
+        'as' => 'destroyblog',
+        'title' => __('pages.delete-blog'),
+    ]);
+});
 
-        # update first tap
-        Route::post('update', [
-            'uses' => 'Admin\SiteSettingController@update',
-            'as' => 'updateSiteSetting',
-            'title' => __('pages.update-site-setting'),
-        ]);
-    });
-    
-    // pages group
-    Route::group(['prefix' => 'pages', 'middleware' => ['auth', 'checkRole']], function () {
+// setting group
+Route::group(['prefix' => 'site_setting', 'middleware' => ['auth', 'checkRole']], function () {
+    # setting page
+    Route::get('/', [
+        'uses' => 'Admin\SiteSettingController@index',
+        'as' => 'site_setting',
+        'title' => __('pages.site_setting'),
+        'child' => [
+            'updateSiteSetting',
+            'contact_messages',
+            'consultations'
+        ]
+    ]);
 
-        # pages index
-        Route::get('/', [
-            'uses' => 'Admin\PageController@index',
-            'as' => 'pages',
-            'title' => __('pages.pages'),
-            'child' => [
-//                'addpages',
-//                'postaddpages',
-                'getupdatepages',
-                'postupdatepages',
-//                'destroypages'
-            ]
-        ]);
+    # update first tap
+    Route::post('update', [
+        'uses' => 'Admin\SiteSettingController@update',
+        'as' => 'updateSiteSetting',
+        'title' => __('pages.update-site-setting'),
+    ]);
+});
 
-        # pages add
-        /*Route::get('create', [
+// pages group
+Route::group(['prefix' => 'pages', 'middleware' => ['auth', 'checkRole']], function () {
+
+    # pages index
+    Route::get('/', [
+        'uses' => 'Admin\PageController@index',
+        'as' => 'pages',
+        'title' => __('pages.pages'),
+        'child' => [
+            //                'addpages',
+            //                'postaddpages',
+            'getupdatepages',
+            'postupdatepages',
+            //                'destroypages'
+        ]
+    ]);
+
+    # pages add
+    /*Route::get('create', [
             'uses' => "Admin\PageController@create",
             'as' => 'addpages',
             'title' => __('pages.add-new-page'),
@@ -1004,127 +982,127 @@ Route::post('do-register','Admin\Auth\LoginController@doRegister')->name('do-reg
             'title' => __('pages.store-page'),
         ]);*/
 
-        # pages update
-        Route::get('/edit/{id}', [
-            'uses' => 'Admin\PageController@edit',
-            'as' => 'getupdatepages',
-            'title' => __('pages.edit-page'),
-        ]);
+    # pages update
+    Route::get('/edit/{id}', [
+        'uses' => 'Admin\PageController@edit',
+        'as' => 'getupdatepages',
+        'title' => __('pages.edit-page'),
+    ]);
 
-        # pages postupdate
-        Route::post('postupdate/{id}', [
-            'uses' => 'Admin\PageController@update',
-            'as' => 'postupdatepages',
-            'title' => __('pages.update-page'),
-        ]);
+    # pages postupdate
+    Route::post('postupdate/{id}', [
+        'uses' => 'Admin\PageController@update',
+        'as' => 'postupdatepages',
+        'title' => __('pages.update-page'),
+    ]);
 
-        # pages delete
-        /*Route::get('/delete/{id}', [
+    # pages delete
+    /*Route::get('/delete/{id}', [
             'uses' => 'Admin\PageController@destroy',
             'as' => 'destroypages',
             'title' => __('pages.delete-page'),
         ]);*/
-    });
-    
-    // contact_messages group
-    Route::group(['prefix' => 'contact_messages', 'middleware' => ['auth', 'checkRole']], function () {
-        # contact_messages index
-        Route::get('/', [
-            'uses' => 'HomeController@contactMessages',
-            'as' => 'contact_messages',
-            'title' => __('pages.contact_messages'),
-        ]);
-    });
-    
-    // consultations group
-    Route::group(['prefix' => 'consultations', 'middleware' => ['auth', 'checkRole']], function () {
-        # consultations index
-        Route::get('/', [
-            'uses' => 'HomeController@consultations',
-            'as' => 'consultations',
-            'title' => __('pages.consultations'),
-        ]); 
-    });
-    
-    Route::post('consultations/reply', 'HomeController@consultationReply');
-    Route::get('consultations/show/{id}', 'HomeController@consultationShow');
-    Route::post('consultations/suggested_date_action', 'HomeController@consultationSuggestedAction');
-    
-    // testimonials group
-    Route::group(['prefix' => 'testimonials', 'middleware' => ['auth', 'checkRole']], function () {
+});
 
-        # testimonials index
-        Route::get('/', [
-            'uses' => 'Admin\TestimonialController@index',
-            'as' => 'testimonials',
-            'title' => __('pages.testimonials'),
-            'child' => [
-                'addtestimonials',
-                'postaddtestimonials',
-                'getupdatetestimonials',
-                'postupdatetestimonials',
-                'destroytestimonials'
-            ]
-        ]);
+// contact_messages group
+Route::group(['prefix' => 'contact_messages', 'middleware' => ['auth', 'checkRole']], function () {
+    # contact_messages index
+    Route::get('/', [
+        'uses' => 'HomeController@contactMessages',
+        'as' => 'contact_messages',
+        'title' => __('pages.contact_messages'),
+    ]);
+});
 
-        # testimonials add
-        Route::get('create', [
-            'uses' => "Admin\TestimonialController@create",
-            'as' => 'addtestimonials',
-            'title' => __('pages.add-new-testimonial'),
-        ]);
+// consultations group
+Route::group(['prefix' => 'consultations', 'middleware' => ['auth', 'checkRole']], function () {
+    # consultations index
+    Route::get('/', [
+        'uses' => 'HomeController@consultations',
+        'as' => 'consultations',
+        'title' => __('pages.consultations'),
+    ]);
+});
 
-        # testimonials postadd
-        Route::post('post-testimonial', [
-            'uses' => 'Admin\TestimonialController@store',
-            'as' => 'postaddtestimonials',
-            'title' => __('pages.store-testimonial'),
-        ]);
+Route::post('consultations/reply', 'HomeController@consultationReply');
+Route::get('consultations/show/{id}', 'HomeController@consultationShow');
+Route::post('consultations/suggested_date_action', 'HomeController@consultationSuggestedAction');
 
-        # testimonials update
-        Route::get('/edit/{id}', [
-            'uses' => 'Admin\TestimonialController@edit',
-            'as' => 'getupdatetestimonials',
-            'title' => __('pages.edit-testimonial'),
-        ]);
+// testimonials group
+Route::group(['prefix' => 'testimonials', 'middleware' => ['auth', 'checkRole']], function () {
 
-        # testimonials postupdate
-        Route::post('postupdate/{id}', [
-            'uses' => 'Admin\TestimonialController@update',
-            'as' => 'postupdatetestimonials',
-            'title' => __('pages.update-testimonial'),
-        ]);
+    # testimonials index
+    Route::get('/', [
+        'uses' => 'Admin\TestimonialController@index',
+        'as' => 'testimonials',
+        'title' => __('pages.testimonials'),
+        'child' => [
+            'addtestimonials',
+            'postaddtestimonials',
+            'getupdatetestimonials',
+            'postupdatetestimonials',
+            'destroytestimonials'
+        ]
+    ]);
 
-        # testimonials delete
-        Route::get('/delete/{id}', [
-            'uses' => 'Admin\TestimonialController@destroy',
-            'as' => 'destroytestimonials',
-            'title' => __('pages.delete-testimonial'),
-        ]);
-    });
-    
-    // newsletters group
-    Route::group(['prefix' => 'newsletters', 'middleware' => ['auth', 'checkRole']], function () {
+    # testimonials add
+    Route::get('create', [
+        'uses' => "Admin\TestimonialController@create",
+        'as' => 'addtestimonials',
+        'title' => __('pages.add-new-testimonial'),
+    ]);
 
-        # newsletters index
-        Route::get('/', [
-            'uses' => 'HomeController@newsletters',
-            'as' => 'newsletters',
-            'title' => __('pages.newsletters'),
-            'child' => [
-                'postaddnewsletters'
-            ]
-        ]);
+    # testimonials postadd
+    Route::post('post-testimonial', [
+        'uses' => 'Admin\TestimonialController@store',
+        'as' => 'postaddtestimonials',
+        'title' => __('pages.store-testimonial'),
+    ]);
 
-        # newsletters postadd
-        Route::post('post-newsletter', [
-            'uses' => 'HomeController@newslettersContact',
-            'as' => 'postaddnewsletters',
-            'title' => __('pages.store-newsletter'),
-        ]);
-    });
-    
-Route::group(['prefix' => 'trainer','middleware' => ['auth','checkRole']], function () {
+    # testimonials update
+    Route::get('/edit/{id}', [
+        'uses' => 'Admin\TestimonialController@edit',
+        'as' => 'getupdatetestimonials',
+        'title' => __('pages.edit-testimonial'),
+    ]);
+
+    # testimonials postupdate
+    Route::post('postupdate/{id}', [
+        'uses' => 'Admin\TestimonialController@update',
+        'as' => 'postupdatetestimonials',
+        'title' => __('pages.update-testimonial'),
+    ]);
+
+    # testimonials delete
+    Route::get('/delete/{id}', [
+        'uses' => 'Admin\TestimonialController@destroy',
+        'as' => 'destroytestimonials',
+        'title' => __('pages.delete-testimonial'),
+    ]);
+});
+
+// newsletters group
+Route::group(['prefix' => 'newsletters', 'middleware' => ['auth', 'checkRole']], function () {
+
+    # newsletters index
+    Route::get('/', [
+        'uses' => 'HomeController@newsletters',
+        'as' => 'newsletters',
+        'title' => __('pages.newsletters'),
+        'child' => [
+            'postaddnewsletters'
+        ]
+    ]);
+
+    # newsletters postadd
+    Route::post('post-newsletter', [
+        'uses' => 'HomeController@newslettersContact',
+        'as' => 'postaddnewsletters',
+        'title' => __('pages.store-newsletter'),
+    ]);
+});
+
+Route::group(['prefix' => 'trainer', 'middleware' => ['auth', 'checkRole']], function () {
 
     Route::group(['prefix' => 'courses', 'middleware' => ['auth', 'checkRole']], function () {
 
@@ -1231,10 +1209,8 @@ Route::group(['prefix' => 'trainer','middleware' => ['auth','checkRole']], funct
             'as' => 'addGroupFromListTrainer',
             'title' => __('pages.add-group-to-course'),
         ]);
-        
-        
     });
-    
+
     Route::group(['prefix' => 'missions', 'middleware' => ['auth', 'checkRole']], function () {
         # missions
         Route::get('/', [
@@ -1314,8 +1290,8 @@ Route::group(['prefix' => 'trainer','middleware' => ['auth','checkRole']], funct
             'as' => 'postaddsurveysTrainer',
             'title' => __('pages.store-survey'),
         ]);
-		
-		# surveys edit
+
+        # surveys edit
         Route::get('/edit/{id}', [
             'uses' => "Trainer\SurveyController@edit",
             'as' => 'editsurveysTrainer',
@@ -1336,7 +1312,7 @@ Route::group(['prefix' => 'trainer','middleware' => ['auth','checkRole']], funct
             'title' => __('pages.surveys-results'),
         ]);
     });
-    
+
     Route::group(['prefix' => 'groups', 'middleware' => ['auth', 'checkRole']], function () {
 
         # groups index
@@ -1479,7 +1455,7 @@ Route::group(['prefix' => 'trainer','middleware' => ['auth','checkRole']], funct
                 'postupdatemeetingTrainer',
                 'destroymeetingTrainer',
                 'ajaxshowmeetingTrainer',
-				'startmeetingTrainer'
+                'startmeetingTrainer'
             ]
         ]);
 
@@ -1522,7 +1498,7 @@ Route::group(['prefix' => 'trainer','middleware' => ['auth','checkRole']], funct
             'title' => __('pages.delete-meeting'),
         ]);
 
-		# groups start
+        # groups start
         Route::get('/start/{id}', [
             'uses' => 'Trainer\MeetingsController@start',
             'as' => 'startmeetingTrainer',
@@ -1588,8 +1564,6 @@ Route::group(['prefix' => 'trainer','middleware' => ['auth','checkRole']], funct
             'as' => 'destroyeventTrainer',
             'title' => __('pages.delete-event'),
         ]);
-
-
     });
 
     Route::group(['prefix' => 'lessons', 'middleware' => ['auth', 'checkRole']], function () {
@@ -1766,7 +1740,6 @@ Route::group(['prefix' => 'trainer','middleware' => ['auth','checkRole']], funct
             'as' => 'destroydiscussionTrainer',
             'title' => __('pages.delete-discussion'),
         ]);
-
     });
 
     Route::group(['prefix' => 'notifications', 'middleware' => ['auth', 'checkRole']], function () {
@@ -1787,13 +1760,11 @@ Route::group(['prefix' => 'trainer','middleware' => ['auth','checkRole']], funct
             'as' => 'sendnotificationTrainer',
             'title' => __('pages.send-notification'),
         ]);
-
     });
-
 });
 
 
-Route::group(['prefix' => 'student','middleware' => ['auth','checkRole']], function () {
+Route::group(['prefix' => 'student', 'middleware' => ['auth', 'checkRole']], function () {
 
     Route::group(['prefix' => 'courses', 'middleware' => ['auth', 'checkRole']], function () {
 
@@ -1813,7 +1784,7 @@ Route::group(['prefix' => 'student','middleware' => ['auth','checkRole']], funct
                 'showSurveyResultsStudent'
             ]
         ]);
-        
+
         Route::post('catalog/join_course', [
             'uses' => 'Student\CoursesController@joinCourse',
             'as' => 'StudentCatalogJoinCourse',
@@ -1850,14 +1821,14 @@ Route::group(['prefix' => 'student','middleware' => ['auth','checkRole']], funct
             'as' => 'finishLessonStudent',
             'title' => __('pages.finish-lesson-course'),
         ]);
-        
+
         # surveys show
         Route::get('/show-survey/{id}', [
             'uses' => "Student\CoursesController@showSurvey",
             'as' => 'showSurveysStudent',
             'title' => __('pages.show-survey'),
         ]);
-        
+
         # answer survey
         Route::post('/answer-survey/{id}', [
             'uses' => 'Student\CoursesController@answerSurvey',
@@ -1899,7 +1870,6 @@ Route::group(['prefix' => 'student','middleware' => ['auth','checkRole']], funct
             'as' => 'postaddgroupsStudent',
             'title' => __('pages.store-group'),
         ]);
-
     });
 
     Route::group(['prefix' => 'events', 'middleware' => ['auth', 'checkRole']], function () {
@@ -1966,8 +1936,6 @@ Route::group(['prefix' => 'student','middleware' => ['auth','checkRole']], funct
             'as' => 'destroyeventStudent',
             'title' => __('pages.delete-event'),
         ]);
-
-
     });
 
     Route::group(['prefix' => 'discussions', 'middleware' => ['auth', 'checkRole']], function () {
@@ -2036,9 +2004,8 @@ Route::group(['prefix' => 'student','middleware' => ['auth','checkRole']], funct
             'as' => 'destroydiscussionStudent',
             'title' => __('pages.delete-discussion'),
         ]);
-
     });
-    
+
     Route::group(['prefix' => 'missions', 'middleware' => ['auth', 'checkRole']], function () {
         # missions
         Route::get('/', [
@@ -2057,7 +2024,7 @@ Route::group(['prefix' => 'student','middleware' => ['auth','checkRole']], funct
             'as' => 'showMissionsStudent',
             'title' => __('pages.view-mission'),
         ]);
-        
+
         # missions add reply
         Route::post('/add-reply/{id}', [
             'uses' => 'Student\MissionController@addReply',

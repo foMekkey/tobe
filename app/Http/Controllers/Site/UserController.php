@@ -10,7 +10,7 @@ use Session;
 use App\User;
 
 class UserController extends Controller
-{   
+{
     # login page
     public function getLogin()
     {
@@ -25,11 +25,11 @@ class UserController extends Controller
             'email'    => 'required|email'
         ]);
 
-        if (auth()->attempt($request->only(['email','password']),$request->rememberme)) {
+        if (auth()->attempt($request->only(['email', 'password']), $request->rememberme)) {
             if (!empty($request->referrer_url)) {
                 return redirect($request->referrer_url);
             }
-            
+
             // add points
             $settings = \App\Setting::whereIn('name', ['check_points_group', 'enter'])->pluck('value', 'name')->toArray();
             if (auth()->user()->role == 3 && $settings['check_points_group'] == 'on' && $settings['enter']) {
@@ -40,7 +40,7 @@ class UserController extends Controller
                     auth()->user()->increment('points', $settings['enter']);
                 }
             }
-            
+
             return redirect()->route('home');
         } else {
             return redirect()->route('login')->withErrors([
@@ -63,9 +63,9 @@ class UserController extends Controller
             'l_name'      => 'required',
             'email'       => 'required|email|max:190|unique:users',
             'password'    => 'required',
-            'confirm_pass'=> 'required|same:password',
+            'confirm_pass' => 'required|same:password',
             'agree_terms' => 'required',
-        ],[
+        ], [
             'f_name.required'      => __('site.first_name_required'),
             'l_name.required'      => __('site.second_name_required'),
             'user_name.required'   => __('site.username_required'),
@@ -105,9 +105,9 @@ class UserController extends Controller
     public function sendResetLinkEmail(Request $request)
     {
         $this->validate($request, ['email' => 'required|email']);
-        $userModel = User::where('email', $request->only('email','activation_code'))->first();
+        $userModel = User::where('email', $request->only('email', 'activation_code'))->first();
         Mail::to($userModel->email)->send(new passwordNotification($userModel));
-        return redirect(url('/'))->with('success','check your email');
+        return redirect(url('/'))->with('success', 'check your email');
     }
 
     public function resendRememberToken()
