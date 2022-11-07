@@ -78,7 +78,7 @@
                             <input type="checkbox" name="agree_terms">
                             <i>
                                 {{ __('site.i_agree') }}
-                                <a href="{{ url('site/page/terms_conditions') }}" target="_blank">{{ __('site.terms') }}</a>
+                                <a href="{{ url('site/page/terms_conditions') }}" data-target="#terms_conditions_modal" data-toggle="modal">{{ __('site.terms') }}</a>
                             </i>
                             <span class="checkmark"></span>
                         </label>
@@ -92,6 +92,12 @@
                 </form>
             </div>
         </div>
+        <div class="modal fade text-center" id="terms_conditions_modal">
+            <div class="modal-dialog">
+              <div class="modal-content">
+              </div>
+            </div>
+          </div>
     </section>
 @endsection
 
