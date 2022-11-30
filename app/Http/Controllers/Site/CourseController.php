@@ -23,7 +23,24 @@ class CourseController extends Controller
         parent::__construct();
     }
 
-    public function index($catId = '', Request $request)
+    public function index(Request $request)
+    {
+        $courses = Courses::where('lang', $this->locale);
+
+        if ($keyword = $request->input('keyword')) {
+            $courses->where(function ($q) use ($keyword) {
+                $q->where('name', 'like', '%' . $keyword . '%');
+                $q->orWhere('desc', 'like', '%' . $keyword . '%');
+                $q->orWhere('content', 'like', '%' . $keyword . '%');
+            });
+        }
+
+        $courses = $courses->orderBy('id', 'desc')->paginate(16)->appends(request()->query());
+
+        return view('site.courses.index', compact('courses'));
+    }
+
+    public function indexCat($catId = '', Request $request)
     {
         if ($catId != '') {
             $courses = Courses::where('category_id', $catId)->where('lang', $this->locale);
