@@ -25,7 +25,7 @@ class CourseController extends Controller
 
     public function index($catId = '', Request $request)
     {
-        if ($catId) {
+        if ($catId != '') {
             $courses = Courses::where('category_id', $catId)->where('lang', $this->locale);
         } else {
             $courses = Courses::where('lang', $this->locale);
