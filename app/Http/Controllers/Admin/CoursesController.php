@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\CategoiresCourses;
 use App\Courses;
 use App\CoursesGroup;
@@ -38,7 +39,7 @@ class CoursesController extends Controller
     {
         $trainers = User::where('type', 2)->pluck('user_name', 'id')->toArray();
         $categories = CategoiresCourses::all()->pluck('name', 'id');
-        return view('backend.courses.create',compact('categories', 'trainers'));
+        return view('backend.courses.create', compact('categories', 'trainers'));
     }
 
 
@@ -55,27 +56,24 @@ class CoursesController extends Controller
         $dateTo = $full_date[1];
 
         $timestamp_from = Carbon::createFromFormat('m/d/Y', trim($dateFrom));
-        $timestamp_to = Carbon::createFromFormat('m/d/Y',trim($dateTo));
+        $timestamp_to = Carbon::createFromFormat('m/d/Y', trim($dateTo));
 
-        if(isset($coursesRequest->status) ||  $coursesRequest->status != null)
-        {
+        if (isset($coursesRequest->status) ||  $coursesRequest->status != null) {
             $stauts = $coursesRequest->status;
-        }else{
+        } else {
             $stauts = 0;
         }
 
 
-        if(isset($coursesRequest->image) ||  $coursesRequest->image != null)
-        {
+        if (isset($coursesRequest->image) ||  $coursesRequest->image != null) {
             $image = $coursesRequest->image->store('courses');
-        }else{
+        } else {
             $image = 'courses/download.jpeg';
         }
 
-        if(isset($coursesRequest->hide_from_catalog) ||  $coursesRequest->hide_from_catalog != null)
-        {
+        if (isset($coursesRequest->hide_from_catalog) ||  $coursesRequest->hide_from_catalog != null) {
             $hide_from_catalog = $coursesRequest->hide_from_catalog;
-        }else{
+        } else {
             $hide_from_catalog = 0;
         }
 
@@ -111,13 +109,13 @@ class CoursesController extends Controller
     {
         $courseData = Courses::find($id);
         //$sections = CourseSection::where('course_id',$id)->get();
-        $terms = CourseTerms::where('course_id',$id)->first();
-        $coursesLessons = CoursesLessons::where('course_id',$id)->orderBy('number_lession')->get(); //LessonInSameSection($id);
+        $terms = CourseTerms::where('course_id', $id)->first();
+        $coursesLessons = CoursesLessons::where('course_id', $id)->orderBy('number_lession')->get(); //LessonInSameSection($id);
         //print_r($coursesLessons);exit;
-        $courses_count = CoursesLessons::where('course_id',$id)->count();
-        return view('backend.courses.showCourse',compact('coursesLessons','courses_count','courseData'/*,'sections'*/,'terms'));
+        $courses_count = CoursesLessons::where('course_id', $id)->count();
+        return view('backend.courses.showCourse', compact('coursesLessons', 'courses_count', 'courseData'/*,'sections'*/, 'terms'));
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -135,7 +133,7 @@ class CoursesController extends Controller
 
         $coursesCategories = CategoiresCourses::pluck('name', 'id')->toArray();
         $trainers = User::where('type', 2)->pluck('user_name', 'id')->toArray();
-        return  view('backend.courses.edit',compact('courses','coursesCategories', 'trainers','startdate','enddate'));
+        return  view('backend.courses.edit', compact('courses', 'coursesCategories', 'trainers', 'startdate', 'enddate'));
     }
 
 
@@ -148,26 +146,24 @@ class CoursesController extends Controller
     public function update(Request $request, $id)
     {
 
-        $this->validate($request,[
-            'name'=>'required',
-            'category_id'=>'required',
-            'user_id'=>'required',
-            'level'=>'required',
-            'duration'=>'required',
+        $this->validate($request, [
+            'name' => 'required',
+            'category_id' => 'required',
+            'user_id' => 'required',
+            'level' => 'required',
+            'duration' => 'required',
         ]);
 
 
-        if(isset($request->status) ||  $request->status != null)
-        {
+        if (isset($request->status) ||  $request->status != null) {
             $stauts = $request->status;
-        }else{
+        } else {
             $stauts = 0;
         }
 
-        if(isset($request->hide_from_catalog) ||  $request->hide_from_catalog != null)
-        {
+        if (isset($request->hide_from_catalog) ||  $request->hide_from_catalog != null) {
             $hide_from_catalog = $request->hide_from_catalog;
-        }else{
+        } else {
             $hide_from_catalog = 0;
         }
 
@@ -198,8 +194,6 @@ class CoursesController extends Controller
         $courses->update();
 
         return redirect('courses')->with(['success' =>  __('pages.success-edit')]);
-
-
     }
 
     /**
@@ -219,7 +213,6 @@ class CoursesController extends Controller
             return Response::json($id, '200');
         } else {
             return redirect()->back()->with('error', __('pages.success-delete'));
-
         }
     }
 
@@ -232,25 +225,24 @@ class CoursesController extends Controller
 
         return \DataTables::of($users)
 
-            ->editColumn('type',function($query){
-                if($query->type == 1)
-                {
+            ->editColumn('type', function ($query) {
+                if ($query->type == 1) {
                     return '<span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">مسئول</span>';
-                }elseif ($query->type == 2){
+                } elseif ($query->type == 2) {
                     return '<td><span class="kt-badge kt-badge--danger kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-danger">مدرب</span></td>';
-                }else{
+                } else {
                     return '<span class="kt-badge kt-badge--primary kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-primary">طالب</span>';
                 }
             })
 
-            ->addColumn('options', function($query)  use ($courses){
+            ->addColumn('options', function ($query)  use ($courses) {
                 $user_id = $query->id;
                 $course_id = $courses->id;
-                return view('backend.courses.actionUsers', compact('course_id','user_id'));
+                return view('backend.courses.actionUsers', compact('course_id', 'user_id'));
             })
 
 
-            ->rawColumns(['options','type'])
+            ->rawColumns(['options', 'type'])
             ->make(true);
     }
 
@@ -263,10 +255,10 @@ class CoursesController extends Controller
 
         return \DataTables::of($groups)
 
-            ->addColumn('options', function($query)  use ($courses){
+            ->addColumn('options', function ($query)  use ($courses) {
                 $group_id = $query->id;
                 $courses_id = $courses->id;
-                return view('backend.courses.actionGroups', compact('group_id','courses_id'));
+                return view('backend.courses.actionGroups', compact('group_id', 'courses_id'));
             })
 
             ->rawColumns(['options'])
@@ -276,18 +268,18 @@ class CoursesController extends Controller
 
 
 
-    public function destroyUserFromList($user_id,$course_id)
+    public function destroyUserFromList($user_id, $course_id)
     {
 
-        $user = CoursesUser::where('user_id',$user_id)->where('course_id',$course_id)->first();
+        $user = CoursesUser::where('user_id', $user_id)->where('course_id', $course_id)->first();
 
         $check = $user->delete();
 
-        return redirect()->back()->with('error',__('pages.success-delete'));
+        return redirect()->back()->with('error', __('pages.success-delete'));
     }
 
 
-    public function addUserFromList($user_id,$course_id)
+    public function addUserFromList($user_id, $course_id)
     {
 
         $course = new CoursesUser();
@@ -295,24 +287,24 @@ class CoursesController extends Controller
         $course->user_id = $user_id;
         $course->save();
 
-        return redirect()->back()->with('error',__('pages.success-join'));
+        return redirect()->back()->with('error', __('pages.success-join'));
     }
 
 
 
 
-    public function destroyGroupFromList($group_id,$course_id)
+    public function destroyGroupFromList($group_id, $course_id)
     {
 
-        $user = CoursesGroup::where('course_id',$course_id)->where('group_id',$group_id)->first();
+        $user = CoursesGroup::where('course_id', $course_id)->where('group_id', $group_id)->first();
 
         $check = $user->delete();
 
-        return redirect()->back()->with('error',__('pages.success-delete-join'));
+        return redirect()->back()->with('error', __('pages.success-delete-join'));
     }
 
 
-    public function addGroupFromList($group_id,$course_id)
+    public function addGroupFromList($group_id, $course_id)
     {
 
         $coursesGroup = new CoursesGroup();
@@ -320,9 +312,6 @@ class CoursesController extends Controller
         $coursesGroup->group_id = $group_id;
         $coursesGroup->save();
 
-        return redirect()->back()->with('error',__('pages.success-join'));
+        return redirect()->back()->with('error', __('pages.success-join'));
     }
-
-
-
 }

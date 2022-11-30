@@ -5,9 +5,9 @@ namespace App\DataTables;
 use App\CategoiresCourses;
 use App\Courses;
 use App\User;
-use Yajra\DataTables\Services\DataTables;
+use Yajra\DataTables\Services\DataTable;
 
-class CoursesDatatable extends DataTables
+class CoursesDatatable extends DataTable
 {
     /**
      * Build DataTable class.
