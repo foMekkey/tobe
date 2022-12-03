@@ -58,17 +58,16 @@ class StudentMissionsDatatable extends DataTable
     {
         $userGroups = \App\GroupMember::where('student_id', auth()->user()->id)->pluck('group_id')->toArray();
 
-        if ((int)count($userGroups) === 0)
-            return [];
         return $model->newQuery()->select('id', 'name', 'user_id', 'period', 'expire_date')->where(function ($q) use ($userGroups) {
             $q->where(function ($q1) {
                 $q1->where('mission_to', '1');
                 $q1->where('mission_to_id', auth()->user()->id);
             });
-            $q->orWhere(function ($q2) use ($userGroups) {
-                $q2->where('mission_to', '2');
-                $q2->orWhereIn('mission_to_id', $userGroups);
-            });
+            if ((int)count($userGroups) > 0)
+                $q->orWhere(function ($q2) use ($userGroups) {
+                    $q2->where('mission_to', '2');
+                    $q2->orWhereIn('mission_to_id', $userGroups);
+                });
         });
     }
 
