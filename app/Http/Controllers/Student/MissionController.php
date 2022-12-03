@@ -24,14 +24,14 @@ class MissionController extends Controller
     public function show($id)
     {
         $userGroups = \App\GroupMember::where('student_id', auth()->user()->id)->pluck('group_id')->toArray();
-        
+
         $mission = Mission::where('id', $id)
-            ->where(function($q) use($userGroups) { 
-                $q->where(function($q1) {
+            ->where(function ($q) use ($userGroups) {
+                $q->where(function ($q1) {
                     $q1->where('mission_to', '1');
                     $q1->where('mission_to_id', auth()->user()->id);
                 });
-                $q->orWhere(function($q2) use($userGroups) {
+                $q->orWhere(function ($q2) use ($userGroups) {
                     $q2->where('mission_to', '2');
                     $q2->whereIn('mission_to_id', $userGroups);
                 });
@@ -39,13 +39,15 @@ class MissionController extends Controller
             ->first();
 
         $reply = MissionReply::where('mission_id', $id)->first();
-        
+
+        var_dump($mission);
+        var_dump($reply);
         return view('students.missions.show', compact('mission', 'reply'));
     }
 
 
-    
-    
+
+
     /*public function showReply($id)
     {
         $reply = MissionReply::where('id', $id)->whereHas('mission', function($q) {
@@ -54,17 +56,17 @@ class MissionController extends Controller
         
         return view('trainer.missions.show-reply',compact('reply'));
     }*/
-    
+
     public function addReply($missionId, Request $request)
     {
-        $this->validate($request,[
-            'reply'=>'required_without:file',
-            'file'=>'required_without:reply'
+        $this->validate($request, [
+            'reply' => 'required_without:file',
+            'file' => 'required_without:reply'
         ]);
-        
+
         $mission = Mission::findOrFail($missionId);
         $reply = MissionReply::where('mission_id', $missionId)->where('user_id', auth()->user()->id)->first();
-        
+
         $file = '';
         if (!$reply) {
             if (isset($request->file) ||  $request->file != null) {
@@ -79,7 +81,7 @@ class MissionController extends Controller
                 'sent_at' => Carbon::now()
             ];
             $reply = MissionReply::create($data);
-            
+
             $notificationData = [
                 'type' => 2,
                 'user_id' => $mission->user_id,
@@ -89,10 +91,10 @@ class MissionController extends Controller
                 'datetime' => Carbon::now()
             ];
             UserNotification::insert($notificationData);
-            
+
             return redirect(route('StudentMissions'))->with(['success' => __('pages.success-mission-add-reply')]);
         }
-        
+
         return redirect()->back()->with('error', __('pages.unauthorized'));
     }
 }
