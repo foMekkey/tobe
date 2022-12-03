@@ -19,29 +19,29 @@ class StudentMissionsDatatable extends DataTable
         return datatables($query)
 
             ->editColumn('action', 'students.missions.action')
-            ->editColumn('user_id',function($query){
+            ->editColumn('user_id', function ($query) {
                 $user = User::find($query->user_id);
 
                 return $user->user_name ?? '';
             })
-            ->addColumn('status',function($query){
+            ->addColumn('status', function ($query) {
                 return $query->getStatus();
             })
-            ->addColumn('trainer_rate',function($query){
+            ->addColumn('trainer_rate', function ($query) {
                 $reply = \App\MissionReply::where('user_id', auth()->user()->id)->where('mission_id', $query->id)->first();
-                if($reply && $reply->trainer_rate) {
+                if ($reply && $reply->trainer_rate) {
                     $output = '';
-                    for ($i=1; $i<6; $i++) {
+                    for ($i = 1; $i < 6; $i++) {
                         if ($i <= $reply->trainer_rate) {
                             $output .= '<span class="fa fa-star"></span>';
                         } else {
                             $output .= '<span class="fa fa-star-o"></span>';
                         }
                     }
-                    
+
                     return $output;
                 }
-                
+
                 return '';
             })
             ->rawColumns(['action', 'status', 'trainer_rate'])
@@ -57,13 +57,15 @@ class StudentMissionsDatatable extends DataTable
     public function query(Mission $model)
     {
         $userGroups = \App\GroupMember::where('student_id', auth()->user()->id)->pluck('group_id')->toArray();
-        
-        return $model->newQuery()->select('id', 'name', 'user_id', 'period', 'expire_date')->where(function($q) use($userGroups) {
-            $q->where(function($q1) {
+
+        if ((int)count($userGroups) === 0)
+            return [];
+        return $model->newQuery()->select('id', 'name', 'user_id', 'period', 'expire_date')->where(function ($q) use ($userGroups) {
+            $q->where(function ($q1) {
                 $q1->where('mission_to', '1');
                 $q1->where('mission_to_id', auth()->user()->id);
             });
-            $q->orWhere(function($q2) use($userGroups) {
+            $q->orWhere(function ($q2) use ($userGroups) {
                 $q2->where('mission_to', '2');
                 $q2->orWhereIn('mission_to_id', $userGroups);
             });
@@ -86,8 +88,8 @@ class StudentMissionsDatatable extends DataTable
                 'order'   => [[0, 'desc']],
                 "lengthMenu" => [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 'buttons' => [
-                    ['extend' => 'excel', 'text' => '<i class="fa fa-download"></i>Excel' , 'className' =>'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
-                    ['extend' => 'print' , 'text' => '<i class="fa fa-print"></i>Print' , 'className' =>'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
+                    ['extend' => 'excel', 'text' => '<i class="fa fa-download"></i>Excel', 'className' => 'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
+                    ['extend' => 'print', 'text' => '<i class="fa fa-print"></i>Print', 'className' => 'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
 
                 ],
                 'language' => ['url' => asset('ar-datatable.json')],
@@ -102,18 +104,17 @@ class StudentMissionsDatatable extends DataTable
     protected function getColumns()
     {
         $cols =  [
-            'DT_RowIndex' => ['name' => 'id' ,'data' => 'DT_RowIndex' ,'title' => '#'],
-            'user_id' => ['name' => 'user_id' ,'data' => 'user_id' , 'title' =>__('pages.instructor_name')],
-            'name' => ['name' => 'name' ,'data' => 'name' , 'title' => __('pages.mission-title')],
-            'period' => ['name' => 'period' ,'data' => 'period' , 'title' => __('pages.period')],
-            'expire_date' => ['name' => 'expire_date' ,'data' => 'expire_date' , 'title' => __('pages.expire_date')],
-            'status' => ['name' => 'status' ,'data' => 'status' , 'title' => __('pages.status-column')],
-            'trainer_rate' => ['name' => 'trainer_rate' ,'data' => 'trainer_rate' , 'title' => __('pages.trainer_rate')],
-            'action' => [ 'exportable' => false, 'printable'  => false, 'searchable' => false, 'orderable'  => false, 'title' => __('pages.action')]
+            'DT_RowIndex' => ['name' => 'id', 'data' => 'DT_RowIndex', 'title' => '#'],
+            'user_id' => ['name' => 'user_id', 'data' => 'user_id', 'title' => __('pages.instructor_name')],
+            'name' => ['name' => 'name', 'data' => 'name', 'title' => __('pages.mission-title')],
+            'period' => ['name' => 'period', 'data' => 'period', 'title' => __('pages.period')],
+            'expire_date' => ['name' => 'expire_date', 'data' => 'expire_date', 'title' => __('pages.expire_date')],
+            'status' => ['name' => 'status', 'data' => 'status', 'title' => __('pages.status-column')],
+            'trainer_rate' => ['name' => 'trainer_rate', 'data' => 'trainer_rate', 'title' => __('pages.trainer_rate')],
+            'action' => ['exportable' => false, 'printable'  => false, 'searchable' => false, 'orderable'  => false, 'title' => __('pages.action')]
         ];
 
         return $cols;
-
     }
 
 
