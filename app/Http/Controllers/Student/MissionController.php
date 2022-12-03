@@ -39,10 +39,6 @@ class MissionController extends Controller
             ->first();
 
         $reply = MissionReply::where('mission_id', $id)->first();
-
-        var_dump(auth()->user()->id);
-        var_dump($mission);
-        var_dump($reply);
         return view('students.missions.show', compact('mission', 'reply'));
     }
 
