@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Mission extends Model
 {
     protected $guarded = [];
-    
-    public function user(){
+
+    public function user()
+    {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-    
+
     public function getStatus()
     {
         if (auth()->user()->role == 3) {
@@ -23,10 +24,10 @@ class Mission extends Model
                     return 'تم الإنجاز';
                 }
             }
-            
+
             return 'قيد التنفيذ';
         }
-        
+
         return '';
     }
 }
