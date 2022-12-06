@@ -1,7 +1,7 @@
 {
     "name": "jquery-confirm",
     "authors": [
-        "Matthieu Napoli http://mnapoli.fr"
+        "Matthieu Napoli https://mnapoli.fr"
     ],
     "description": "Confirm dialogs for buttons and links using jQuery and Bootstrap",
     "main": "jquery.confirm.js",
