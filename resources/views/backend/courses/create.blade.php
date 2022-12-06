@@ -89,119 +89,119 @@
                         </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.author') }}  <span style="color: red">*</span></label>
-                            <div class="col-lg-9 col-xl-9">
-                                {{Form::select('user_id',$trainers,null,['class'=>'form-control','placeholder'=> __('pages.choose-trainer'), 'required'=>'required'])}}
-                            </div>
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.author') }}  <span style="color: red">*</span></label>
+                        <div class="col-lg-9 col-xl-9">
+                            {{Form::select('user_id',$trainers,null,['class'=>'form-control','placeholder'=> __('pages.choose-trainer'), 'required'=>'required'])}}
                         </div>
-
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.language') }} <span style="color: red">*</span></label>
-                            <div class="col-lg-9 col-xl-9">
-                                <select class="form-control"  name="lang" >
-                                    <option value="" selected> {{ __('pages.choose-language') }} </option>
-                                    <option value="ar"> {{ __('pages.language-ar') }} </option>
-                                    <option value="en"> {{ __('pages.language-en') }} </option>
-                                </select>
-
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label">{{ __('pages.course-name') }}     <span style="color: red">*</span></label>
-                            <div class="col-lg-9 col-xl-9">
-                                <input  class="form-control" id="kt_name" name="name" type="text" value="{{ old('name') }}">
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.category') }} <span style="color: red">*</span></label>
-                            <div class="col-lg-9 col-xl-9">
-                                {{Form::select('category_id',$categories,null,['class'=>'form-control','id'=>'kt_category','placeholder'=> __('pages.choose-category')])}}
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.level') }} <span style="color: red">*</span></label>
-                            <div class="col-lg-9 col-xl-9">
-                                <select class="form-control"  name="level" id="kt_level" >
-                                    @for ($i = 1; $i <= 12; $i++)
-                                        <option value="{{ $i }}">{{ $i }}</option>
-                                    @endfor
-
-                                </select>
-
-                            </div>
-                        </div>
-
-
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.desc') }} <span style="color: red">*</span></label>
-                            <div class="col-lg-9 col-xl-9">
-                                <textarea  class="form-control" name="desc" id="exampleTextarea" rows="3" spellcheck="false">{{ old('desc') }}</textarea>                                                        </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.content') }}</label>
-                            <div class="col-lg-9 col-xl-9">
-                                <textarea id="summernote" name="content">{{ old('content') }}</textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label">{{ __('pages.data-start-and-end') }}   <span style="color: red">*</span></label>
-                            <div class="col-lg-9 col-xl-9">
-                                <input  type='text' class="form-control" id="daterangepicker" readonly placeholder="Select time" name="dateRange" />
-                            </div>
-                        </div>
-
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.price') }} <span style="color: red">*</span></label>
-                            <div class="col-lg-9 col-xl-9">
-                                <input  type="number" name="price" class="form-control" value="{{ old('price') }}"  />
-                            </div>
+
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.language') }} <span style="color: red">*</span></label>
+                        <div class="col-lg-9 col-xl-9">
+                            <select class="form-control"  name="lang" >
+                                <option value="" selected> {{ __('pages.choose-language') }} </option>
+                                <option value="ar"> {{ __('pages.language-ar') }} </option>
+                                <option value="en"> {{ __('pages.language-en') }} </option>
+                            </select>
+
                         </div>
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.peroid') }} <span style="color: red">*</span></label>
-                            <div class="col-lg-9 col-xl-9">
-                                <input type="number"  name="duration" class="form-control" value="{{ old('duration') }}"  />
-                            </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">{{ __('pages.course-name') }}     <span style="color: red">*</span></label>
+                        <div class="col-lg-9 col-xl-9">
+                            <input  class="form-control" id="kt_name" name="name" type="text" value="{{ old('name') }}">
                         </div>
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.rules_of_achievement') }}</label>
-                            <div class="col-lg-9 col-xl-9">
-                                <textarea class="form-control" name="complete_rules" rows="3" spellcheck="false"></textarea>                                                        </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.tag') }} </label>
-                            <div class="col-lg-9 col-xl-9">
-                                <input type="text" name="tags" class="form-control" value="" data-role="tagsinput" />
-                            </div>
-                        </div>
+                    </div>
 
 
-                        <div class="form-group form-group-last row">
-                            <label class="col-xl-3 col-lg-3 col-form-label">{{ __('pages.types') }}</label>
-                            <div class="col-lg-9 col-xl-6">
-                                <div class="kt-checkbox-inline">
-                                    <label class="kt-checkbox">
-                                        <input type="checkbox" name="status" value="1">{{ __('pages.status') }}
-                                        <span></span>
-                                    </label>
-                                    <label class="kt-checkbox">
-                                        <input type="checkbox" name="hide_from_catalog" value="1">{{ __('pages.catalog') }}
-                                        <span></span>
-                                    </label>
-                                </div>
+
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.category') }} <span style="color: red">*</span></label>
+                        <div class="col-lg-9 col-xl-9">
+                            {{Form::select('category_id',$categories,null,['class'=>'form-control','id'=>'kt_category','placeholder'=> __('pages.choose-category')])}}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.level') }} <span style="color: red">*</span></label>
+                        <div class="col-lg-9 col-xl-9">
+                            <select class="form-control"  name="level" id="kt_level" >
+                                @for ($i = 1; $i <= 12; $i++)
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
+
+                            </select>
+
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.desc') }} <span style="color: red">*</span></label>
+                        <div class="col-lg-9 col-xl-9">
+                            <textarea  class="form-control" name="desc" id="exampleTextarea" rows="3" spellcheck="false">{{ old('desc') }}</textarea>                                                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.content') }}</label>
+                        <div class="col-lg-9 col-xl-9">
+                            <textarea id="summernote" name="content">{{ old('content') }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">{{ __('pages.data-start-and-end') }}   <span style="color: red">*</span></label>
+                        <div class="col-lg-9 col-xl-9">
+                            <input  type='text' class="form-control" id="daterangepicker" readonly placeholder="Select time" name="dateRange" />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.price') }} <span style="color: red">*</span></label>
+                        <div class="col-lg-9 col-xl-9">
+                            <input  type="number" name="price" class="form-control" value="{{ old('price') }}"  />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.peroid') }} <span style="color: red">*</span></label>
+                        <div class="col-lg-9 col-xl-9">
+                            <input type="number"  name="duration" class="form-control" value="{{ old('duration') }}"  />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.rules_of_achievement') }}</label>
+                        <div class="col-lg-9 col-xl-9">
+                            <textarea class="form-control" name="complete_rules" rows="3" spellcheck="false"></textarea>                                                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.tag') }} </label>
+                        <div class="col-lg-9 col-xl-9">
+                            <input type="text" name="tags" class="form-control" value="" data-role="tagsinput" />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group form-group-last row">
+                        <label class="col-xl-3 col-lg-3 col-form-label">{{ __('pages.types') }}</label>
+                        <div class="col-lg-9 col-xl-6">
+                            <div class="kt-checkbox-inline">
+                                <label class="kt-checkbox">
+                                    <input type="checkbox" name="status" value="1">{{ __('pages.status') }}
+                                    <span></span>
+                                </label>
+                                <label class="kt-checkbox">
+                                    <input type="checkbox" name="hide_from_catalog" value="1">{{ __('pages.catalog') }}
+                                    <span></span>
+                                </label>
                             </div>
                         </div>
                     </div>
+
+
+
                 </div>
                 <div class="kt-form__actions">
 
