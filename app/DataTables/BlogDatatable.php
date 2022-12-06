@@ -19,7 +19,7 @@ class BlogDatatable extends DataTable
         return datatables($query)
 
             ->editColumn('action', 'backend.blog.action')
-            ->editColumn('lang',function($query){
+            ->editColumn('lang', function ($query) {
                 if ($query->lang == 'ar') {
                     return 'العربية';
                 } else {
@@ -69,15 +69,14 @@ class BlogDatatable extends DataTable
     protected function getColumns()
     {
         $cols =  [
-            'DT_RowIndex' => ['name' => 'id' ,'data' => 'DT_RowIndex' ,'title' => '#'],
-            'lang' => ['name' => 'lang' ,'data' => 'lang' , 'title' => __('pages.language')],
-            'title' => ['name' => 'title' ,'data' => 'title' , 'title' => __('pages.title')],
-            'date' => ['name' => 'date' ,'data' => 'date' , 'title' =>__('pages.date')],
-            'action' => [ 'exportable' => false, 'printable'  => false, 'searchable' => false, 'orderable'  => false, 'title' => __('pages.action')]
+            'DT_RowIndex' => ['name' => 'id', 'data' => 'DT_RowIndex', 'title' => '#'],
+            'lang' => ['name' => 'lang', 'data' => 'lang', 'title' => __('pages.language')],
+            'title' => ['name' => 'title', 'data' => 'title', 'title' => __('pages.title')],
+            'date' => ['name' => 'date', 'data' => 'date', 'title' => __('pages.date')],
+            'action' => ['exportable' => false, 'printable'  => false, 'searchable' => false, 'orderable'  => false, 'title' => __('pages.action')]
         ];
 
         return $cols;
-
     }
 
     /**

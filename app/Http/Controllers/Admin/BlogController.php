@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Blog;
 use App\DataTables\BlogDatatable;
 use App\Http\Requests\BlogRequest;
@@ -42,9 +43,9 @@ class BlogController extends Controller
         if (isset($blogRequest->image) ||  $blogRequest->image != null) {
             $data['image'] = $blogRequest->image->store('blog');
         }
-        
+
         $data['date'] = Carbon::createFromFormat('m/d/Y', $data['date']);
-        
+
         Blog::insert($data);
 
         return redirect('blog')->with(['success' =>  __('pages.success-add')]);
@@ -61,8 +62,8 @@ class BlogController extends Controller
     {
         $blog = Blog::find($id);
         $blog->date = Carbon::parse($blog->date)->format('m/d/Y');
-        
-        return  view('backend.blog.edit',compact('blog'));
+
+        return  view('backend.blog.edit', compact('blog'));
     }
 
 
@@ -74,26 +75,24 @@ class BlogController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'lang'=>'required',
-            'title'=>'required',
-            'date'=>'required',
-            'content'=>'required',
-            'created_by'=>'required',
+        $this->validate($request, [
+            'lang' => 'required',
+            'title' => 'required',
+            'date' => 'required',
+            'content' => 'required',
+            'created_by' => 'required',
         ]);
-        
+
         $data = $request->only(['lang', 'title', 'date', 'content', 'created_by']);
         if ($request->hasFile('image')) {
             $data['image'] = $request->image->store('blog');
         }
-        
+
         $data['date'] = Carbon::createFromFormat('m/d/Y', $data['date']);
-        
+
         Blog::where('id', $id)->update($data);
 
         return redirect('blog')->with(['success' =>  __('pages.success-edit')]);
-
-
     }
 
     /**
@@ -113,7 +112,6 @@ class BlogController extends Controller
             return Response::json($id, '200');
         } else {
             return redirect()->back()->with('error', __('pages.success-delete'));
-
         }
     }
 }
