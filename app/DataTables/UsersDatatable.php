@@ -26,7 +26,7 @@ class UsersDatatable extends DataTable
             })
 
             ->editColumn('type', function ($query) {
-                return '<span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">' . $query->role()->role . '</span>';
+                return '<span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">' . $query->roles->role . '</span>';
             })
             ->rawColumns(['action', 'status', 'type', 'image'])
             ->addIndexColumn();
