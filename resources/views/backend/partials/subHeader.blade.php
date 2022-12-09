@@ -6,7 +6,7 @@
                 <section class="second_menu">
                     <ul class="list-inline ">
                         @if(Auth::check())
-                          @if(Auth::user()->role == 1)
+                          @if(in_array(Auth::user()->role ,[1,6]))
                             <li><a href="{{route('courses')}}"><div class="menu_block"><span class="fa fa-book"></span><h1>{{ __('pages.courses') }}</h1></div></a></li>
                             <li><a href="{{route('users')}}"><div class="menu_block"><span class="fa fa-user"></span><h1>{{ __('pages.users') }}</h1></div></a></li>
                             <li><a href="{{route('groups')}}"><div class="menu_block"><span class="fa fa-users"></span><h1>{{ __('pages.groups') }}</h1></div></a></li>
