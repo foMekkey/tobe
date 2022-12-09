@@ -48,6 +48,11 @@ class User extends Authenticatable
         return $this->hasOne(Role::class, 'id', 'type');
     }
 
+    public function permissions()
+    {
+        return $this->roles->Permissions();
+    }
+
     public function groups()
     {
         return $this->belongsToMany(Groups::class, 'group_members', 'student_id', 'group_id');
