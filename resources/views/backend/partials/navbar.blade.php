@@ -21,7 +21,7 @@
                         <div class="kt-menu__submenu kt-menu__submenu--classic kt-menu__submenu--left">
                             <ul class="kt-menu__subnav"> --}}
                               @if(Auth::check())
-                                @if(Auth::user()->role == 1)
+                                @if(in_array(Auth::user()->role ,[1,6]))
                                     <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('courses')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">{{ __('pages.courses') }}</span></a></li>
                                     <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('users')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">{{ __('pages.users') }}</span></a></li>
                                     <li class="kt-menu__item " aria-haspopup="true"><a href="{{route('groups')}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">{{ __('pages.groups') }}</span></a></li>
