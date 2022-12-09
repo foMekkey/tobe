@@ -207,7 +207,7 @@
                                             <select name="type" id="user_type" class="form-control">
                                                 <option value="">{{__('pages.choose-user-type')}}</option>
                                                 @foreach($roles as $role)
-                                                    <option value="{{$role->id}}" @if($role->id == $user->type) selected @endif>{{$role->role}}</option>
+                                                    <option value="{{$role->id}}" @if($role->id == $users->type) selected @endif>{{$role->role}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
