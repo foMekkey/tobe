@@ -71,7 +71,8 @@ class UsersController extends Controller
     public function edit($id)
     {
         $users = User::find($id);
-        return view('backend.users.edit', compact('users'));
+        $roles = Role::select('id', 'role')->get();
+        return view('backend.users.edit', compact('users', 'roles'));
     }
 
     /**

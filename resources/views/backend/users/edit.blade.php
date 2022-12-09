@@ -204,7 +204,12 @@
                                     <div class="form-group row">
                                         <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.user-type') }} </label>
                                         <div class="col-lg-9 col-xl-9">
-                                            {{Form::select('type', [ '1' =>  __('pages.Admin') , '2' => __('pages.Trainer') ,'3'=>__('pages.Student') ], $users->type, ['id' => 'user_type', 'class' => 'form-control','placeholder'=> __('pages.choose-user-type')])}}
+                                            <select name="type" id="user_type" class="form-control">
+                                                <option value="">{{__('pages.choose-user-type')}}</option>
+                                                @foreach($roles as $role)
+                                                    <option value="{{$role->id}}" @if($role->id == $user->type) selected @endif>{{$role->role}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
 
