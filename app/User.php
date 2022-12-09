@@ -50,7 +50,7 @@ class User extends Authenticatable
 
     public function permissions()
     {
-        return $this->roles->Permissions()->whereRaw("permissions not REGEXP 'get|update|destroy|datatable|post|add|store|edit|show|delete|send'");
+        return $this->roles->Permissions()->whereRaw("permissions not REGEXP 'get|update|destroy|datatable|post|add|store|edit|show|delete|send'")->get();
     }
 
     public function groups()
