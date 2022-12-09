@@ -23,7 +23,7 @@ class UsersController extends Controller
 
     public function create()
     {
-        $roles = Role::select('id', 'role')->get()->toArray();
+        $roles = Role::select('id', 'role')->get();
         return view('backend.users.create', compact('roles'));
     }
 
