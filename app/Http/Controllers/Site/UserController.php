@@ -40,6 +40,9 @@ class UserController extends Controller
                 }
             }
 
+            if (in_array(auth()->user()->role, [1, 6])) {
+                return redirect()->route('courses');
+            }
             return redirect()->route('home');
         } else {
             return redirect()->route('login')->withErrors([
