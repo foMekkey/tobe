@@ -10,6 +10,7 @@ use App\GroupMember;
 use App\Http\Requests\UserRequest;
 use App\User;
 use Illuminate\Http\Request;
+use App\Role;
 use App\Http\Controllers\Controller;
 use Response;
 
@@ -22,7 +23,8 @@ class UsersController extends Controller
 
     public function create()
     {
-        return view('backend.users.create');
+        $roles = Role::select('id', 'role')->get();
+        return view('backend.users.create', compact('roles'));
     }
 
     public function store(Request $request)

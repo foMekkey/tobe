@@ -17,7 +17,6 @@ class UserController extends Controller
         return view('site.auth.login');
     }
 
-    # login 
     public function doLogin(Request $request)
     {
         $request->validate([

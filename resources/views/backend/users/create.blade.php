@@ -115,7 +115,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-xl-3 col-lg-3 col-form-label"> {{__('pages.user-type')}} <span style="color: red">*</span></label>
                                                     <div class="col-lg-9 col-xl-9">
-                                                        {{Form::select('type', [ '1' =>  __('pages.Admin') , '2' => __('pages.Trainer') ,'3'=>__('pages.Student') ], null, ['id' => 'user_type', 'class' => 'form-control','placeholder'=> __('pages.choose-user-type')])}}
+                                                        {{Form::select('type', $roles, null, ['id' => 'user_type', 'class' => 'form-control','placeholder'=> __('pages.choose-user-type')])}}
                                                     </div>
                                                 </div>
 
