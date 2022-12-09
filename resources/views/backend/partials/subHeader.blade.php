@@ -7,7 +7,7 @@
                     <ul class="list-inline ">
                         @if(Auth::check())
                             @foreach(Auth::user()->permissions as $value)
-                                <li><a href="{{route($value)}}"><div class="menu_block"><span class="fa fa-book"></span><h1>{{ __('pages.'.$value) }}</h1></div></a></li>
+                                <li><a href="{{route($value->permission)}}"><div class="menu_block"><span class="fa fa-book"></span><h1>{{ __('pages.'.$value->permission) }}</h1></div></a></li>
                             @endforeach
                         @endif
                     </ul>
