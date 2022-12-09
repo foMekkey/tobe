@@ -6,33 +6,9 @@
                 <section class="second_menu">
                     <ul class="list-inline ">
                         @if(Auth::check())
-                          @if(in_array(Auth::user()->role ,[1,6]))
-                            <li><a href="{{route('courses')}}"><div class="menu_block"><span class="fa fa-book"></span><h1>{{ __('pages.courses') }}</h1></div></a></li>
-                            <li><a href="{{route('users')}}"><div class="menu_block"><span class="fa fa-user"></span><h1>{{ __('pages.users') }}</h1></div></a></li>
-                            <li><a href="{{route('groups')}}"><div class="menu_block"><span class="fa fa-users"></span><h1>{{ __('pages.groups') }}</h1></div></a></li>
-                            {{-- <li><a href="{{route('events')}}"><div class="menu_block"><span class="fa fa-history"></span><h1>{{ __('pages.events') }}</h1></div></a></li>
-                            <li><a href="{{route('notifications')}}"><div class="menu_block"><span class="fa fa-bell-o"></span><h1>الاشعارات</h1></div></a></li> --}}
-                            <li><a href="{{route('categories')}}"><div class="menu_block"><span class="fa fa-th"></span><h1>{{ __('pages.catogries') }}</h1></div></a></li>
-                            <li><a href="{{route('permissions')}}"><div class="menu_block"><span class="fa fa-unlock-alt"></span><h1>{{ __('pages.permission') }}</h1></div></a></li>
-                            <li><a href="{{route('setting')}}"><div class="menu_block"><span class="fa fa-sliders"></span><h1>{{ __('pages.main-setting') }}</h1></div></a></li>
-                            <li><a href="{{route('services')}}"><div class="menu_block"><span class="fa fa-globe fa-3x"></span><h1>{{ __('pages.site_content') }}</h1></div></a></li>
-                          @elseif(Auth::user()->role == 2)
-                            <li><a href="{{route('TrainerCourses')}}"><div class="menu_block"><span class="fa fa-book"></span><h1>{{ __('pages.courses') }}</h1></div></a></li>
-                            <li><a href="{{route('TrainerGroups')}}"><div class="menu_block"><span class="fa fa-users"></span><h1>{{ __('pages.groups') }}</h1></div></a></li>
-                            <li><a href="{{route('TrainerMeeting')}}"><div class="menu_block"><span class="fas fa-headset"></span><h1>{{ __('pages.meetings') }}</h1></div></a></li>
-                            <li><a href="{{route('TrainerEvents')}}"><div class="menu_block"><span class="fa fa-history"></span><h1>{{ __('pages.my_calendar') }}</h1></div></a></li>
-                            <li><a href="{{route('TrainerDiscussions')}}"><div class="menu_block"><span class="fas fa-comment-dots"></span><h1>{{ __('pages.discussions') }}</h1></div></a></li>
-                            <li><a href="{{route('TrainerMissions')}}"><div class="menu_block"><span class="fa fa-tasks"></span><h1>{{ __('pages.missions') }}</h1></div></a></li>
-                            <li><a href="{{route('TrainerNotifications')}}"><div class="menu_block"><span class="fa fa-bell-o"></span><h1>الاشعارات</h1></div></a></li>
-                          @elseif(Auth::user()->role == 3)
-                            <li><a href="{{route('StudentCourses')}}"><div class="menu_block"><span class="fa fa-home"></span><h1>{{ __('pages.home') }}</h1></div></a></li>
-                            <li><a href="{{route('StudentCatalog')}}"><div class="menu_block"><span class="fa fa-book"></span><h1>{{ __('pages.courses_catalog') }}</h1></div></a></li>
-                            <li><a href="{{route('addgroupsStudent')}}"><div class="menu_block"><span class="fa fa-users"></span><h1>{{ __('pages.join-to-group') }}</h1></div></a></li>
-                            <li><a href="{{route('StudentDiscussions')}}"><div class="menu_block"><span class="fas fa-comment-dots"></span><h1>{{ __('pages.discussions') }}</h1></div></a></li>
-                            <li><a href="{{route('StudentEvents')}}"><div class="menu_block"><span class="fa fa-history"></span><h1>{{ __('pages.my_calendar') }}</h1></div></a></li>
-                            <li><a href="{{route('StudentMissions')}}"><div class="menu_block"><span class="fa fa-tasks"></span><h1>{{ __('pages.missions') }}</h1></div></a></li>
-                            <li><a href="{{url('site/consult')}}"><div class="menu_block"><span class="fa fa-support"></span><h1>{{ __('pages.consultation_request') }}</h1></div></a></li>
-                          @endif
+                            @foreach(Auth::user()->permissions as $value)
+                                <li><a href="{{route($value)}}"><div class="menu_block"><span class="fa fa-book"></span><h1>{{ __('pages.'.$value) }}</h1></div></a></li>
+                            @endforeach
                         @endif
                     </ul>
                 </section>
