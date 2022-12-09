@@ -22,7 +22,7 @@
                             <ul class="kt-menu__subnav"> --}}
                               @if(Auth::check())
                                 @foreach(Auth::user()->permissions as $value)
-                                    <li class="kt-menu__item " aria-haspopup="true"><a  class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">{{ __('pages.'.$value->permission) }}</span></a></li>
+                                    <li class="kt-menu__item " aria-haspopup="true"><a href="{{route($value->permissions)}}" class="kt-menu__link "><i class="kt-menu__link-bullet kt-menu__link-bullet--dot"><span></span></i><span class="kt-menu__link-text">{{ __('pages.'.$value->permissions) }}</span></a></li>
                                 @endforeach
                               @endif
                             {{-- </ul>
