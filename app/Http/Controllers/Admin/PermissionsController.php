@@ -57,22 +57,22 @@ class PermissionsController extends Controller
 		$role->role = $request->role_name;
 		$role->save();
 
-		if ($request->id == 1) {
-			Permission::where('role_id', $request->id)->delete();
-			foreach ($request->permissions as $per) {
-				$permission = new Permission;
-				$permission->permissions = $per;
-				$permission->role_id = $role->id;
-				$permission->save();
-			}
-			//Session::flash('success','تم حفظ التعديلات');
-
-			return redirect('permissions')->with(['success' =>  __('pages.success-edit')]);
-		} else {
-
-			//Session::flash('danger','لم يتم حفظ التعديلات');
-			return back()->with(['error' => __('pages.error-edit')]);
+		// if ($request->id == 1) {
+		Permission::where('role_id', $request->id)->delete();
+		foreach ($request->permissions as $per) {
+			$permission = new Permission;
+			$permission->permissions = $per;
+			$permission->role_id = $role->id;
+			$permission->save();
 		}
+		//Session::flash('success','تم حفظ التعديلات');
+
+		return redirect('permissions')->with(['success' =>  __('pages.success-edit')]);
+		// } else {
+
+		// 	//Session::flash('danger','لم يتم حفظ التعديلات');
+		// 	return back()->with(['error' => __('pages.error-edit')]);
+		// }
 	}
 
 
