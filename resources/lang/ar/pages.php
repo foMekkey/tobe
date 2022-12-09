@@ -75,6 +75,7 @@ return [
     'catalog' => 'أخفاء من الكاتالوج',
     'add-new-course' => 'اضافة مادة جديدة : ',
     'categories' => 'الفئات',
+    'catogries' => 'الفئات',
     'category-name' => 'اسم  الفئة ',
     'add-new-category' => 'اضافة فئة جديدة : ',
     'add-new-notification' => 'اضافة اشعار جديد:',
