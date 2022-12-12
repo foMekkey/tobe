@@ -38,7 +38,7 @@
 
             <!--begin::Form-->
             {{$courseId}} - {{$survey->id}}
-            <form class="kt-form kt-form--label-right" id="kt_form_1" method="post" action="{{ URL::to('updatesurveys/'.$courseId.'/'$survey->id) }}">
+            <form class="kt-form kt-form--label-right" id="kt_form_1" method="post" action="{{ URL::to('updatesurveys/'.$courseId.'/'.$survey->id) }}">
                 <div class="kt-portlet__body">
                     <div class="kt-form__content">
                         <div class="kt-alert m-alert--icon alert alert-danger kt-hidden" role="alert" id="kt_form_1_msg">
