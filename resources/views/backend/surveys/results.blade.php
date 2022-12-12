@@ -28,7 +28,7 @@
                             <td>
                                 @foreach ($answersPerQuestions[$question->id] as $answer => $count)
                                     @if($survey->is_day_star && $question->type != 1)
-                                        {{ $courseUsers[$answer] ?? '' }}
+                                        {{ array_key_exists($answer,$courseUsers) ? $courseUsers[$answer] : '' }}
                                     @else
                                         {{ $answer }}
                                     @endif
