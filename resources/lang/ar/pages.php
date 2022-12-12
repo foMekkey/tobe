@@ -280,7 +280,7 @@ return [
     'TrainerNotifications' => 'إرسال الإشعار',
     'add-discussion-comment' => 'التعليق علي مناقشه',
     'StudentCourses' => 'الدورات المشترك بها',
-
+    'no-permission-detected' => 'غير محدد له صلاحية',
     'join-to-group' => 'انضمام إلى مجموعة',
     'key-group' => 'مفتاح المجموعة',
     'join' => 'انضمام',

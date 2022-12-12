@@ -26,7 +26,9 @@ class UsersDatatable extends DataTable
             })
 
             ->editColumn('type', function ($query) {
-                return '<span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">' . $query->roles->role . '</span>';
+                if ($query->roles->role)
+                    return '<span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">' . $query->roles->role . '</span>';
+                return '<span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">' . __('pages.no-permission-detected') . '</span>';
             })
             ->rawColumns(['action', 'status', 'type', 'image'])
             ->addIndexColumn();
