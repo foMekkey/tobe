@@ -50,7 +50,7 @@ class SurveyController extends Controller
             'date' => 'required',
             'questions' => 'required'
         ]);
-        
+
         $data = [
             'user_id' => Auth::user()->id,
             'course_id' => $courseId,
@@ -61,14 +61,16 @@ class SurveyController extends Controller
             'status' => isset($request->status) ? 1 : 0
         ];
         $survey = Survey::create($data);
-        
+
         if ($survey) {
             $questions = [];
             $requestQuestions = $request->questions;
             foreach ($requestQuestions['question'] as $i => $question) {
-                if (!empty($question) && !empty($requestQuestions['type'][$i]) && in_array($requestQuestions['type'][$i], [1, 2, 3]) && 
-                   ($requestQuestions['type'][$i] == '1' || $request->is_day_star == '1' ||
-                        ($requestQuestions['type'][$i] != '1' && !empty($requestQuestions['allowed_options'][$i])))) {
+                if (
+                    !empty($question) && !empty($requestQuestions['type'][$i]) && in_array($requestQuestions['type'][$i], [1, 2, 3]) &&
+                    ($requestQuestions['type'][$i] == '1' || $request->is_day_star == '1' ||
+                        ($requestQuestions['type'][$i] != '1' && !empty($requestQuestions['allowed_options'][$i])))
+                ) {
                     $questions[] = [
                         'survey_id' => $survey->id,
                         'question' => $question,
@@ -80,18 +82,18 @@ class SurveyController extends Controller
             }
             if (count($questions)) {
                 SurveyQuestion::insert($questions);
-                
+
                 return redirect('surveys/' . $courseId)->with(['success' =>  __('pages.success-add')]);
             } else {
                 $survey->delete();
-                
+
                 return redirect()->back()->with('error', __('pages.add-survey-error-questions'));
             }
         }
-        
+
         return redirect()->back()->with('error', __('pages.add-survey-error'));
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -102,13 +104,13 @@ class SurveyController extends Controller
     {
         $survey = Survey::findOrFail($id);
         $questions = SurveyQuestion::where('survey_id', $id)->get();
-        
+
         $readonly = '';
         $hasAnswer = SurveyQuestionAnswer::where('survey_id', $id)->first();
         if ($hasAnswer) {
             $readonly = 'readonly';
         }
-        
+
         return view('backend.surveys.edit', compact('survey', 'questions', 'courseId', 'readonly'));
     }
 
@@ -126,17 +128,17 @@ class SurveyController extends Controller
             'date' => 'required',
             'questions' => 'required'
         ]);
-        
+
         $survey = Survey::findOrFail($id);
         $hasAnswer = SurveyQuestionAnswer::where('survey_id', $id)->first();
         if ($hasAnswer) {
             $survey->show_results_in_course = isset($request->show_results_in_course) ? 1 : 0;
             $survey->status = isset($request->status) ? 1 : 0;
             $survey->save();
-            
+
             return redirect('surveys/' . $courseId)->with(['success' =>  __('pages.success-edit')]);
         }
-        
+
         $data = [
             'title' => $request->title,
             'is_day_star' => $request->is_day_star,
@@ -144,13 +146,15 @@ class SurveyController extends Controller
             'show_results_in_course' => isset($request->show_results_in_course) ? 1 : 0,
             'status' => isset($request->status) ? 1 : 0
         ];
-        
+
         $questions = [];
         $requestQuestions = $request->questions;
         foreach ($requestQuestions['question'] as $i => $question) {
-            if (!empty($question) && !empty($requestQuestions['type'][$i]) && in_array($requestQuestions['type'][$i], [1, 2, 3]) && 
-               ($requestQuestions['type'][$i] == '1' || $request->is_day_star == '1' ||
-                    ($requestQuestions['type'][$i] != '1' && !empty($requestQuestions['allowed_options'][$i])))) {
+            if (
+                !empty($question) && !empty($requestQuestions['type'][$i]) && in_array($requestQuestions['type'][$i], [1, 2, 3]) &&
+                ($requestQuestions['type'][$i] == '1' || $request->is_day_star == '1' ||
+                    ($requestQuestions['type'][$i] != '1' && !empty($requestQuestions['allowed_options'][$i])))
+            ) {
                 $questions[] = [
                     'survey_id' => $survey->id,
                     'question' => $question,
@@ -169,27 +173,27 @@ class SurveyController extends Controller
         } else {
             return redirect()->back()->with('error', __('pages.add-survey-error-questions'));
         }
-        
+
         return redirect()->back()->with('error', __('pages.edit-survey-error'));
     }
-    
+
     public function results($courseId, $id)
     {
         $survey = Survey::findOrFail($id);
-        
+
         $questions = SurveyQuestion::where('survey_id', $id)->get();
-        
+
         $answersPerQuestions = [];
         $answers = SurveyQuestionAnswer::select('survey_question_id', 'answer', \DB::raw('count(*) as cnt'))
-                                       ->where('survey_id', $id)
-                                       ->groupBy('survey_question_id')->groupBy('answer')
-                                       ->orderBy('survey_question_id', 'asc')
-                                       ->orderBy('cnt', 'desc')
-                                       ->get();
+            ->where('survey_id', $id)
+            ->groupBy('survey_question_id')->groupBy('answer')
+            ->orderBy('survey_question_id', 'asc')
+            ->orderBy('cnt', 'desc')
+            ->get();
         foreach ($answers as $answer) {
             $answersPerQuestions[$answer->survey_question_id][$answer->answer] = $answer->cnt;
         }
-        
+
         $courseUsers = [];
         if ($survey->is_day_star) {
             $courseUsersQuery = CoursesUser::where('course_id', $survey->course_id)->with('user')->get();
@@ -197,7 +201,7 @@ class SurveyController extends Controller
                 $courseUsers[$courseUser->user_id] = $courseUser->user->user_name ?? '';
             }
         }
-        
-        return view('backend.surveys.results',compact('survey', 'questions', 'answersPerQuestions', 'courseId', 'courseUsers'));
+
+        return view('backend.surveys.results', compact('survey', 'questions', 'answersPerQuestions', 'courseId', 'courseUsers'));
     }
 }
