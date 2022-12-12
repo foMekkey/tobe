@@ -27,11 +27,8 @@
                             <td>{{ $question->question }}</td>
                             <td>
                                 @foreach ($answersPerQuestions[$question->id] as $answer => $count)
-                                    @if($survey->is_day_star && $question->type != 1)
-                                        {{  @$courseUsers[$answer] ?? '' }}
-                                    @else
+
                                         {{ $answer }}
-                                    @endif
                                     &nbsp;&nbsp;<span class="kt-badge kt-badge--primary">{{ $count }}</span><br/>
                                 @endforeach
                             </td>
