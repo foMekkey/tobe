@@ -2,9 +2,25 @@
 
 Auth::routes();
 
+Route::get('test_mail_view', [
+    'uses' => "Admin\SubscriptionsController@test_mail_view",
+    'as' => 'addsubscripti',
+    'title' => __('pages.add-new-subscription'),
+]);
+
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('mark_notifications_as_read', 'HomeController@markNotificationsAsRead')->name('markNotificationsAsRead');
 Route::post('upload', 'HomeController@upload')->name('upload');
+
+Route::post('/forgot-your-password', 'Site\ForgotPasswordController@postForgotPassword');
+Route::get('/forgot-your-password', [
+    'uses' => 'Site\ForgotPasswordController@forgotPassword',
+    'as' => 'forgotPassword'
+]);
+
+Route::get('/password/reset/{token}', 'Site\ForgotPasswordController@passwordResBlade');
+Route::post('/change_password', 'Site\ForgotPasswordController@changePassword');
+
 
 Route::group(['prefix' => 'site'], function () {
     Route::get('switch_language/{locale}', function ($locale) {
@@ -21,6 +37,9 @@ Route::group(['prefix' => 'site'], function () {
 
         return redirect()->back();
     });
+
+    Route::get('/email', 'EmailController@create');
+    Route::post('/email', 'EmailController@receiveEmail')->name('send.email');
 
     Route::get('/', 'Site\HomeController@index')->name('site-home');
 
@@ -44,6 +63,7 @@ Route::group(['prefix' => 'site'], function () {
     Route::get('about', 'Site\HomeController@about')->name('site-about');
     Route::get('know', 'Site\HomeController@know')->name('site-know');
     Route::get('discover', 'Site\HomeController@discover')->name('site-discover');
+    Route::get('faq', 'Site\HomeController@faq')->name('site-faq');
     Route::get('page/{key}', 'Site\HomeController@showPage')->name('site-pages-view');
 
     Route::post('newsletter', 'Site\HomeController@storeNewsletter')->name('site-storeNewsletter');
@@ -929,6 +949,236 @@ Route::group(['prefix' => 'blog', 'middleware' => ['auth', 'checkRole']], functi
     ]);
 });
 
+// faqs group
+Route::group(['prefix' => 'faqs', 'middleware' => ['auth', 'checkRole']], function () {
+
+    # faq index
+    Route::get('/', [
+        'uses' => 'Admin\FaqsController@index',
+        'as' => 'faqs',
+        'title' => __('pages.faqs'),
+        'child' => [
+            'addfaq',
+            'postaddfaq',
+            'getupdatefaq',
+            'postupdatefaq',
+            'destroyfaq'
+        ]
+    ]);
+
+    # faq add
+    Route::get('create', [
+        'uses' => "Admin\FaqsController@create",
+        'as' => 'addfaq',
+        'title' => __('pages.add-new-faq'),
+    ]);
+
+    # faq postadd
+    Route::post('post-faq', [
+        'uses' => 'Admin\FaqsController@store',
+        'as' => 'postaddfaq',
+        'title' => __('pages.store-faq'),
+    ]);
+
+    # faq update
+    Route::get('/edit/{id}', [
+        'uses' => 'Admin\FaqsController@edit',
+        'as' => 'getupdatefaq',
+        'title' => __('pages.edit-faq'),
+    ]);
+
+    # faq postupdate
+    Route::post('postupdate/{id}', [
+        'uses' => 'Admin\FaqsController@update',
+        'as' => 'postupdatefaq',
+        'title' => __('pages.update-faq'),
+    ]);
+
+    # faq delete
+    Route::get('/delete/{id}', [
+        'uses' => 'Admin\FaqsController@destroy',
+        'as' => 'destroy_faq',
+        'title' => __('pages.delete-faq'),
+    ]);
+});
+
+
+
+
+
+
+
+// e_wallets group
+Route::group(['prefix' => 'e_wallets', 'middleware' => ['auth', 'checkRole']], function () {
+
+    # blog index
+    Route::get('/', [
+        'uses' => 'Admin\E_WalletsController@index',
+        'as' => 'e_wallets',
+        'title' => __('pages.e_wallets'),
+        'child' => [
+            'addblog',
+            'postaddblog',
+            'getupdateblog',
+            'postupdateblog',
+            'destroyblog'
+        ]
+    ]);
+
+    # blog add
+    Route::get('create', [
+        'uses' => "Admin\E_WalletsController@create",
+        'as' => 'adde_wallet',
+        'title' => __('pages.add-new-e_wallet'),
+    ]);
+
+    # blog postadd
+    Route::post('post-e_wallet', [
+        'uses' => 'Admin\E_WalletsController@store',
+        'as' => 'postadde_wallet',
+        'title' => __('pages.store-e_wallet'),
+    ]);
+
+    # blog update
+    Route::get('/edit/{id}', [
+        'uses' => 'Admin\E_WalletsController@edit',
+        'as' => 'getupdatee_wallet',
+        'title' => __('pages.edit-e_wallet'),
+    ]);
+
+    # blog postupdate
+    Route::post('postupdate/{id}', [
+        'uses' => 'Admin\E_WalletsController@update',
+        'as' => 'postupdatee_wallet',
+        'title' => __('pages.update-e_wallet'),
+    ]);
+
+    # blog delete
+    Route::get('/delete/{id}', [
+        'uses' => 'Admin\E_WalletsController@destroy',
+        'as' => 'destroye_wallet',
+        'title' => __('pages.delete-e_wallet'),
+    ]);
+});
+
+// banks group
+Route::group(['prefix' => 'banks', 'middleware' => ['auth', 'checkRole']], function () {
+
+    # banks index
+    Route::get('/', [
+        'uses' => 'Admin\BanksController@index',
+        'as' => 'banks',
+        'title' => __('pages.banks'),
+        'child' => [
+            'addbank',
+            'postaddbank',
+            'getupdatebank',
+            'postupdatebank',
+            'destroybank'
+        ]
+    ]);
+
+    # blog add
+    Route::get('create', [
+        'uses' => "Admin\BanksController@create",
+        'as' => 'addbank',
+        'title' => __('pages.add-new-bank'),
+    ]);
+
+    # blog postadd
+    Route::post('post-bank', [
+        'uses' => 'Admin\BanksController@store',
+        'as' => 'postaddbank',
+        'title' => __('pages.store-bank'),
+    ]);
+
+    # blog update
+    Route::get('/edit/{id}', [
+        'uses' => 'Admin\BanksController@edit',
+        'as' => 'getupdatebank',
+        'title' => __('pages.edit-bank'),
+    ]);
+
+    # blog postupdate
+    Route::post('postupdate/{id}', [
+        'uses' => 'Admin\BanksController@update',
+        'as' => 'postupdatebank',
+        'title' => __('pages.update-bank'),
+    ]);
+
+    # blog delete
+    Route::get('/delete/{id}', [
+        'uses' => 'Admin\BanksController@destroy',
+        'as' => 'destroybank',
+        'title' => __('pages.delete-bank'),
+    ]);
+});
+
+
+// subscriptions group
+Route::group(['prefix' => 'subscriptions', 'middleware' => ['auth', 'checkRole']], function () {
+
+    # banks index
+    Route::get('/', [
+        'uses' => 'Admin\SubscriptionsController@index',
+        'as' => 'subscriptions',
+        'title' => __('pages.subscriptions'),
+        'child' => [
+            'addsubscription',
+            'postaddsubscription',
+            'getupdatesubscription',
+            'postupdatesubscription',
+            'destroysubscription'
+        ]
+    ]);
+
+
+
+    /*# blog test_mail
+        Route::get('test_mail', [
+            'uses' => "Admin\SubscriptionsController@test_mail",
+            'as' => 'addsubscripti',
+            'title' => __('pages.add-new-subscription'),
+        ]);
+        */
+
+    # blog add
+    Route::get('create', [
+        'uses' => "Admin\SubscriptionsController@create",
+        'as' => 'addsubscription',
+        'title' => __('pages.add-new-subscription'),
+    ]);
+
+
+    # blog postadd
+    Route::post('post-subscription', [
+        'uses' => 'Admin\SubscriptionsController@store',
+        'as' => 'postaddsubscription',
+        'title' => __('pages.store-subscription'),
+    ]);
+
+    # blog update
+    Route::get('/edit/{id}', [
+        'uses' => 'Admin\SubscriptionsController@edit',
+        'as' => 'getupdatesubscription',
+        'title' => __('pages.edit-subscription'),
+    ]);
+
+    # blog postupdate
+    Route::post('postupdate/{id}', [
+        'uses' => 'Admin\SubscriptionsController@update',
+        'as' => 'postupdatesubscription',
+        'title' => __('pages.update-subscription'),
+    ]);
+
+    # blog delete
+    Route::get('/delete/{id}', [
+        'uses' => 'Admin\SubscriptionsController@destroy',
+        'as' => 'destroysubscription',
+        'title' => __('pages.delete-subscription'),
+    ]);
+});
+
 // setting group
 Route::group(['prefix' => 'site_setting', 'middleware' => ['auth', 'checkRole']], function () {
     # setting page
@@ -1766,6 +2016,19 @@ Route::group(['prefix' => 'trainer', 'middleware' => ['auth', 'checkRole']], fun
 
 Route::group(['prefix' => 'student', 'middleware' => ['auth', 'checkRole']], function () {
 
+    # users update
+    Route::get('edit', [
+        'uses' => 'Student\StudentController@edit',
+        'as' => 'getUpdateStudent',
+        'title' => __('pages.edit-user'),
+    ]);
+    # users postupdate
+    Route::post('postupdate/{id}', [
+        'uses' => 'Student\StudentController@update',
+        'as' => 'postUpdateStudent',
+        'title' => __('pages.update-user'),
+    ]);
+
     Route::group(['prefix' => 'courses', 'middleware' => ['auth', 'checkRole']], function () {
 
         # courses index
@@ -1797,6 +2060,16 @@ Route::group(['prefix' => 'student', 'middleware' => ['auth', 'checkRole']], fun
             'title' => __('pages.courses_catalog'),
         ]);
 
+        Route::get('subscripe/{id?}', [
+            'uses' => 'Student\CoursesController@subscripe',
+            'as' => 'StudentSubscription',
+            'title' => __('pages.subscription'),
+        ]);
+
+        Route::post('postsubscripe', [
+            'uses' => 'Student\SubscriptionsController@store',
+            'as' => 'postaddstudentsubscription',
+        ]);
         /*Route::get('course_details/{id}', [
             'uses' => 'Student\CoursesController@courseDetails',
             'as' => 'StudentCourseDetails',
@@ -1862,6 +2135,14 @@ Route::group(['prefix' => 'student', 'middleware' => ['auth', 'checkRole']], fun
             'uses' => "Student\GroupsController@showGroup",
             'as' => 'addgroupsStudent',
             'title' => __('pages.join-to-group'),
+        ]);
+
+
+        # group show
+        Route::get('show/{id}', [
+            'uses' => "Student\GroupsController@show",
+            'as' => 'showGroup',
+            'title' => __('pages.show-group'),
         ]);
 
         # groups postadd
