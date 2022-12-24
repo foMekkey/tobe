@@ -176,10 +176,10 @@
                             <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.period_type') }} <span style="color: red">*</span></label>
                             <div class="col-lg-9 col-xl-9">
                                 <select name="period_type" class="form-control" id="period_type">
-                                    <option value="hour" @if( {{ old('period_type') }} == 'hour') selected='selected' @endif>{{__('pages.hour')}}</option>
-                                    <option value="day" @if( {{ old('period_type') }} == 'day') selected='selected' @endif>{{__('pages.day')}}</option>
-                                    <option value="week" @if( {{ old('period_type') }} == 'week') selected='selected' @endif>{{__('pages.week')}}</option>
-                                    <option value="month" @if( {{ old('period_type') }} == 'month') selected='selected' @endif>{{__('pages.month')}}</option>
+                                    <option value="hour" @if ( old('period_type') == 'hour') selected='selected' @endif>{{__('pages.hour')}}</option>
+                                    <option value="day" @if ( old('period_type') == 'day') selected='selected' @endif>{{__('pages.day')}}</option>
+                                    <option value="week" @if ( old('period_type') == 'week') selected='selected' @endif>{{__('pages.week')}}</option>
+                                    <option value="month" @if ( old('period_type') == 'month') selected='selected' @endif>{{__('pages.month')}}</option>
                                 </select>
                             </div>
                         </div>
