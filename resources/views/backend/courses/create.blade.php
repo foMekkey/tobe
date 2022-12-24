@@ -197,7 +197,7 @@
                         <label class="col-xl-3 col-lg-3 col-form-label">{{ __('pages.types') }}</label>
                         <div class="col-lg-9 col-xl-6">
                             <div class="kt-checkbox-inline">
-                                <label class="kt-checkbox hidden">
+                                <label class="kt-checkbox hidden" style="display:none;">
                                     <input type="checkbox" name="status" value="1">{{ __('pages.status') }}
                                     <span></span>
                                 </label>
@@ -208,9 +208,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
                 </div>
                 <div class="kt-form__actions">
 
