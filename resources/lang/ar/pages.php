@@ -165,6 +165,7 @@ return [
     'success-add' => 'تم الاضافة بنجاح',
     'success-edit' => 'تم التعديل بنجاح',
     'success-delete' => 'تم الحذف بنجاح',
+    'delete-failed-has-users' => 'لم يتم الحذف نظراً لوجود اعضاء أو مجموعات ملتحقة بهذة الدورة',
     'success-join' => 'تم الالتحاق بنجاح',
     'success-delete-join' => 'تم الغاء الالتحاق',
     'can-see' => 'يمكن للمستخدم رؤيته',

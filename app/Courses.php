@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use PHPUnit\TextUI\XmlConfiguration\Group;
 
 class Courses extends Model
 {
@@ -31,5 +32,10 @@ class Courses extends Model
     public function lessons()
     {
         return $this->hasMany(CoursesLessons::class, 'course_id', 'id');
+    }
+
+    public function groups()
+    {
+        return $this->belongsToMany(Groups::class, 'courses_group', 'course_id', 'group_id');
     }
 }
