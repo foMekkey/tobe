@@ -203,7 +203,6 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        </div>
                                         <div class="form-group row">
                                             <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.rules_of_achievement') }}</label>
                                             <div class="col-lg-9 col-xl-9">
