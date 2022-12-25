@@ -228,13 +228,9 @@ class CoursesController extends Controller
         return \DataTables::of($users)
 
             ->editColumn('type', function ($query) {
-                if ($query->type == 1) {
-                    return '<span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">مسئول</span>';
-                } elseif ($query->type == 2) {
-                    return '<td><span class="kt-badge kt-badge--danger kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-danger">مدرب</span></td>';
-                } else {
-                    return '<span class="kt-badge kt-badge--primary kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-primary">طالب</span>';
-                }
+                if ($query->roles)
+                    return '<span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">' . $query->roles->role . '</span>';
+                return '<span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">' . __('pages.no-permission-detected') . '</span>';
             })
 
             ->addColumn('options', function ($query)  use ($courses) {
