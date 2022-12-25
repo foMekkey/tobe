@@ -100,8 +100,8 @@
                         <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.language') }} <span style="color: red">*</span></label>
                         <div class="col-lg-9 col-xl-9">
                             <select class="form-control"  name="lang" >
-                                <option value="" selected> {{ __('pages.choose-language') }} </option>
-                                <option value="ar"> {{ __('pages.language-ar') }} </option>
+                                <option value=""> {{ __('pages.choose-language') }} </option>
+                                <option value="ar" selected> {{ __('pages.language-ar') }} </option>
                                 <option value="en"> {{ __('pages.language-en') }} </option>
                             </select>
 
@@ -198,7 +198,7 @@
                         <div class="col-lg-9 col-xl-6">
                             <div class="kt-checkbox-inline">
                                 <label class="kt-checkbox hidden" style="display:none;">
-                                    <input type="checkbox" name="status" value="1">{{ __('pages.status') }}
+                                    <input type="checkbox" name="status" value="1" checked>{{ __('pages.status') }}
                                     <span></span>
                                 </label>
                                 <label class="kt-checkbox">
