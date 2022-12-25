@@ -22,22 +22,21 @@ class PermissionsTable extends Migration
             $table->timestamps();
         });
 
-        $permission = 
-        [
-            'dashboard',
-            'permissionslist',
-            'addpermissionspage',
-            'addpermission',
-            'editpermissionpage',
-            'updatepermission',
-            'deletepermission'
-        ];
+        $permission =
+            [
+                'dashboard',
+                'permissionslist',
+                'addpermissionspage',
+                'addpermission',
+                'editpermissionpage',
+                'updatepermission',
+                'deletepermission'
+            ];
 
-        foreach($permission as $p)
-        {
+        foreach ($permission as $p) {
             $Permission = new Permission;
-            $Permission->permissions =$p;
-            $Permission->role_id     =1;
+            $Permission->permissions = $p;
+            $Permission->role_id     = 1;
             $Permission->save();
         }
     }
