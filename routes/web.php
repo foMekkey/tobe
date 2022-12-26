@@ -282,7 +282,7 @@ Route::group(['prefix' => 'courses', 'middleware' => ['auth', 'checkRole']], fun
         'uses' => 'Admin\CoursesController@destroy',
         'as' => 'destroycourses',
         'title' => __('pages.delete-course'),
-    ])->name('destroycourses');
+    ]);
 
     # users groups datatable
     Route::get('/datatable-users/{id}', [
