@@ -571,7 +571,7 @@
         var route = $(this).data('data-route');
         var token = $(this).data('data-token');
         var rowId = $(this).data('id');
-
+        console.log(route);
         swal({
             title: "{{__('jsMessage.question-delete')}}",
             text: "{{__('jsMessage.alert-delete')}}",
