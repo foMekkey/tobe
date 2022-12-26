@@ -587,11 +587,11 @@
                     dataType: 'json',
                     success: function (data) {
                         console.log(data);
-                        // location.reload(true);
+                        location.reload(true);
                         swal("{{__('jsMessage.deleteReturn')}}", {
                             icon: "success",
                         });
-                        $("#" + data).parents("tr").remove();
+                        // $("#" + data).parents("tr").remove();
 
                     },
                     errors:function (data) {
