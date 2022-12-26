@@ -587,7 +587,7 @@
                     data: {_method: 'delete', _token: token},
                     dataType: 'json',
                     success: function (data) {
-                        console.log(data);
+                        console.log(ypeof data);
                         // location.reload(true);
                         if (typeof data == 'object'){
                             if (data.message == 'hasUser'){
