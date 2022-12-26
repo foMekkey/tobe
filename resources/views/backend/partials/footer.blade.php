@@ -586,6 +586,7 @@
                     data: {_method: 'delete', _token: token},
                     dataType: 'json',
                     success: function (data) {
+                        console.log(data);
                         // location.reload(true);
                         swal("{{__('jsMessage.deleteReturn')}}", {
                             icon: "success",
