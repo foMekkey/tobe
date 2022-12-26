@@ -568,7 +568,7 @@
 
 <script>
     $(document).on('click', '.destroy', function () {
-        var route = $(this).data('data-route');
+        var route = $(this).data('route');
         var token = $(this).data('data-token');
         var rowId = $(this).data('id');
         console.log(route);
