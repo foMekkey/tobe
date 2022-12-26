@@ -568,8 +568,8 @@
 
 <script>
     $(document).on('click', '.destroy', function () {
-        var route = $(this).data('route');
-        var token = $(this).data('token');
+        var route = $(this).data('data-route');
+        var token = $(this).data('data-token');
 
         swal({
             title: "{{__('jsMessage.question-delete')}}",
