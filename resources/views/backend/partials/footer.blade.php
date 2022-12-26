@@ -571,7 +571,7 @@
         var route = $(this).data('route');
         var token = $(this).data('token');
         var rowId = $(this).data('id');
-        console.log(route);
+        console.log(rowId);
         swal({
             title: "{{__('jsMessage.question-delete')}}",
             text: "{{__('jsMessage.alert-delete')}}",
@@ -589,9 +589,7 @@
                     success: function (data) {
                         // location.reload(true);
                         if (typeof data == 'object'){
-                            console.log(typeof data);
                             if (data.message == 'hasUsers'){
-                                console.log(data.message);
                                 swal("{{__('jsMessage.cannotDeleteMessage')}}", {
                                     icon: "warning",
                                 });
