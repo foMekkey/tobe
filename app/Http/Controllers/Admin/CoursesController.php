@@ -210,7 +210,7 @@ class CoursesController extends Controller
         $courses = Courses::find($id);
 
         if ($courses->users()->count() > 0 ||  $courses->groups()->count() > 0) {
-            return response()->json(['message' => 'hasUsers']);
+            return response()->json(['message' => 'hasUsers', 'countUsers' => $courses->users()->count()]);
         }
 
         $check = $courses->delete();

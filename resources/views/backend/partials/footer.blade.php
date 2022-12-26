@@ -592,7 +592,7 @@
                             console.log(typeof data);
                             if (data.message == 'hasUsers'){
                                 console.log(data.message);
-                                swal("لا يمكن حذف هذة الدورة نظراً لإرتباط بعض المستخدمين بها", {
+                                swal("{{__('jsMessage.cannotDeleteMessage')}}", {
                                     icon: "warning",
                                 });
                             }
