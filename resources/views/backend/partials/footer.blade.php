@@ -591,6 +591,8 @@
                         // location.reload(true);
                         if (data.message){
                             if (data.message == 'hasUser'){
+                                console.log(data.message);
+
                                 swal("لا يمكن حذف هذة الدورة نظراً لإرتباط بعض المستدمين بها", {
                                     icon: "warning",
                                 });
