@@ -598,7 +598,7 @@
                             swal("{{__('jsMessage.deleteReturn')}}", {
                                 icon: "success",
                             });
-                            $("tr#" + rowId).remove();
+                            $("tr#" + data).remove();
                         }
 
                     },
