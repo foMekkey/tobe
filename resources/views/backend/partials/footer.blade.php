@@ -590,7 +590,7 @@
                         // location.reload(true);
                         if (typeof data == 'object'){
                             console.log(typeof data);
-                            if (data.message == 'hasUser'){
+                            if (data.message == 'hasUsers'){
                                 console.log(data.message);
                                 swal("لا يمكن حذف هذة الدورة نظراً لإرتباط بعض المستخدمين بها", {
                                     icon: "warning",
