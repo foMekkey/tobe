@@ -589,10 +589,18 @@
                     success: function (data) {
                         console.log(data);
                         // location.reload(true);
-                        swal("{{__('jsMessage.deleteReturn')}}", {
-                            icon: "success",
-                        });
-                        $("tr#" + rowId).remove();
+                        if (data.message){
+                            if (data.message == 'hasUser'){
+                                swal("لا يمكن حذف هذة الدورة نظراً لإرتباط بعض المستدمين بها", {
+                                    icon: "warning",
+                                });
+                            }
+                        }else{
+                            swal("{{__('jsMessage.deleteReturn')}}", {
+                                icon: "success",
+                            });
+                            $("tr#" + rowId).remove();
+                        }
 
                     },
                     errors:function (data) {
