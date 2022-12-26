@@ -278,7 +278,7 @@ Route::group(['prefix' => 'courses', 'middleware' => ['auth', 'checkRole']], fun
     ]);
 
     # courses delete
-    Route::get('/delete/{id}', [
+    Route::delete('/delete/{id}', [
         'uses' => 'Admin\CoursesController@destroy',
         'as' => 'destroycourses',
         'title' => __('pages.delete-course'),
