@@ -587,9 +587,9 @@
                     data: {_method: 'delete', _token: token},
                     dataType: 'json',
                     success: function (data) {
-                        console.log(typeof data);
                         // location.reload(true);
-                        if (typeof data === object){
+                        if (typeof data == 'object'){
+                            console.log(typeof data);
                             if (data.message == 'hasUser'){
                                 console.log(data.message);
                                 swal("لا يمكن حذف هذة الدورة نظراً لإرتباط بعض المستخدمين بها", {
