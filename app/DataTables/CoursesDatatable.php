@@ -48,6 +48,7 @@ class CoursesDatatable extends DataTable
                 }
             })
             ->rawColumns(['action', 'status', 'user_id'])
+            ->setRowId('id')
             ->addIndexColumn();
     }
 
