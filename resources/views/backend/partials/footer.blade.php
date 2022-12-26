@@ -570,6 +570,7 @@
     $(document).on('click', '.destroy', function () {
         var route = $(this).data('data-route');
         var token = $(this).data('data-token');
+        var rowId = $(this).data('id');
 
         swal({
             title: "{{__('jsMessage.question-delete')}}",
@@ -591,7 +592,7 @@
                         swal("{{__('jsMessage.deleteReturn')}}", {
                             icon: "success",
                         });
-                        // $("#" + data).parents("tr").remove();
+                        $("#" + rowId).remove();
 
                     },
                     errors:function (data) {
