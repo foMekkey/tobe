@@ -583,7 +583,7 @@
             if (willDelete) {
                 $.ajax({
                     url: route,
-                    type: 'get',
+                    type: 'DELETE',
                     data: {_method: 'delete', _token: token},
                     dataType: 'json',
                     success: function (data) {
@@ -592,7 +592,7 @@
                         swal("{{__('jsMessage.deleteReturn')}}", {
                             icon: "success",
                         });
-                        $("#" + rowId).remove();
+                        $("tr#" + rowId).remove();
 
                     },
                     errors:function (data) {
