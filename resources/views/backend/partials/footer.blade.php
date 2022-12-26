@@ -583,7 +583,7 @@
             if (willDelete) {
                 $.ajax({
                     url: route,
-                    type: 'DELETE',
+                    type: 'get',
                     data: {_method: 'delete', _token: token},
                     dataType: 'json',
                     success: function (data) {
