@@ -210,7 +210,7 @@ class CoursesController extends Controller
         $courses = Courses::find($id);
 
         if ($courses->users()->count() > 0 ||  $courses->groups()->count() > 0) {
-            return redirect()->back()->with('error', __('pages.delete-failed-has-users'));
+            return response()->json(['message' => 'hasUsers']);
         }
 
         $check = $courses->delete();
