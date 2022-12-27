@@ -107,8 +107,17 @@
 
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.period') }} <span style="color: red">*</span></label>
-                        <div class="col-lg-9 col-xl-9">
+                        <div class="col-lg-3 col-xl-3">
                             <input type="number"  name="period" class="form-control" value="{{ $lesson->period }}"  />
+                        </div>
+                        <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.period_type') }} <span style="color: red">*</span></label>
+                        <div class="col-lg-3 col-xl-3">
+                            <select name="period_type" class="form-control" id="period_type">
+                                <option value="hour" @if ( $lesson->period_type == 'hour') selected='selected' @endif>{{ __('pages.hour') }}</option>
+                                <option value="day" @if ( $lesson->period_type == 'day') selected='selected' @endif>{{ __('pages.day') }}</option>
+                                <option value="week" @if ( $lesson->period_type == 'week') selected='selected' @endif>{{ __('pages.week') }}</option>
+                                <option value="month" @if ( $lesson->period_type == 'month') selected='selected' @endif>{{ __('pages.month') }}</option>
+                            </select>
                         </div>
                     </div>
 

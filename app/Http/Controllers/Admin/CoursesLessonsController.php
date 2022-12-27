@@ -35,7 +35,7 @@ class CoursesLessonsController extends Controller
 
         $courseTypes = CoursesLessons::lessonType();
 
-        return view('backend.lessons.create',compact(/*'courseSectionId',*/'id','courseTypes'));
+        return view('backend.lessons.create', compact(/*'courseSectionId',*/'id', 'courseTypes'));
     }
 
     /**
@@ -60,14 +60,14 @@ class CoursesLessonsController extends Controller
         $courses->name                      = $request->name;
         $courses->content                   = ($request->type == 3 || $request->type == 4) ? $request->content : '';
         $courses->file                      = ($request->hasFile('file')) ? $request->file->store('lessons') : NULL;
-//        $courses->type                      = $request->file->getMimeType();
+        //        $courses->type                      = $request->file->getMimeType();
         $courses->sort                      = $request->sort;
         $courses->type                      = $request->type;
         $courses->period                    = $request->period;
+        $courses->period_type                   = $request->period_type;
         $courses->save();
 
         return redirect('courses')->with(['success' =>  __('pages.success-add')]);
-
     }
 
     /**
@@ -80,39 +80,34 @@ class CoursesLessonsController extends Controller
     {
         $lesson = CoursesLessons::find($id);
 
-        return view('backend.lessons.show',compact('lesson'));
+        return view('backend.lessons.show', compact('lesson'));
     }
 
 
     public function DatatableUsersCourses($id)
     {
 
-        $users = CoursesUser::where('course_id',$id)->get();
+        $users = CoursesUser::where('course_id', $id)->get();
         $courses = Courses::find($id);
 
         return \DataTables::of($users)
 
-            ->editColumn('type',function($query){
-                if($query->type == 1)
-                {
-                    return '<span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">مسئول</span>';
-                }elseif ($query->type == 2){
-                    return '<td><span class="kt-badge kt-badge--danger kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-danger">مدرب</span></td>';
-                }else{
-                    return '<span class="kt-badge kt-badge--primary kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-primary">طالب</span>';
-                }
+            ->editColumn('type', function ($query) {
+                if ($query->roles)
+                    return '<span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">' . $query->roles->role . '</span>';
+                return '<span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">' . __('pages.no-permission-detected') . '</span>';
             })
 
-            ->editColumn('user_name',function ($query){
-               return  $user = User::find($query->user_id)->user_name;
+            ->editColumn('user_name', function ($query) {
+                return  $user = User::find($query->user_id)->user_name;
             })
 
-            ->addColumn('options', function($query)  use ($courses){
+            ->addColumn('options', function ($query)  use ($courses) {
                 $user_id = $query->id;
                 $course_id = $courses->id;
-                return view('backend.courses.actionUsers', compact('course_id','user_id'));
+                return view('backend.courses.actionUsers', compact('course_id', 'user_id'));
             })
-            ->rawColumns(['options','type'])
+            ->rawColumns(['options', 'type'])
             ->make(true);
     }
 
@@ -122,12 +117,12 @@ class CoursesLessonsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($course_id,$lesson_id)
+    public function edit($course_id, $lesson_id)
     {
         $lesson = CoursesLessons::find($lesson_id);
         //$courseSectionId = CourseSection::all()->pluck('title', 'id');
         $courseTypes = CoursesLessons::lessonType();
-        return view('backend.lessons.edit',compact(/*'courseSectionId',*/'course_id','courseTypes','lesson'));
+        return view('backend.lessons.edit', compact(/*'courseSectionId',*/'course_id', 'courseTypes', 'lesson'));
     }
 
     /**
@@ -137,7 +132,7 @@ class CoursesLessonsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $course_id,$lesson_id)
+    public function update(Request $request, $course_id, $lesson_id)
     {
 
         $lesson = CoursesLessons::find($lesson_id);
@@ -154,13 +149,12 @@ class CoursesLessonsController extends Controller
         $lesson->update();
 
         return redirect('courses/show-all/' . $course_id)->with(['success' =>  __('pages.success-edit')]);
-
     }
 
-    public function trams(Request $request,$id)
+    public function trams(Request $request, $id)
     {
 
-        $courses =  CourseTerms::where('course_id',$id)->first();
+        $courses =  CourseTerms::where('course_id', $id)->first();
         $courses->course_id                           = $id;
         $courses->rules_of_traversal                  = $request->rules_of_traversal;
         $courses->rules_of_achievement                = $request->rules_of_achievement;

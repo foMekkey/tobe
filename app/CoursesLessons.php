@@ -7,9 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class CoursesLessons extends Model
 {
     protected $table = 'course_lessons';
-    protected $fillable =['course_id', 'name', 'content', 'type', 'sort'];
+    protected $fillable = ['course_id', 'name', 'content', 'type', 'sort', 'period_type'];
 
-    public function Course(){
+    public function Course()
+    {
         return $this->belongsTo(Courses::class);
     }
 
@@ -17,12 +18,13 @@ class CoursesLessons extends Model
         return $this->belongsTo(CourseSection::class);
     }*/
 
-    public static function lessonType(){
+    public static function lessonType()
+    {
         return [
-            '1'=>__('pages.video'),
-            '2'=>__('pages.file'),
-            '3'=>__('pages.quiz'),
-            '4'=>__('pages.text'),
+            '1' => __('pages.video'),
+            '2' => __('pages.file'),
+            // '3' => __('pages.quiz'),
+            '4' => __('pages.text'),
         ];
     }
 
