@@ -72,7 +72,7 @@ return [
             'bucket' => env('CONTABO_BUCKET'),
             'url' => env('CONTABO_URL'),
             'endpoint' => env('CONTABO_ENDPOINT'),
-            // 'use_path_style_endpoint' => env('CONTABO_USE_PATH_STYLE_ENDPOINT'),
+            'use_path_style_endpoint' => env('CONTABO_USE_PATH_STYLE_ENDPOINT'),
             'throw' => false,
         ],
 
