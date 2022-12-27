@@ -88,7 +88,7 @@ class BlogController extends Controller
 
         $data = $request->only(['lang', 'title', 'date', 'content', 'created_by']);
         if ($request->hasFile('image')) {
-            $data['image'] = $request->image->storePublicly(
+            $data['image'] = $request->file('image')->storePublicly(
                 path: 'main',
                 options: 'contabo'
             );
