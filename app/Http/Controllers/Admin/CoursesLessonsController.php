@@ -146,6 +146,7 @@ class CoursesLessonsController extends Controller
         $lesson->sort                      = $request->sort;
         $lesson->type                      = $request->type;
         $lesson->period                    = $request->period;
+        $lesson->period_type                    = $request->period_type;
         $lesson->update();
 
         return redirect('courses/show-all/' . $course_id)->with(['success' =>  __('pages.success-edit')]);
