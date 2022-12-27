@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e021a50f5e6e35affbb900c6894bc79",
+    "content-hash": "27ff87d91905c38b6ca17e6de1a8cc6d",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1153,6 +1153,68 @@
                 "source": "https://github.com/fideloper/TrustedProxy/tree/4.4.2"
             },
             "time": "2022-02-09T13:33:34+00:00"
+        },
+        {
+            "name": "fortrabbit/laravel-object-storage",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fortrabbit/laravel-object-storage.git",
+                "reference": "c0c5e57e2d11efbc0f0cd7cdc228ae55b4583eeb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fortrabbit/laravel-object-storage/zipball/c0c5e57e2d11efbc0f0cd7cdc228ae55b4583eeb",
+                "reference": "c0c5e57e2d11efbc0f0cd7cdc228ae55b4583eeb",
+                "shasum": ""
+            },
+            "require": {
+                "aws/aws-sdk-php": "^3.0.0",
+                "illuminate/filesystem": "^5.5|^6.0|^7.0|^8.0",
+                "illuminate/support": "^5.5|^6.0|^7.0|^8.0",
+                "league/flysystem": "^1.0.40",
+                "league/flysystem-aws-s3-v3": "^1.0.7",
+                "php": "^7.1|^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^0.12"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "fortrabbit\\ObjectStorage\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "fortrabbit\\ObjectStorage\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oliver Stark",
+                    "email": "os@fortrabbit.com"
+                }
+            ],
+            "description": "Flysystem adapter for fortrabbit Object Storage",
+            "keywords": [
+                "Flysystem",
+                "fortrabbit",
+                "laravel",
+                "object-storage",
+                "s3"
+            ],
+            "support": {
+                "issues": "https://github.com/fortrabbit/laravel-object-storage/issues",
+                "source": "https://github.com/fortrabbit/laravel-object-storage/tree/1.4.0"
+            },
+            "time": "2021-05-04T11:47:58+00:00"
         },
         {
             "name": "fruitcake/laravel-cors",
