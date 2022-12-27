@@ -525,6 +525,6 @@ if (!function_exists('get_period_name')) {
                 $period_name = 'شهر';
                 break;
         }
-        return $period_name;
+        return $period_type;
     }
 }
