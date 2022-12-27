@@ -28,8 +28,8 @@ class CoursesController extends Controller
         $coursesCompletedIds = CoursesUser::where(['user_id' => auth()->id(), 'status' => 1])->pluck('course_id')->toArray();
         $coursesCompletedDurations = Courses::whereIn('id', $coursesCompletedIds)->sum('duration');
 
-        $courses  = CoursesUser::with('Courses')->where('user_id',auth()->id())->get();
-        foreach($courses as $course) {
+        $courses  = CoursesUser::with('Courses')->where('user_id', auth()->id())->get();
+        foreach ($courses as $course) {
             $course->lessons_count = CoursesLessons::where('course_id', $course->Courses->id)->count();
             $course->completed_lessons_count = CourseUserLog::where(['course_user_id' => $course->id, 'status' => 1])->count();
             $course->progress_percentage = $course->lessons_count ? round(($course->completed_lessons_count / $course->lessons_count) * 100, 0) : 0;
@@ -37,14 +37,14 @@ class CoursesController extends Controller
 
         $groupsIds = \App\GroupMember::where('student_id', auth()->id())->pluck('group_id')->toArray();
         $coursesIds = \App\CoursesGroup::whereIn('group_id', $groupsIds)->pluck('course_id')->toArray();
-        $groupCourses  = Courses::whereIn('id',$coursesIds)->get();
-        foreach($groupCourses as $course) {
+        $groupCourses  = Courses::whereIn('id', $coursesIds)->get();
+        foreach ($groupCourses as $course) {
             $course->lessons_count = CoursesLessons::where('course_id', $course->id)->count();
             //$course->completed_lessons_count = CourseUserLog::where(['course_user_id' => $course->id, 'status' => 1])->count();
             //$course->progress_percentage = $course->lessons_count ? round(($course->completed_lessons_count / $course->lessons_count) * 100, 0) : 0;
         }
-        
-        return view('students.courses.index',compact('courses', 'coursesInProgress', 'coursesCompleted', 'coursesCompletedDurations', 'groupCourses'));
+
+        return view('students.courses.index', compact('courses', 'coursesInProgress', 'coursesCompleted', 'coursesCompletedDurations', 'groupCourses'));
     }
 
     /*public function show($id){
@@ -65,8 +65,7 @@ class CoursesController extends Controller
             $courseUserLog = CourseUserLog::where(['course_user_id' => $courseUser->id, 'course_lesson_id' => $id])->first();
         }
 
-        return view('students.courses.lesson',compact('courses_lesson', 'courseUserLog'));
-
+        return view('students.courses.lesson', compact('courses_lesson', 'courseUserLog'));
     }
 
     public function catalog($categoryId = '')
@@ -77,11 +76,11 @@ class CoursesController extends Controller
         }
         $courses = Courses::where($where)->get();
         $categories = CategoiresCourses::all();
-        $userCourses = CoursesUser::where('user_id',auth()->id())->pluck('course_id')->toArray();
+        $userCourses = CoursesUser::where('user_id', auth()->id())->pluck('course_id')->toArray();
 
-        return view('students.courses.catalog',compact('courses', 'userCourses', 'categories', 'categoryId'));
+        return view('students.courses.catalog', compact('courses', 'userCourses', 'categories', 'categoryId'));
     }
-    
+
     public function show($id)
     {
         $courseData = Courses::findOrFail($id);
@@ -95,10 +94,10 @@ class CoursesController extends Controller
         }
 
         $icons = ['fa-file-text-o', 'fa-file-o', 'fa-play-circle-o', 'fa-question-circle-o'];
-        
-        return view('students.courses.show',compact('courseData', 'coursesLessons', 'courseUser', 'completedLessons', 'courseSurveys', 'courseCompletedSurveys', 'icons'));
+
+        return view('students.courses.show', compact('courseData', 'coursesLessons', 'courseUser', 'completedLessons', 'courseSurveys', 'courseCompletedSurveys', 'icons'));
     }
-    
+
     public function joinCourse(Request $request)
     {
         if (!empty($request->id)) {
@@ -106,15 +105,15 @@ class CoursesController extends Controller
                 'user_id' => auth()->id(),
                 'course_id' => $request->id
             ]);
-            
-            Session::flash('success','تم الإشتراك بنجاح');
-            
+
+            Session::flash('success', 'تم الإشتراك بنجاح');
+
             return Response::json(['success' => true], '200');
         } else {
             return Response::json(['success' => false], '200');
         }
     }
-    
+
     public function finishLesson(Request $request)
     {
         if (!empty($request->id) && !empty($request->course_id)) {
@@ -131,7 +130,7 @@ class CoursesController extends Controller
                         'status' => 1
                     ]);
                 }
-                
+
                 // add points
                 $settings = \App\Setting::whereIn('name', ['check_points_group', 'complete_unit'])->pluck('value', 'name')->toArray();
                 if ($settings['check_points_group'] == 'on' && $settings['complete_unit']) {
@@ -148,7 +147,7 @@ class CoursesController extends Controller
                 if ($lessonsCount == $completedLessonsCount) {
                     $courseUser->status = 1;
                     $courseUser->save();
-                    
+
                     // add points
                     $settings = \App\Setting::whereIn('name', ['check_points_group', 'complete_course'])->pluck('value', 'name')->toArray();
                     if ($settings['check_points_group'] == 'on' && $settings['complete_course']) {
@@ -169,23 +168,23 @@ class CoursesController extends Controller
             return Response::json(['success' => false], '200');
         }
     }
-    
+
     public function showSurvey($id)
     {
         $survey = Survey::where('id', $id)->where('status', 1)->where('date', date('Y-m-d'))->firstOrFail();
         $courseUser = CoursesUser::where('user_id', auth()->id())->where('course_id', $survey->course_id)->firstOrFail();
         $surveyAnswerExists = SurveyQuestionAnswer::where('survey_id', $id)->where('user_id', auth()->id())->first();
-        
+
         $courseUsers = [];
         if ($survey->is_day_star) {
             $courseUsers = CoursesUser::where('course_id', $survey->course_id)->where('user_id', '!=', auth()->id())->with('user')->get();
         }
-        
+
         $questions = SurveyQuestion::where('survey_id', $id)->get();
-        
-        return view('students.courses.show-survey',compact('survey', 'surveyAnswerExists', 'questions', 'courseUsers'));
+
+        return view('students.courses.show-survey', compact('survey', 'surveyAnswerExists', 'questions', 'courseUsers'));
     }
-    
+
     public function answerSurvey($id, Request $request)
     {
         $survey = Survey::where('id', $id)->where('status', 1)->where('date', date('Y-m-d'))->firstOrFail();
@@ -194,7 +193,7 @@ class CoursesController extends Controller
         if ($surveyAnswerExists) {
             return redirect()->back()->with('error', __('pages.survey-error-already-answered'));
         }
-        
+
         $answers = [];
         $questions = SurveyQuestion::where('survey_id', $id);
         $currentDateTime = Carbon::now();
@@ -211,32 +210,32 @@ class CoursesController extends Controller
                 'datetime' => $currentDateTime
             ];
         }
-        
+
         if (count($answers)) {
             SurveyQuestionAnswer::insert($answers);
-            
+
             return redirect(route('showCourseDetailsStudent', $survey->course_id))->with(['success' => __('pages.success-survey-answers')]);
         }
-        
+
         return redirect()->back()->with('error', __('pages.survey_validation_msg_at_least_one'));
     }
-    
+
     public function showSurveyResults($id)
     {
         $survey = Survey::where('id', $id)->where('status', 1)->where('show_results_in_course', 1)->where('date', '<', date('Y-m-d'))->firstOrFail();
         $questions = SurveyQuestion::where('survey_id', $id)->get();
-        
+
         $answersPerQuestions = [];
         $answers = SurveyQuestionAnswer::select('survey_question_id', 'answer', \DB::raw('count(*) as cnt'))
-                                       ->where('survey_id', $id)
-                                       ->groupBy('survey_question_id')->groupBy('answer')
-                                       ->orderBy('survey_question_id', 'asc')
-                                       ->orderBy('cnt', 'desc')
-                                       ->get();
+            ->where('survey_id', $id)
+            ->groupBy('survey_question_id')->groupBy('answer')
+            ->orderBy('survey_question_id', 'asc')
+            ->orderBy('cnt', 'desc')
+            ->get();
         foreach ($answers as $answer) {
             $answersPerQuestions[$answer->survey_question_id][$answer->answer] = $answer->cnt;
         }
-        
+
         $courseUsers = [];
         if ($survey->is_day_star) {
             $courseUsersQuery = CoursesUser::where('course_id', $survey->course_id)->with('user')->get();
@@ -244,7 +243,7 @@ class CoursesController extends Controller
                 $courseUsers[$courseUser->user_id] = $courseUser->user->user_name ?? '';
             }
         }
-        
-        return view('students.courses.results',compact('survey', 'questions', 'answersPerQuestions', 'courseUsers'));
+
+        return view('students.courses.results', compact('survey', 'questions', 'answersPerQuestions', 'courseUsers'));
     }
 }
