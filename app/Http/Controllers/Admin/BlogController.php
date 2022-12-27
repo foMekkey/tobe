@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Response;
+use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
 {
