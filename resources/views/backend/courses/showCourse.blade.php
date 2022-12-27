@@ -62,7 +62,7 @@
                             <h1>{{ __('pages.course_content') }}</h1>
                             <div class="desc">
                                 <h2>{{ __('pages.Total_learning') }}: <span>{{ $courses_count }} {{ __('pages.lessons') }} </span></h2>
-                                <h2>{{ __('pages.time_period') }}: <span>{{ $courseData->duration }} {{ __('pages.weeks') }}</span></h2>
+                                <h2>{{ __('pages.time_period') }}: <span>{{ $courseData->duration }} {{ $courseData->period_type }}</span></h2>
                             </div>
                         </div>
 
