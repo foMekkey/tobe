@@ -42,7 +42,7 @@ class BlogController extends Controller
         $data = $blogRequest->only(['lang', 'title', 'date', 'content', 'created_by']);
         if (isset($blogRequest->image) ||  $blogRequest->image != null) {
             $data['image'] = $blogRequest->image->storePublicly(
-                path: '',
+                path: 'main',
                 options: 'contabo'
             );
         }
