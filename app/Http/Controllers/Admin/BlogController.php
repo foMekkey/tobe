@@ -88,7 +88,10 @@ class BlogController extends Controller
 
         $data = $request->only(['lang', 'title', 'date', 'content', 'created_by']);
         if ($request->hasFile('image')) {
-            $data['image'] = $request->image->store('blog');
+            $data['image'] = $request->image->storePublicly(
+                path: 'main',
+                options: 'contabo'
+            );
         }
 
         $data['date'] = Carbon::createFromFormat('m/d/Y', $data['date']);
