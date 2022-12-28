@@ -32,11 +32,10 @@
                     </div>
                 
                     <div class="form-group row">
-                       ss {{config("filessystems/disks.contabo.url")}}
                         <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.profile') }} <span style="color: red">*</span></label>
                         <div class="col-lg-9 col-xl-6">
                             <div class="kt-avatar kt-avatar--outline kt-avatar--circle" id="kt_apps_user_add_avatar">
-                                <div class="kt-avatar__holder" id="imagePreview" style="background-image: url('{{ config("filesystems.disks.contabo.url").$blog->image }}');background-size: 100% 100%;"></div>
+                                <div class="kt-avatar__holder" id="imagePreview" style="background-image: url('{{ config("filesystems.disks.contabo.url").'/'.$blog->image }}');background-size: 100% 100%;"></div>
                                 <label class="kt-avatar__upload" data-toggle="kt-tooltip" title="" data-original-title="{{ __('pages.change_image') }}">
                                     <i class="fa fa-pencil"></i>
                                     <input  type="file" name="image" id="imageUpload">
