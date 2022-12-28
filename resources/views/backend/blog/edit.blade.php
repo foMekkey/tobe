@@ -32,7 +32,7 @@
                     </div>
                 
                     <div class="form-group row">
-                        {{config("filessystems/disks.contabo.url")}}
+                       ss {{config("filessystems/disks.contabo.url")}}
                         <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.profile') }} <span style="color: red">*</span></label>
                         <div class="col-lg-9 col-xl-6">
                             <div class="kt-avatar kt-avatar--outline kt-avatar--circle" id="kt_apps_user_add_avatar">
