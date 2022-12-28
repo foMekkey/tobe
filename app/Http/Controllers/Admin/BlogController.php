@@ -42,7 +42,7 @@ class BlogController extends Controller
         $data = $blogRequest->only(['lang', 'title', 'date', 'content', 'created_by']);
         if (isset($blogRequest->image) ||  $blogRequest->image != null) {
             $data['image'] = $blogRequest->file('image')->storePublicly(
-                path: 'main',
+                path: 'blog/posts',
                 options: 'contabo'
             );
         }
@@ -89,7 +89,7 @@ class BlogController extends Controller
         $data = $request->only(['lang', 'title', 'date', 'content', 'created_by']);
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->storePublicly(
-                path: 'main',
+                path: 'blog/posts',
                 options: 'contabo'
             );
         }
