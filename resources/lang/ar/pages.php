@@ -372,6 +372,7 @@ return [
     'text' => 'نص',
     'question-select' => 'اختيارات',
     'question-multi-select' => 'اختيار متعدد',
+    'question-number' => 'رقم',
     'delete' => 'حذف',
     'author' => 'المدرب',
     'end_date' => 'تاريخ الإنتهاء',

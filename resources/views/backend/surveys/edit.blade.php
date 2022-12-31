@@ -120,7 +120,8 @@
                                             <select class="form-control question_type" name="questions[type][]" required="" {{ $readonly ? 'disabled' : '' }}>
                                                 <option value="1" @if($question->type == '1') selected="" @endif>{{ __('pages.text') }}</option>
                                                 <option value="2" @if($question->type == '2') selected="" @endif>{{ __('pages.question-select') }}</option>
-                                                {{-- <option value="3" @if($question->type == '3') selected="" @endif>{{ __('pages.question-multi-select') }}</option> --}}
+                                                <option value="3" @if($question->type == '3') selected="" @endif>{{ __('pages.question-multi-select') }}</option>
+                                                <option value="4" @if($question->type == '4') selected="" @endif>{{ __('pages.question-number') }}</option>
                                             </select>
                                             @if($readonly)
                                                 <input type="hidden" name="questions[type][]" value="{{ $question->type }}" />

@@ -113,7 +113,8 @@
                                             <select class="form-control question_type" name="questions[type][]" required="">
                                                 <option value="1">{{ __('pages.text') }}</option>
                                                 <option value="2" selected="">{{ __('pages.question-select') }}</option>
-                                                {{-- <option value="3">{{ __('pages.question-multi-select') }}</option> --}}
+                                                <option value="3">{{ __('pages.question-multi-select') }}</option>
+                                                <option value="4">{{ __('pages.question-number') }}</option>
                                             </select>
                                         </td>
                                         <td class="allowed_options_cell"><textarea class="form-control allowed_options" name="questions[allowed_options][]" rows="3"></textarea></td>
@@ -207,6 +208,7 @@
                                                     <option value="1">{{ __('pages.text') }}</option>
                                                     <option value="2" selected="">{{ __('pages.question-select') }}</option>
                                                     <option value="3">{{ __('pages.question-multi-select') }}</option>
+                                                    <option value="4">{{ __('pages.question-number') }}</option>
                                                 </select>
                                             </td>
                                             <td class="allowed_options_cell"><textarea class="form-control allowed_options" name="questions[allowed_options][]" rows="3"></textarea></td>
