@@ -71,7 +71,7 @@
                             <input class="form-control" id="kt_name" name="title" type="text" value="{{ $survey->title }}" {{ $readonly }}>
                         </div>
                     </div>
-                    <div class="form-group row">
+                    <div class="form-group row" style="display: none;">
                         <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.date') }} <span style="color: red">*</span></label>
                         <div class="col-lg-9 col-xl-9">
                             <input type='text' class="form-control"  @if(!$readonly) id="datepickerr" @endif readonly placeholder="" name="date" value="{{ Carbon\Carbon::now()->format('m/d/Y') }}"/>
