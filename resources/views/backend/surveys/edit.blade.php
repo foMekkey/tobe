@@ -74,7 +74,7 @@
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.date') }} <span style="color: red">*</span></label>
                         <div class="col-lg-9 col-xl-9">
-                            <input type='text' class="form-control"  @if(!$readonly) id="datepickerr" @endif readonly placeholder="" name="date" value="{{ Carbon\Carbon::parse($survey->date)->format('m/d/Y') }}"/>
+                            <input type='text' class="form-control"  @if(!$readonly) id="datepickerr" @endif readonly placeholder="" name="date" value="{{ Carbon\Carbon::now()->format('m/d/Y') }}"/>
                         </div>
                     </div>
                     <div class="form-group row">
