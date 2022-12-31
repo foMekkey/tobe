@@ -112,9 +112,9 @@
                                         <td>
                                             <select class="form-control question_type" name="questions[type][]" required="">
                                                 <option value="1">{{ __('pages.text') }}</option>
+                                                <option value="4">{{ __('pages.question-number') }}</option>
                                                 <option value="2" selected="">{{ __('pages.question-select') }}</option>
                                                 <option value="3">{{ __('pages.question-multi-select') }}</option>
-                                                <option value="4">{{ __('pages.question-number') }}</option>
                                             </select>
                                         </td>
                                         <td class="allowed_options_cell"><textarea class="form-control allowed_options" name="questions[allowed_options][]" rows="3"></textarea></td>
@@ -182,7 +182,7 @@
             });
             
             $('#is_day_star').change(function() {
-                if ($(this).val() == '1') {
+                if ($(this).val() == '1' || $(this).val() == '4') {
                     $('.allowed_options_cell').hide();
                 } else {
                     $('.allowed_options_cell').show();
@@ -190,7 +190,7 @@
             });
             
             $(document).on('change', '.question_type', function() {
-                if ($(this).val() == '1') {
+                if ($(this).val() == '1' || $(this).val() == '4') {
                     $(this).parent().parent().find('.allowed_options').hide();
                 } else {
                     $(this).parent().parent().find('.allowed_options').show();
@@ -206,9 +206,9 @@
                                             <td>
                                                 <select class="form-control question_type" name="questions[type][]" required="">
                                                     <option value="1">{{ __('pages.text') }}</option>
+                                                    <option value="4">{{ __('pages.question-number') }}</option>
                                                     <option value="2" selected="">{{ __('pages.question-select') }}</option>
                                                     <option value="3">{{ __('pages.question-multi-select') }}</option>
-                                                    <option value="4">{{ __('pages.question-number') }}</option>
                                                 </select>
                                             </td>
                                             <td class="allowed_options_cell"><textarea class="form-control allowed_options" name="questions[allowed_options][]" rows="3"></textarea></td>
