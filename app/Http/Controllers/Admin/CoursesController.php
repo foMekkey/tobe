@@ -183,7 +183,7 @@ class CoursesController extends Controller
         $courses->level              = $request->level;
         $courses->desc               = $request->desc;
         $courses->content            = $request->content;
-        $courses->status             = $hide_from_catalog;
+        $courses->status             = $hide_from_catalog == 1 ? 0 : 1;
         $courses->hide_from_catalog  = $hide_from_catalog;
         $courses->tags               = $request->tags;
         $courses->price              = $request->price;
@@ -192,7 +192,7 @@ class CoursesController extends Controller
         $courses->duration           = $request->duration;
         $courses->period_type           = $request->period_type;
         $courses->image              = ($request->hasFile('image')) ? $request->file('image')->storePublicly(
-            path: 'courses/posts',
+            path: 'courses/images',
             options: 'contabo'
         ) : $courses->image;
         $courses->complete_rules     = $request->complete_rules;
