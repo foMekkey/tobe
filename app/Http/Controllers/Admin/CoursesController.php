@@ -85,7 +85,7 @@ class CoursesController extends Controller
         $courses->level             = $coursesRequest->level;
         $courses->desc              = $coursesRequest->desc;
         $courses->content           = $coursesRequest->content;
-        $courses->status            = $stauts;
+        $courses->status            = $hide_from_catalog;
         $courses->hide_from_catalog = $hide_from_catalog;
         $courses->tags              = $coursesRequest->tags;
         $courses->price             = $coursesRequest->price;
@@ -183,7 +183,7 @@ class CoursesController extends Controller
         $courses->level              = $request->level;
         $courses->desc               = $request->desc;
         $courses->content            = $request->content;
-        $courses->status             = $stauts;
+        $courses->status             = $hide_from_catalog;
         $courses->hide_from_catalog  = $hide_from_catalog;
         $courses->tags               = $request->tags;
         $courses->price              = $request->price;
