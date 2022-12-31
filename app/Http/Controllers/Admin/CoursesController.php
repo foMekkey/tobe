@@ -66,7 +66,10 @@ class CoursesController extends Controller
 
 
         if (isset($coursesRequest->image) ||  $coursesRequest->image != null) {
-            $image = $coursesRequest->image->store('courses');
+            $image = $coursesRequest->file('image')->storePublicly(
+                path: 'courses/images',
+                options: 'contabo'
+            );
         } else {
             $image = 'courses/download.jpeg';
         }
@@ -85,7 +88,7 @@ class CoursesController extends Controller
         $courses->level             = $coursesRequest->level;
         $courses->desc              = $coursesRequest->desc;
         $courses->content           = $coursesRequest->content;
-        $courses->status            = $hide_from_catalog;
+        $courses->status            = $hide_from_catalog == 1 ? 0 : 1;
         $courses->hide_from_catalog = $hide_from_catalog;
         $courses->tags              = $coursesRequest->tags;
         $courses->price             = $coursesRequest->price;
