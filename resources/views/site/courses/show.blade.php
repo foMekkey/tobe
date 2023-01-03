@@ -73,7 +73,7 @@
                                 <div class="info_box">
                                     <h3>{{ __('site.course_information') }}</h3>
                                     <p>{{ __('site.beginning') }} : {{ \Carbon\Carbon::parse($course->start_date)->format('j/n/Y') }}</p>
-                                    <p>{{ __('site.period_type') }} : {{ $course->lessons->sum('period') }} {{$course->lessons->period_type}}</p>
+                                    <p>{{ __('site.period_type') }} : {{ $course->lessons->sum('period') }} {{$course->period_type}}</p>
                                     <p>{{ __('site.specific_conditions') }} : {{ __('site.none') }}</p>
                                 </div>
                             </div>
