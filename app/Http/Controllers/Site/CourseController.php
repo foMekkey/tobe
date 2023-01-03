@@ -7,9 +7,10 @@ use App\Http\Controllers\Site\Controller;
 use App\Courses;
 use App\CategoiresCourses;
 use App\CourseReview;
-
+use App\CoursesUser;
 use Illuminate\Http\Request;
 use Validator;
+use App\Subscription;
 
 class CourseController extends Controller
 {
@@ -23,26 +24,10 @@ class CourseController extends Controller
         parent::__construct();
     }
 
-    public function index(Request $request)
+    public function index($catId = '', Request $request)
     {
-        $courses = Courses::where('lang', $this->locale);
 
-        if ($keyword = $request->input('keyword')) {
-            $courses->where(function ($q) use ($keyword) {
-                $q->where('name', 'like', '%' . $keyword . '%');
-                $q->orWhere('desc', 'like', '%' . $keyword . '%');
-                $q->orWhere('content', 'like', '%' . $keyword . '%');
-            });
-        }
-
-        $courses = $courses->orderBy('id', 'desc')->paginate(16)->appends(request()->query());
-
-        return view('site.courses.index', compact('courses'));
-    }
-
-    public function indexCat($catId = '', Request $request)
-    {
-        if ($catId != '') {
+        if ($catId) {
             $courses = Courses::where('category_id', $catId)->where('lang', $this->locale);
         } else {
             $courses = Courses::where('lang', $this->locale);
@@ -56,7 +41,7 @@ class CourseController extends Controller
             });
         }
 
-        $courses = $courses->orderBy('id', 'desc')->paginate(16)->appends(request()->query());
+        $courses = $courses->where('status', 1)->orderBy('id', 'desc')->paginate(16)->appends(request()->query());
 
         return view('site.courses.index', compact('courses'));
     }
@@ -67,20 +52,35 @@ class CourseController extends Controller
         if (!$course) {
             abort(404);
         }
-
-        $latestCourses = Courses::where('id', '!=', $id)->where('lang', $this->locale)->orderBy('id', 'desc')->limit(3)->get();
+        if (auth()->user()) {
+            $user_id = auth()->user()->id;
+            if (CoursesUser::where('course_id', $id)->where('user_id', $user_id)->exists()) {
+                $course['status'] = 1;
+            } else {
+                if (Subscription::where('course_id', $id)->where('user_id', $user_id)->where('status', 0)->exists()) {
+                    $course['status'] = 0;
+                } else {
+                    $course['status'] = 2;
+                }
+            }
+        } else {
+            $course['status'] = 2;
+        }
+        $latestCourses = Courses::where('id', '!=', $id)->where('lang', $this->locale)->where('status', 1)->orderBy('id', 'desc')->limit(3)->get();
         $categories = CategoiresCourses::whereHas('courses')->where('lang', $this->locale)->orderBy('name', 'asc')->get();
 
         $reviewsCount = $reviewsAvg = 0;
         $reviewsGrouped = [];
-        $reviews = CourseReview::select('rate', \DB::raw('count(*) as cnt'))->where('course_id', $id)->groupBy('rate')->get();
+        $reviews = CourseReview::select('review', 'rate', \DB::raw('count(*) as cnt'))->where('course_id', $id)->groupBy('rate')->get();
+
         if (count($reviews)) {
             $reviewsCount = $reviews->sum('cnt');
             $reviewsAvg = $reviews->sum('rate') / $reviewsCount;
             $reviewsGrouped = $reviews->pluck('cnt', 'rate')->toArray();
         }
-
-        return view('site.courses.show', compact('course', 'latestCourses', 'categories', 'reviewsCount', 'reviewsAvg', 'reviewsGrouped'));
+        $reviews = CourseReview::where('course_id', $id)->orderBy('id', 'DESC')->get();
+        //return $reviews;
+        return view('site.courses.show', compact('course', 'latestCourses', 'categories', 'reviews', 'reviewsCount', 'reviewsAvg', 'reviewsGrouped'));
     }
 
     public function storeReview(Request $request)
