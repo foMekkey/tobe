@@ -24,14 +24,9 @@ class CourseController extends Controller
         parent::__construct();
     }
 
-    public function index($catId = '', Request $request)
+    public function index(Request $request)
     {
-
-        if ($catId) {
-            $courses = Courses::where('category_id', $catId)->where('lang', $this->locale);
-        } else {
-            $courses = Courses::where('lang', $this->locale);
-        }
+        $courses = Courses::where('lang', $this->locale);
 
         if ($keyword = $request->input('keyword')) {
             $courses->where(function ($q) use ($keyword) {
@@ -41,7 +36,7 @@ class CourseController extends Controller
             });
         }
 
-        $courses = $courses->where('status', 1)->orderBy('id', 'desc')->paginate(16)->appends(request()->query());
+        $courses = $courses->orderBy('id', 'desc')->paginate(16)->appends(request()->query());
 
         return view('site.courses.index', compact('courses'));
     }
