@@ -538,4 +538,5 @@ return [
     'inquiries' => 'استفسارات',
     'share' => 'مشاركة',
     'tasks_and_apps' => 'مهام وتطبيقات',
+    'StudentCatalogJoinCourse' => 'فهرس الدورات'
 ];
