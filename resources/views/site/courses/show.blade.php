@@ -30,7 +30,6 @@
             <div class="row">
                 <div class="col-md-8 col-sm-12 col-xs-12">
                     <div class="course_detail">
-                        <img src="{{ asset("uploads/".$course->image) }}" class="main_img">
                         <h2>{{ $course->category->name ?? '' }}</h2>
                         <div class="course_subscribe">
                             <div class="course_info">
@@ -59,11 +58,22 @@
                             <div class="course_info">
                                 <h6>$ {{ $course->price }}</h6>
                             </div>
+                            @if($course['status'] == 1)
                             <div class="course_info">
-                                <a href="{{ url('student/courses/subscripe/')}}/{{$course->id}}" class="btn black_hover">{{ __('site.subscribe') }}</a>
+                                <a class="disabled btn black_hover">{{ __('site.subscribed') }}</a>
                             </div>
+                            @elseif($course['status'] == 0)
+                            <div class="course_info">
+                                <a class="disabled btn black_hover">{{ __('site.pending') }}</a>
+                            </div>
+                            @else
+                            <div class="course_info">
+                                <a href="{{ url('student/courses/subscripe/')}}/{{$course->id}}" class="btn black_hover">{{ __('site.subscripe') }}</a>
+                            </div>
+                            @endif
                         </div><!-- course_subscribe -->
-
+                        <img src="{{ asset("uploads/".$course->image) }}" class="main_img">
+                        
                         <div class="serv_name">
                             <div class="left">
                                 <h3>{{ $course->name }}</h3>
@@ -73,14 +83,17 @@
                                 <div class="info_box">
                                     <h3>{{ __('site.course_information') }}</h3>
                                     <p>{{ __('site.beginning') }} : {{ \Carbon\Carbon::parse($course->start_date)->format('j/n/Y') }}</p>
-                                    <p>{{ __('site.period_type') }} : {{ $course->lessons->sum('period') }} {{get_period_name($course->period_type)}}</p>
+                                    <p>{{ __('site.end') }} : {{ \Carbon\Carbon::parse($course->end_date)->format('j/n/Y') }}</p>
+                                    <p>{{ __('site.num_of_hours') }} : {{ $course->duration }}</p>
                                     <p>{{ __('site.specific_conditions') }} : {{ __('site.none') }}</p>
                                 </div>
                             </div>
                         </div><!-- serv_name -->
 
                         <div class="word">
-                            <img src="{{ asset("uploads/".$course->user->image) }}">
+                            @if($course->user->image)
+                                <img src="{{ asset("uploads/".$course->user->image) }}">
+                            @endif
                             <div>
                                 <span>,,</span>
                                 <p>
@@ -103,6 +116,26 @@
                                 <li>{{ $reviewsGrouped[1] ?? 0 }} <span></span>{{ __('site.stars') }} 1</li>
                             </ul>
                         </div><!-- reviews -->
+                        
+                        <div class="comments">
+                            
+                            <h3>التعليقات</h3>
+                            @foreach($reviews as $review)
+                            <div class="block">
+                                <div class="comm_title">
+                                    <h1>{{$review->name}}</h1>
+                                    <h2>التقييم: <span>{{$review->rate}}</span></h2>
+                                </div>
+                                <div class="comm_body">
+                                    <p>
+                                        {{$review->review}}
+                                    </p>
+                                </div>
+                            </div>
+                            @endforeach
+                            
+                            
+                        </div><!-- comments -->
 
                         <div class="add_comment">
                             <h3>{{ __('site.add_comment') }}</h3>
@@ -147,7 +180,59 @@
                             </div>
                         </form>
                     </div><!-- article_search -->
-
+                    
+                    <div class="categories crs_inf">
+                        <h1>{{ $course->category->name ?? '' }}</h1>
+                        <ul>
+                            <li>
+                                <span>{{ __('site.the_lecturer') }} : </span>
+                                {{ ($course->user->f_name ?? '') . ' ' . ($course->user->l_name ?? '') }}
+                            </li>
+                            <li>
+                                <span>{{ __('site.category') }} : </span>
+                                {{ $course->category->name ?? '' }}
+                            </li>
+                            <li>
+                                <span>المراجعات : </span>
+                                <ul class="list-inline rate">
+                                    @for($i=1; $i<6; $i++)
+                                        @if($i <= (int)$reviewsAvg)
+                                            <li><span class="fas fa-star"></span></li>
+                                        @else
+                                            <li><span class="far fa-star"></span></li>
+                                        @endif
+                                    @endfor
+                                </ul>
+                            </li>
+                            <li>
+                                <span>السعر : </span>
+                                <span class="price">$ {{ $course->price }}</span>
+                            </li>
+                            <li>
+                                @if($course['status'] == 1)
+                                    <div class="course_info">
+                                        <a class="disabled btn black_hover">{{ __('site.subscribed') }}</a>
+                                    </div>
+                                @elseif($course['status'] == 0)
+                                    <div class="course_info">
+                                        <a class="disabled btn black_hover">{{ __('site.pending') }}</a>
+                                    </div>
+                                @else
+                                    <div class="course_info">
+                                        <a href="{{ url('student/courses/subscripe/')}}/{{$course->id}}" class="btn black_hover">{{ __('site.subscripe') }}</a>
+                                    </div>
+                                @endif
+                            </li>
+                        </ul>
+                    </div><!-- categories -->
+                    
+                    <div class="book_now">
+    					<h2>احجز الان</h2>
+    					<h1>كورس جديد</h1>
+    					<p> هو ببساطة نص شكلي (بمعنى أن الغاية هي الشكل وليس المحتوى) ويُستخدم في صناعات المطابع ودور النشر. كان لوريم إيبسوم ولايزال المعيار </p>
+    					<a href="#" class="btn black_hover">تسجيل</a>
+    				</div><!-- book_now -->
+                    
                     <div class="categories">
                         <h1>{{ __('site.categories') }}</h1>
                         <ul>
@@ -156,13 +241,6 @@
                             @endforeach
                         </ul>
                     </div><!-- categories -->
-
-                    {{-- <div class="book_now">
-                        <h2>Book now</h2>
-                        <h1>New course</h1>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                        <a href="#" class="btn black_hover">Sign Up</a>
-                    </div><!-- book_now --> --}}
 
                     <div class="last_news">
                         <h1>{{ __('site.latest_courses') }}</h1>
