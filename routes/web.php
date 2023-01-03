@@ -48,7 +48,7 @@ Route::group(['prefix' => 'site'], function () {
 
     Route::get('course/{id}', 'Site\CourseController@show')->name('site-courses-view');
     Route::post('course/store_review', 'Site\CourseController@storeReview')->name('site-courses-storeReview');
-    Route::get('courses/category/{catId}', 'Site\CourseController@index')->name('site-courses-index_category');
+    Route::get('courses/category/{catId}', 'Site\CourseController@indexCat')->name('site-courses-index_category');
     Route::get('courses', 'Site\CourseController@index')->name('site-courses-index');
 
     Route::get('service/{id}', 'Site\ServiceController@show')->name('site-services-view');
