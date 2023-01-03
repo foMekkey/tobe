@@ -84,7 +84,7 @@
                                     <h3>{{ __('site.course_information') }}</h3>
                                     <p>{{ __('site.beginning') }} : {{ \Carbon\Carbon::parse($course->start_date)->format('j/n/Y') }}</p>
                                     <p>{{ __('site.end') }} : {{ \Carbon\Carbon::parse($course->end_date)->format('j/n/Y') }}</p>
-                                    <p>{{ __('site.num_of_hours') }} : {{ $course->duration }}</p>
+                                    <p>{{ __('site.period_type') }} : {{ $course->duration }} {{ get_period_name($course->period_type) }}</p>
                                     <p>{{ __('site.specific_conditions') }} : {{ __('site.none') }}</p>
                                 </div>
                             </div>
