@@ -72,7 +72,7 @@
                             </div>
                             @endif
                         </div><!-- course_subscribe -->
-                        <img src="{{ asset("uploads/".$course->image) }}" class="main_img">
+                        <img src="{{ config("filesystems.disks.contabo.url").'/'.$course->image }}" class="main_img">
                         
                         <div class="serv_name">
                             <div class="left">
