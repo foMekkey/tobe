@@ -73,7 +73,7 @@
         <div class="kt-portlet__body">
             <div class="row">
                 <div class="col-md-3 pull-right text-center">
-                    <img class="img-fluid" src="{{ asset('/uploads/'.$courseData->image) }}" alt="" style="border-radius: 4px;">
+                    <img class="img-fluid" src="{{ config("filesystems.disks.contabo.url").'/'.$courseData->image }}" alt="" style="border-radius: 4px;">
                     @if($courseUser)
                         @foreach ($courseSurveys as $survey)
                             <a href="{{ route('showSurveysStudent', $survey->id) }}">
