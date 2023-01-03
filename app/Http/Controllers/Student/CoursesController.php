@@ -16,6 +16,10 @@ use App\CourseUserLog;
 use App\Survey;
 use App\SurveyQuestion;
 use App\SurveyQuestionAnswer;
+use App\CourseReview;
+use App\Subscription;
+use App\Bank;
+use App\E_Wallet;
 use Session;
 use Carbon\Carbon;
 
@@ -56,6 +60,29 @@ class CoursesController extends Controller
         return view('students.courses.showCourse',compact('coursesLessons','courses_count','courseData','terms')); //,'sections'
     }*/
 
+    public function subscripe($id)
+    {
+        $course_id = $id;
+        if (auth()->user()) {
+
+            $user_id = auth()->user()->id;
+
+            if (
+                CoursesUser::where('course_id', $course_id)->where('user_id', $user_id)->exists() ||
+                Subscription::where('user_id', $user_id)->where('status', 0)->where('course_id', $course_id)->exists()
+            ) {
+                return redirect()->back();
+            }
+            $banks = Bank::all();
+            $e_wallets = E_Wallet::all();
+            $course = Courses::find($id);
+            return view('students.courses.payment', compact('course', 'banks', 'e_wallets'));
+        } else {
+            return redirect()->back();
+        }
+    }
+
+
     public function showLesson($id)
     {
         $courses_lesson = CoursesLessons::findOrFail($id);
@@ -77,13 +104,13 @@ class CoursesController extends Controller
         $courses = Courses::where($where)->get();
         $categories = CategoiresCourses::all();
         $userCourses = CoursesUser::where('user_id', auth()->id())->pluck('course_id')->toArray();
+        $userSubscriptions = Subscription::where('user_id', auth()->id())->where('status', 0)->pluck('course_id')->toArray();
 
-        return view('students.courses.catalog', compact('courses', 'userCourses', 'categories', 'categoryId'));
+        return view('students.courses.catalog', compact('courses', 'userCourses', 'userSubscriptions', 'categories', 'categoryId'));
     }
 
     public function show($id)
     {
-        $courseData = Courses::findOrFail($id);
         $coursesLessons = CoursesLessons::where('course_id', $id)->orderBy('number_lession')->get();
         $courseUser = CoursesUser::where(['user_id' => auth()->id(), 'course_id' => $id])->first();
         $completedLessons = $courseSurveys = $courseCompletedSurveys = [];
@@ -95,7 +122,40 @@ class CoursesController extends Controller
 
         $icons = ['fa-file-text-o', 'fa-file-o', 'fa-play-circle-o', 'fa-question-circle-o'];
 
-        return view('students.courses.show', compact('courseData', 'coursesLessons', 'courseUser', 'completedLessons', 'courseSurveys', 'courseCompletedSurveys', 'icons'));
+        /*return view('students.courses.show',compact('courseData', 'coursesLessons', 'courseUser', 'completedLessons', 'courseSurveys', 'courseCompletedSurveys', 'icons'));*/
+
+
+        $course = Courses::where('id', $id)->first();
+        if (!$course) {
+            abort(404);
+        }
+
+        $latestCourses = Courses::where('id', '!=', $id)->where('status', 0)->orderBy('id', 'desc')->limit(3)->get();
+        $categories = CategoiresCourses::whereHas('courses')->orderBy('name', 'asc')->get();
+
+        $reviewsCount = $reviewsAvg = 0;
+        $reviewsGrouped = [];
+        $reviews = CourseReview::select('rate', \DB::raw('count(*) as cnt'))->where('course_id', $id)->groupBy('rate')->get();
+        if (count($reviews)) {
+            $reviewsCount = $reviews->sum('cnt');
+            $reviewsAvg = $reviews->sum('rate') / $reviewsCount;
+            $reviewsGrouped = $reviews->pluck('cnt', 'rate')->toArray();
+        }
+
+        return view('students.courses.show', compact(
+            'course',
+            'latestCourses',
+            'categories',
+            'reviewsCount',
+            'reviewsAvg',
+            'reviewsGrouped',
+            'coursesLessons',
+            'courseUser',
+            'completedLessons',
+            'courseSurveys',
+            'courseCompletedSurveys',
+            'icons'
+        ));
     }
 
     public function joinCourse(Request $request)
