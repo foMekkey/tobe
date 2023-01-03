@@ -60,7 +60,7 @@
                                 <h6>$ {{ $course->price }}</h6>
                             </div>
                             <div class="course_info">
-                                <a href="#" class="btn black_hover">{{ __('site.subscribe') }}</a>
+                                <a href="{{ url('student/courses/subscripe/')}}/{{$course->id}}" class="btn black_hover">{{ __('site.subscribe') }}</a>
                             </div>
                         </div><!-- course_subscribe -->
 
