@@ -50,7 +50,7 @@
                         <div class="kt-widget5__item">
                             <div class="col-md-12">
                                 <div class="col-md-2 pull-right text-center">
-                                    <img class="img-fluid" src="{{ asset('/uploads/'.$course->image) }}" alt="">
+                                    <img class="img-fluid" src="{{ config("filesystems.disks.contabo.url").'/'.$course->image }}" alt="">
                                 </div>
                                 <div class="col-md-8 pull-right">
                                     <a href="{{ route('showCourseDetailsStudent', $course->id) }}" class="kt-widget5__title">

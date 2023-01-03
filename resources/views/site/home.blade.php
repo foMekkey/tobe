@@ -129,7 +129,7 @@
             <div class="item">
                 <div class="course_block">
                     <a href="{{ url('site/course/' . $course->id) }}">
-                        <img src="{{ asset("uploads/".$course->image) }}" class="main_img">
+                        <img src="{{ config("filesystems.disks.contabo.url").'/'.$course->image }}" class="main_img">
                         <div class="text">
                             <div class="img_container">
                                 <img src="{{ asset('site_assets') }}/images/logo.png" class="icon1">
