@@ -143,7 +143,7 @@
                                                             <div class="kt-widget__label">
                                                                 <div class="kt-widget__media">
                                                                     <span class="kt-media kt-media--lg kt-media--circle">
-                                                                        <img src="{{ asset('/uploads/'.$course['Courses']['image']) }}" alt="image">
+                                                                        <img src="{{ config("filesystems.disks.contabo.url").'/'.$course['Courses']['image'] }}" alt="image">
                                                                     </span>
                                                                 </div>
                                                                 <div class="kt-widget__info kt-margin-t-5">
