@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Courses;
 use App\Survey;
 use App\SurveyQuestion;
 use App\SurveyQuestionAnswer;
@@ -103,11 +104,12 @@ class SurveyController extends Controller
     public function edit($courseId, $id)
     {
         $survey = Survey::findOrFail($id);
+        $courseData = Courses::find($courseId)->status;
         $questions = SurveyQuestion::where('survey_id', $id)->get();
 
         $readonly = '';
         $hasAnswer = SurveyQuestionAnswer::where('survey_id', $id)->first();
-        if ($hasAnswer) {
+        if ($hasAnswer || $courseData == 0) {
             $readonly = 'readonly';
         }
 

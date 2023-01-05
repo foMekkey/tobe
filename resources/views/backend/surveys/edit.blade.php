@@ -56,7 +56,7 @@
                     <div class="form-group row">
                         <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.Type') }} <span style="color: red">*</span></label>
                         <div class="col-lg-9 col-xl-9">
-                            <select name="is_day_star" class="form-control" id="is_day_star" {{ $readonly ? 'disabled' : '' }}>
+                            <select name="is_day_star" class="form-control" id="is_day_star" disabled {{ $readonly ? 'disabled' : '' }}>
                                 <option value="0" @if($survey->is_day_star == '0') selected="" @endif>{{ __('pages.survey') }}</option>
                                 <option value="1" @if($survey->is_day_star == '1') selected="" @endif>{{ __('pages.day-star') }}</option>
                             </select>
