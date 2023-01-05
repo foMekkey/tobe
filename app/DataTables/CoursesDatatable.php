@@ -40,13 +40,13 @@ class CoursesDatatable extends DataTable
 
                 return '';
             })
-            ->editColumn('lang', function ($query) {
-                if ($query->lang == 'ar') {
-                    return 'العربية';
-                } else {
-                    return 'الإنجليزية';
-                }
-            })
+            // ->editColumn('lang', function ($query) {
+            //     if ($query->lang == 'ar') {
+            //         return 'العربية';
+            //     } else {
+            //         return 'الإنجليزية';
+            //     }
+            // })
             ->rawColumns(['action', 'status', 'user_id'])
             ->setRowId('id')
             ->addIndexColumn();
@@ -96,7 +96,7 @@ class CoursesDatatable extends DataTable
     {
         $cols =  [
             'DT_RowIndex' => ['name' => 'id', 'data' => 'DT_RowIndex', 'title' => '#'],
-            'lang' => ['name' => 'lang', 'data' => 'lang', 'title' => __('pages.language')],
+            // 'lang' => ['name' => 'lang', 'data' => 'lang', 'title' => __('pages.language')],
             'user_id' => ['name' => 'user_id', 'data' => 'user_id', 'title' => __('pages.author')],
             'name' => ['name' => 'name', 'data' => 'name', 'title' => __('pages.course-name')],
             'category_id' => ['name' => 'category_id', 'data' => 'category_id', 'title' => __('pages.category')],
