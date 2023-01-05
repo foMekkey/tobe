@@ -112,7 +112,7 @@
                                         <div class="form-group row">
                                             <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.author') }}  <span style="color: red">*</span></label>
                                             <div class="col-lg-9 col-xl-9">
-                                                {{Form::select('user_id',$trainers,$courses->user_id,['class'=>'form-control','placeholder'=>__('pages.choose-trainer')])}}
+                                                {{Form::select('user_id',$trainers,$courses->user_id,['class'=>'form-control','placeholder'=>__('pages.choose-trainer'),"readonly" => true])}}
                                             </div>
                                         </div>
                                         <div class="form-group row" style="display: none;">
@@ -138,7 +138,7 @@
                                         <div class="form-group row">
                                             <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.category') }} <span style="color: red">*</span></label>
                                             <div class="col-lg-9 col-xl-9">
-                                                {{Form::select('category_id',$coursesCategories,$courses->category_id,['class'=>'form-control','placeholder'=>'اختر المسار التعليمى'])}}
+                                                {{Form::select('category_id',$coursesCategories,$courses->category_id,['class'=>'form-control','placeholder'=>'اختر المسار التعليمى',"readonly" => true])}}
                                             </div>
                                         </div>
 
@@ -146,7 +146,7 @@
                                         <div class="form-group row">
                                             <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.level') }} <span style="color: red">*</span></label>
                                             <div class="col-lg-9 col-xl-9">
-                                                <select class="form-control"  name="level" >
+                                                <select class="form-control"  name="level" disabled>
                                                     <option selected> {{ __('pages.choose-level') }} </option>
                                                     @for ($i = 1; $i <= 12; $i++)
                                                         <option value="{{ $i }}" @if($courses->level == $i) selected @endif>{{ $i }}</option>
@@ -175,7 +175,7 @@
                                             <label class="col-xl-3 col-lg-3 col-form-label">{{ __('pages.data-start-and-end') }}<span style="color: red">*</span></label>
                                             <div class="col-lg-9 col-xl-9">
 
-                                                <input type='text' class="form-control" id="daterangepicker"   readonly placeholder="Select time" value="{{ $startdate }} - {{ $enddate }}" name="dateRange" />
+                                                <input type='text' class="form-control" id="daterangepicker"   readonly placeholder="Select time" value="{{ $startdate }} - {{ $enddate }}" name="dateRange" disabled/>
                                                 {{--<input type='text' class="form-control" id="daterangepicker"   readonly placeholder="Select time" value="04/07/2019 - 11/08/2019" name="dateRange" />--}}
                                             </div>
                                         </div>
@@ -185,17 +185,17 @@
                                         <div class="form-group row">
                                             <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.price') }} <span style="color: red">*</span></label>
                                             <div class="col-lg-9 col-xl-9">
-                                                <input  type="number" name="price" class="form-control" value="{{ $courses->price }}"  />
+                                                <input  type="number" name="price" class="form-control" value="{{ $courses->price }}"  disabled/>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-xl-3 col-lg-3 col-form-label">{{ __('pages.peroid') }} <span style="color: red">*</span></label>
                                             <div class="col-lg-3 col-xl-3">
-                                                <input type="number"  name="duration" class="form-control" value="{{ $courses->duration }}"  />
+                                                <input type="number"  name="duration" class="form-control" value="{{ $courses->duration }}"  disabled />
                                             </div>
                                             <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.period_type') }} <span style="color: red">*</span></label>
                                             <div class="col-lg-3 col-xl-3">
-                                                <select name="period_type" class="form-control" id="period_type">
+                                                <select name="period_type" class="form-control" id="period_type" disabled>
                                                     <option value="hour" @if ( $courses->period_type == 'hour') selected='selected' @endif>{{ __('pages.hour') }}</option>
                                                     <option value="day" @if ( $courses->period_type == 'day') selected='selected' @endif>{{ __('pages.day') }}</option>
                                                     <option value="week" @if ( $courses->period_type == 'week') selected='selected' @endif>{{ __('pages.week') }}</option>
@@ -206,12 +206,12 @@
                                         <div class="form-group row">
                                             <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.rules_of_achievement') }}</label>
                                             <div class="col-lg-9 col-xl-9">
-                                                <textarea class="form-control" name="complete_rules" rows="3" spellcheck="false">{{ $courses->complete_rules }}</textarea>                                                        </div>
+                                                <textarea class="form-control" name="complete_rules" rows="3" spellcheck="false" disabled>{{ $courses->complete_rules }}</textarea>                                                        </div>
                                         </div>
                                         <div class="form-group row">
                                             <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.tag') }} </label>
                                             <div class="col-lg-9 col-xl-9">
-                                                <input type="text" name="tags" class="form-control" value="{{ $courses->tags }}" data-role="tagsinput" />
+                                                <input type="text" name="tags" class="form-control" value="{{ $courses->tags }}" data-role="tagsinput" disabled/>
                                             </div>
                                         </div>
 

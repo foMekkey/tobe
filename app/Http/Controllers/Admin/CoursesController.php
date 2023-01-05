@@ -179,26 +179,26 @@ class CoursesController extends Controller
         $timestamp_to = Carbon::createFromFormat('m/d/Y', trim($dateTo))->toDateTimeString();
 
         $courses = Courses::find($id);
-        $courses->user_id            = $request->user_id;
-        $courses->category_id        = $request->category_id;
-        $courses->lang               = $request->lang ?? 'en';
+        // $courses->user_id            = $request->user_id;
+        // $courses->category_id        = $request->category_id;
+        // $courses->lang               = $request->lang ?? 'en';
         $courses->name               = $request->name;
-        $courses->level              = $request->level;
+        // $courses->level              = $request->level;
         $courses->desc               = $request->desc;
         $courses->content            = $request->content;
         $courses->status             = $hide_from_catalog == 1 ? 0 : 1;
         $courses->hide_from_catalog  = $hide_from_catalog;
-        $courses->tags               = $request->tags;
-        $courses->price              = $request->price;
-        $courses->start_date         = $timestamp_from;
-        $courses->end_date           = $timestamp_to;
-        $courses->duration           = $request->duration;
-        $courses->period_type           = $request->period_type;
-        $courses->image              = ($request->hasFile('image')) ? $request->file('image')->storePublicly(
-            path: 'courses/images',
-            options: 'contabo'
-        ) : $courses->image;
-        $courses->complete_rules     = $request->complete_rules;
+        // $courses->tags               = $request->tags;
+        // $courses->price              = $request->price;
+        // $courses->start_date         = $timestamp_from;
+        // $courses->end_date           = $timestamp_to;
+        // $courses->duration           = $request->duration;
+        // $courses->period_type           = $request->period_type;
+        // $courses->image              = ($request->hasFile('image')) ? $request->file('image')->storePublicly(
+        //     path: 'courses/images',
+        //     options: 'contabo'
+        // ) : $courses->image;
+        // $courses->complete_rules     = $request->complete_rules;
         $courses->update();
 
         return redirect('courses')->with(['success' =>  __('pages.success-edit')]);
