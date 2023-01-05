@@ -101,7 +101,7 @@
                                                     <div class="kt-avatar__holder" id="imagePreview" style="background-image: url('{{ config("filesystems.disks.contabo.url").'/'.$courses->image }}');"></div>
                                                     <label class="kt-avatar__upload" data-toggle="kt-tooltip" title="" data-original-title="Change avatar">
                                                         <i class="fa fa-pencil"></i>
-                                                        <input  type="file" name="image" id="imageUpload">
+                                                        <input  type="file" name="image" id="imageUpload" disabled>
                                                     </label>
                                                     <span class="kt-avatar__cancel" data-toggle="kt-tooltip" title="" data-original-title="Cancel avatar">
 																<i class="fa fa-times"></i>
