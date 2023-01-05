@@ -115,7 +115,7 @@
                                                 {{Form::select('user_id',$trainers,$courses->user_id,['class'=>'form-control','placeholder'=>__('pages.choose-trainer')])}}
                                             </div>
                                         </div>
-                                        <div class="form-group row">
+                                        <div class="form-group row" style="display: none;">
                                             <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.language') }} <span style="color: red">*</span></label>
                                             <div class="col-lg-9 col-xl-9">
                                                 <select class="form-control"  name="lang" >
