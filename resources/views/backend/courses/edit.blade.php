@@ -112,7 +112,7 @@
                                         <div class="form-group row">
                                             <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.author') }}  <span style="color: red">*</span></label>
                                             <div class="col-lg-9 col-xl-9">
-                                                {{Form::select('user_id',$trainers,$courses->user_id,['class'=>'form-control','placeholder'=>__('pages.choose-trainer'),"readonly" => true])}}
+                                                {{Form::select('user_id',$trainers,$courses->user_id,['class'=>'form-control','placeholder'=>__('pages.choose-trainer'),"disabled" => "disabled"])}}
                                             </div>
                                         </div>
                                         <div class="form-group row" style="display: none;">
@@ -138,7 +138,7 @@
                                         <div class="form-group row">
                                             <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.category') }} <span style="color: red">*</span></label>
                                             <div class="col-lg-9 col-xl-9">
-                                                {{Form::select('category_id',$coursesCategories,$courses->category_id,['class'=>'form-control','placeholder'=>'اختر المسار التعليمى',"readonly" => true])}}
+                                                {{Form::select('category_id',$coursesCategories,$courses->category_id,['class'=>'form-control','placeholder'=>'اختر المسار التعليمى',"disabled" => "disabled"])}}
                                             </div>
                                         </div>
 
