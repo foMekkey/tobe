@@ -92,6 +92,7 @@ class CoursesLessonsController extends Controller
         $courses = Courses::find($id);
         $courseGroups = $courses->groups()->get();
         print_r($courseGroups);
+        return;
         return \DataTables::of($users)
 
             ->editColumn('type', function ($query) {
