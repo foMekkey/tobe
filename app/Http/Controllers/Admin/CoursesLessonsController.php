@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Courses;
+use App\CoursesGroup;
 //use App\CourseSection;
 use App\CoursesLessons;
 use App\CoursesUser;
@@ -88,7 +89,10 @@ class CoursesLessonsController extends Controller
     {
 
         $users = CoursesUser::where('course_id', $id)->get();
+        $courseGroup = CoursesGroup::whereCourseId($id)->get();
+        $allUsersCollections = $users->merge($courseGroup);
         $courses = Courses::find($id);
+        print_r($allUsersCollections);
 
         return \DataTables::of($users)
 
@@ -99,6 +103,10 @@ class CoursesLessonsController extends Controller
             })
 
             ->editColumn('user_name', function ($query) {
+                return  $user = User::find($query->user_id)->user_name;
+            })
+
+            ->editColumn('group', function ($query) {
                 return  $user = User::find($query->user_id)->user_name;
             })
 
