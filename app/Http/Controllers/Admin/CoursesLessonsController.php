@@ -104,11 +104,11 @@ class CoursesLessonsController extends Controller
             })
 
             ->editColumn('user_name', function ($query) {
-                return  $user = User::find($query->user_id)->user_name;
+                return  $user = $query->user_name;
             })
 
             ->editColumn('group', function ($query) {
-                return  $user = User::find($query->user_id)->user_name;
+                return  $query->user_name;
             })
 
             ->addColumn('options', function ($query)  use ($courses) {
