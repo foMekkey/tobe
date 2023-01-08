@@ -7,6 +7,7 @@ use App\CoursesGroup;
 //use App\CourseSection;
 use App\CoursesLessons;
 use App\CoursesUser;
+use App\GroupMember;
 use App\CourseTerms;
 use App\User;
 use Illuminate\Http\Request;
