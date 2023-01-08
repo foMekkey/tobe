@@ -108,7 +108,7 @@ class CoursesLessonsController extends Controller
             })
 
             ->editColumn('group', function ($query) {
-                return  $query->group->name;
+                return  $query->group->name ?? '';
             })
 
             ->addColumn('options', function ($query)  use ($courses) {
