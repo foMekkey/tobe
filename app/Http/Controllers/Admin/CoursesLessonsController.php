@@ -93,6 +93,8 @@ class CoursesLessonsController extends Controller
         $courseGroups = $courses->groups()->pluck('group_id')->toArray();
         $courseGroupsUsers = GroupMember::whereIn('group_id', $courseGroups)->pluck('student_id')->toArray();
         $users = CoursesUser::where('course_id', $id)->whereIn('user_id', $courseGroupsUsers)->distinct('user_id')->get();
+        print_r($users->pluck('user_id')->toArray());
+        return;
         return \DataTables::of($users)
 
             ->editColumn('type', function ($query) {
