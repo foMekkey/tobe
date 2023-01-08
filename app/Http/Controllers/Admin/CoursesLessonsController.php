@@ -94,10 +94,8 @@ class CoursesLessonsController extends Controller
         $courseGroupsUsers = GroupMember::whereIn('group_id', $courseGroups)->distinct('student_id')->pluck('student_id')->toArray();
         $users = CoursesUser::where('course_id', $id)->pluck('user_id')->toArray();
         $totalUsers = array_unique(array_merge($courseGroupsUsers, $users));
-        print_r($totalUsers);
-        print_r($courseGroupsUsers);
-        return;
-        return \DataTables::of($users)
+        $usersData = User::whereIn('id', $totalUsers)->get();
+        return \DataTables::of($usersData)
 
             ->editColumn('type', function ($query) {
                 if ($query->roles)
