@@ -88,9 +88,10 @@ class CoursesLessonsController extends Controller
     public function DatatableUsersCourses($id)
     {
 
-        $users = CoursesUser::where('course_id', $id)->with('courseGroupMembers')->get();
+        $users = CoursesUser::where('course_id', $id)->get();
         $courses = Courses::find($id);
-
+        $courseGroups = $courses->groups();
+        var_dump($courseGroups);
         return \DataTables::of($users)
 
             ->editColumn('type', function ($query) {

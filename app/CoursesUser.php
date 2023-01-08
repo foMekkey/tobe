@@ -29,7 +29,7 @@ class CoursesUser extends Model
         // return $this->belongsToMany(Courses::class, 'course_users', 'course_id', 'user_id')->withPivot('status','ended','datetime');
     }
 
-    public function courseGroupMembers()
+    public function courseGroups()
     {
         return $this->hasMany(CoursesGroup::class, "course_id", "course_id");
     }
