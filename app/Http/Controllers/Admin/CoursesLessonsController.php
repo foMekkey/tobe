@@ -88,9 +88,7 @@ class CoursesLessonsController extends Controller
     public function DatatableUsersCourses($id)
     {
 
-        $users = CoursesUser::where('course_id', $id)->get();
-        $courseGroup = CoursesGroup::whereCourseId($id)->get();
-        $allUsersCollections = $users->merge($courseGroup);
+        $users = CoursesUser::where('course_id', $id)->with('courseGroupMembers')->get();
         $courses = Courses::find($id);
 
         return \DataTables::of($users)
