@@ -89,11 +89,11 @@ class CoursesLessonsController extends Controller
     public function DatatableUsersCourses($id)
     {
 
-        $users = CoursesUser::where('course_id', $id)->get();
         $courses = Courses::find($id);
         $courseGroups = $courses->groups()->pluck('group_id')->toArray();
         $courseGroupsUsers = GroupMember::whereIn('group_id', $courseGroups)->pluck('student_id')->toArray();
-        print_r($courseGroupsUsers);
+        $users = CoursesUser::where('course_id', $id)->whereIn('user_id', $courseGroupsUsers)->distinct('user_id')->get();
+        print_r($users);
         return;
         return \DataTables::of($users)
 
