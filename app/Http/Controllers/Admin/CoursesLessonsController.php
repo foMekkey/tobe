@@ -93,7 +93,7 @@ class CoursesLessonsController extends Controller
         $allUsersCollections = $users->merge($courseGroup);
         $courses = Courses::find($id);
 
-        return \DataTables::of($allUsersCollections)
+        return \DataTables::of($users)
 
             ->editColumn('type', function ($query) {
                 if ($query->roles)
