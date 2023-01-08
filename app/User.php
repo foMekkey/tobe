@@ -60,7 +60,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function group()
     {
-        return $this->belongsTo(Groups::class, 'group_members', 'student_id', 'group_id');
+        $groupMember =  GroupMember::where('student_id', $this->id)->first()->group_id ?? null;
+        if ($groupMember) {
+            return Groups::find($groupMember)->name;
+        }
+        return "";
     }
 
     public function CoursesUsers()
