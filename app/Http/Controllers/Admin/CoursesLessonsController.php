@@ -91,7 +91,8 @@ class CoursesLessonsController extends Controller
         $users = CoursesUser::where('course_id', $id)->get();
         $courses = Courses::find($id);
         $courseGroups = $courses->groups()->pluck('group_id')->toArray();
-        print_r($courseGroups);
+        $courseGroupsUsers = GroupMember::whereIn('group_id', $courseGroups)->pluck('user_id')->toArray();
+        print_r($courseGroupsUsers);
         return;
         return \DataTables::of($users)
 
