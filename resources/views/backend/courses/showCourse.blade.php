@@ -163,7 +163,7 @@
                                                 <th>#</th>
                                                 <th>name</th>
                                                 <th>join</th>
-                                                <th>ended</th>
+                                                {{-- <th>ended</th> --}}
                                                 <th>group</th>
                                                 <th>type</th>
                                                 {{--<th>Options</th>--}}
@@ -207,7 +207,7 @@
                     { data: 'id', name: 'id','title':'#' },
                     { data: 'user_name', name: 'user_name' ,'title':'الاسم'},
                     { data: 'created_at', name: 'created_at' ,'title':'تاريخ الالتحاق'},
-                    { data: 'ended', name: 'ended' ,'title':'تاريخ الانتهاء'},
+                    // { data: 'ended', name: 'ended' ,'title':'تاريخ الانتهاء'},
                     { data: 'group', name: 'group','title':'المجموعة' },
                     { data: 'type', name: 'type','title':'الدور' },
                     // { data: 'options', name: 'options' ,'title':'العمليات' },
