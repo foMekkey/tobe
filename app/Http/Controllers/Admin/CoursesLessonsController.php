@@ -90,7 +90,7 @@ class CoursesLessonsController extends Controller
 
         $users = CoursesUser::where('course_id', $id)->get();
         $courses = Courses::find($id);
-        $courseGroups = $courses->groups()->get();
+        $courseGroups = $courses->groups()->pluck('group_id')->toArray();
         print_r($courseGroups);
         return;
         return \DataTables::of($users)
