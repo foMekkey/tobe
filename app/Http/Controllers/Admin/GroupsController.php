@@ -288,7 +288,7 @@ class GroupsController extends Controller
             ->addColumn('options', function ($query) use ($group) {
                 $file_id = $query->id;
                 $id_group = $group->id;
-                $file = $query->url;
+                $file = config("filesystems.disks.contabo.url") . '/' . $query->url;
                 $file_name = $query->name;
                 return view('backend.groups.actionFiles', compact('file_id', 'file', 'id_group', 'file_name'));
             })
