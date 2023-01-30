@@ -248,7 +248,7 @@ class GroupsController extends Controller
 
         $groups = Groups::find($id);
 
-        foreach ($request->file('FileUploaded') as $key => $value) {
+        foreach ($request->FileUploaded as $key => $value) {
             echo $value->getClientOriginalExtension();
             $files = new File();
             $files->url = $value->storePublicly(
