@@ -43,11 +43,9 @@ class FilesController extends Controller
      */
     public function destroy($id)
     {
-        return "sss";
         $file = File::find($id);
 
         \Storage::disk('contabo')->delete($file->url);
-        return config("filesystems.disks.contabo.url") . '/' . $file->url;
         $check = $file->delete();
 
         if ($check) {
