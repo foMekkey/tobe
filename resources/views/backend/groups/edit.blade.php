@@ -201,9 +201,13 @@
                                             <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.Trainer') }}
                                                 <span style="color: red">*</span></label>
                                             <div class="col-lg-9 col-xl-9">
+
+
                                                 {{ Form::select('trainer_id', $trainers, $groups->trainer_id, ['class' => 'form-control', 'placeholder' => __('pages.choose-trainer')]) }}
+
                                             </div>
                                         </div>
+
 
                                         <div class="form-group row">
                                             <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.desc') }}
@@ -222,6 +226,10 @@
                                                     value="{{ $groups->key ? $groups->key : old('key') }}">
                                             </div>
                                         </div>
+
+
+
+
 
                                         <div class="form-group row">
                                             <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.tag') }}
@@ -314,7 +322,7 @@
                                             <label class="button" for="fileElem">{{ __('pages.choose-file') }}</label>
 
                                             <progress id="progress-bar" max=100 value=0></progress>
-                                            <div id="gallery"></div>
+                                            <div id="gallery" />
                                         </div>
                                     </div>
 
