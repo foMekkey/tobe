@@ -7,6 +7,7 @@ use App\Groups;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
+
 class FilesController extends Controller
 {
 
@@ -17,7 +18,7 @@ class FilesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id,$group)
+    public function update(Request $request, $id, $group)
     {
 
         $files = File::find($id);
@@ -32,7 +33,6 @@ class FilesController extends Controller
         $files->update();
 
         return redirect()->back()->with(['success' =>  __('pages.success-add')]);
-
     }
 
     /**
@@ -45,13 +45,14 @@ class FilesController extends Controller
     {
         $file = File::find($id);
 
+        \Storage::disk('contabo')->delete(config("filesystems.disks.contabo.url") . '/' . $file->url);
+
         $check = $file->delete();
 
         if ($check) {
             return Response::json($id, '200');
         } else {
-            return redirect()->back()->with('error',__('pages.success-delete'));
-
+            return redirect()->back()->with('error', __('pages.success-delete'));
         }
     }
 }
