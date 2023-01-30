@@ -261,7 +261,6 @@ class GroupsController extends Controller
             $files->name = $value->getClientOriginalName();
             $files->group_id = $groups->id;
             $files->save();
-            return;
         }
         return;
         // return redirect()->back()->with(['success' =>  __('pages.success-add')]);
