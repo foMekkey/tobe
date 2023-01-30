@@ -262,6 +262,8 @@ class GroupsController extends Controller
             $files->group_id = $groups->id;
             $files->save();
         }
+        echo "<pre>";
+        print_r($request->file('FileUploaded'));
         return;
         // return redirect()->back()->with(['success' =>  __('pages.success-add')]);
     }
