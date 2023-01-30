@@ -317,7 +317,7 @@
                                             <i class="flaticon-upload"></i>
                                             <p>{{ __('pages.choose-to-upolad') }}</p>
 
-                                            <input type="file" name="FileUploaded" id="fileElem" multiple
+                                            <input type="file" name="FileUploaded[]" id="fileElem" multiple
                                                 onchange="handleFiles(this.files)">
                                             <label class="button" for="fileElem">{{ __('pages.choose-file') }}</label>
 
