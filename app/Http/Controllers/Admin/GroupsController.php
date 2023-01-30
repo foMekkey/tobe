@@ -249,7 +249,6 @@ class GroupsController extends Controller
         $groups = Groups::find($id);
 
         foreach ($request->FileUploaded as $key => $value) {
-            echo $value->getClientOriginalExtension();
             $files = new File();
             $files->url = $value->storePublicly(
                 path: 'groups/images',
@@ -262,10 +261,7 @@ class GroupsController extends Controller
             $files->group_id = $groups->id;
             $files->save();
         }
-        echo "<pre>";
-        print_r($request->file('FileUploaded'));
-        return;
-        // return redirect()->back()->with(['success' =>  __('pages.success-add')]);
+        return redirect()->back()->with(['success' =>  __('pages.success-add')]);
     }
 
 
