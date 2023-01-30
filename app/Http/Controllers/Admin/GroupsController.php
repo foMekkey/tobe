@@ -249,8 +249,8 @@ class GroupsController extends Controller
         $groups = Groups::find($id);
 
         $file = $request->file('FileUploaded');
-        print_r($file);
         foreach ($file as $key => $value) {
+            print_r($value);
             $files = new File();
             $files->url = $value->storePublicly(
                 path: 'groups/images',
@@ -262,7 +262,6 @@ class GroupsController extends Controller
             $files->name = $value->getClientOriginalName();
             $files->group_id = $groups->id;
             $files->save();
-            print_r($value);
             return;
         }
         return;
