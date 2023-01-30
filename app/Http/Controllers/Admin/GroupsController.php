@@ -251,7 +251,7 @@ class GroupsController extends Controller
         $file = $request->file('FileUploaded');
         foreach ($file as $key => $value) {
             $files = new File();
-            $files->url = $request->FileUploaded->storePublicly(
+            $files->url = $value->storePublicly(
                 path: 'groups/images',
                 options: 'contabo'
             );
