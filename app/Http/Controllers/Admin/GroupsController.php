@@ -289,6 +289,7 @@ class GroupsController extends Controller
                 return view('backend.groups.actionFiles', compact('file_id', 'file', 'id_group', 'file_name'));
             })
             ->rawColumns(['options', 'is_active'])
+            ->setRowId('id')
             ->make(true);
     }
 }
