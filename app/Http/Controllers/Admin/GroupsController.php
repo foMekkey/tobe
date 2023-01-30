@@ -48,10 +48,9 @@ class GroupsController extends Controller
     public function store(GroupsRequest $groupsRequest)
     {
 
-        if(isset($groupsRequest->status) ||  $groupsRequest->status != null)
-        {
+        if (isset($groupsRequest->status) ||  $groupsRequest->status != null) {
             $stauts = $groupsRequest->status;
-        }else{
+        } else {
             $stauts = 0;
         }
 
@@ -88,7 +87,7 @@ class GroupsController extends Controller
     public function edit($id)
     {
         $groups = Groups::find($id);
-       // dd($groups);
+        // dd($groups);
         $trainers = User::where('type', 2)->pluck('user_name', 'id')->toArray();
         return view('backend.groups.edit', compact('groups', 'trainers'));
     }
@@ -125,7 +124,6 @@ class GroupsController extends Controller
         $groups->update();
 
         return redirect('groups')->with(['success' =>  __('pages.success-edit')]);
-
     }
 
     /**
@@ -145,7 +143,6 @@ class GroupsController extends Controller
             return Response::json($id, '200');
         } else {
             return redirect()->back()->with('error',  __('pages.delete-success'));
-
         }
     }
 
@@ -250,18 +247,21 @@ class GroupsController extends Controller
 
 
         $groups = Groups::find($id);
-        $files = new File();
 
         $file = $request->file('FileUploaded');
-        $files->url = $request->FileUploaded->store('files');
-        // $files->owner_type = $users->type;
-        //  $files->owner_id = $id;
-        $files->extension = $file->getClientOriginalExtension();
-        $files->file_size = $file->getSize();
-        $files->mime = $file->getMimeType();
-        $files->name = $file->getClientOriginalName();
-        $files->group_id = $groups->id;
-        $files->save();
+        foreach ($file as $key => $value) {
+            $files = new File();
+            $files->url = $request->FileUploaded->storePublicly(
+                path: 'groups/images',
+                options: 'contabo'
+            );
+            $files->extension = $value->getClientOriginalExtension();
+            $files->file_size = $value->getSize();
+            $files->mime = $value->getMimeType();
+            $files->name = $value->getClientOriginalName();
+            $files->group_id = $groups->id;
+            $files->save();
+        }
 
         return redirect()->back()->with(['success' =>  __('pages.success-add')]);
     }
@@ -270,7 +270,7 @@ class GroupsController extends Controller
     public function DatatableUsersFiles($id)
     {
         $files = File::where('group_id', $id)->get();
-        $group =Groups::find($id);
+        $group = Groups::find($id);
 
         return \DataTables::of($files)
             ->editColumn('is_active', function ($query) {
@@ -278,22 +278,19 @@ class GroupsController extends Controller
                     return '<span class="kt-badge kt-badge--brand kt-badge--inline kt-badge--pill">يمكن للمستخدم رؤيته</span>';
                 } else {
                     return '<span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill">لا يمكن للمستخدم رؤيته</span>';
-
                 }
             })
             ->editColumn('file_size', function ($query) {
                 return formatSizeUnits($query->file_size);
             })
-            ->addColumn('options', function ($query) use ($group){
+            ->addColumn('options', function ($query) use ($group) {
                 $file_id = $query->id;
                 $id_group = $group->id;
                 $file = $query->url;
                 $file_name = $query->name;
-                return view('backend.groups.actionFiles', compact('file_id', 'file','id_group', 'file_name'));
+                return view('backend.groups.actionFiles', compact('file_id', 'file', 'id_group', 'file_name'));
             })
             ->rawColumns(['options', 'is_active'])
             ->make(true);
     }
-
-
 }
