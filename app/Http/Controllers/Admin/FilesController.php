@@ -49,7 +49,7 @@ class FilesController extends Controller
         $check = $file->delete();
 
         if ($check) {
-            return Response::json($id, '200');
+            return redirect()->back();
         } else {
             return redirect()->back()->with('error', __('pages.success-delete'));
         }
