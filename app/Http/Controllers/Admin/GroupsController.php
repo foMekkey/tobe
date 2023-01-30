@@ -264,8 +264,8 @@ class GroupsController extends Controller
             print_r($value);
             return;
         }
-
-        return redirect()->back()->with(['success' =>  __('pages.success-add')]);
+        return;
+        // return redirect()->back()->with(['success' =>  __('pages.success-add')]);
     }
 
 
