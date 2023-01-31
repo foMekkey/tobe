@@ -22,9 +22,13 @@ class FilesController extends Controller
     {
 
         $files = File::find($id);
+        \Storage::disk('contabo')->delete($files->url);
 
         $file = $request->file('file');
-        $files->url = $request->file->store('files');
+        $files->url = $request->file->storePublicly(
+            path: 'groups/images',
+            options: 'contabo'
+        );
         $files->extension = $file->getClientOriginalExtension();
         $files->file_size = $file->getSize();
         $files->mime = $file->getMimeType();
