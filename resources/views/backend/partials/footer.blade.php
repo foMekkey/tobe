@@ -602,6 +602,7 @@
                                 if (data.message == 'hasUsers') {
                                     swal("{{ __('jsMessage.cannotDeleteMessage') }}", {
                                         icon: "warning",
+                                        showConfirmButton: false,
                                     });
                                 }
                             } else {
