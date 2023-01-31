@@ -845,6 +845,13 @@
                     cache: false,
                     contentType: false,
                     processData: false,
+                    beforeSend: function() {
+                        swal({
+                            title: 'system message',
+                            text: 'please wait connecting to contabo',
+                            buttons: false
+                        });
+                    },
                     success: function(data) {
                         console.log(data);
                         $('#exampleModal').modal('toggle');
