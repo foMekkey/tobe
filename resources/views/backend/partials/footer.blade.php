@@ -594,7 +594,10 @@
                         },
                         dataType: 'json',
                         beforeSend: function() {
-                            swal("please wait", {
+                            swal({
+                                title: 'system message',
+                                text: 'please wait connecting to contabo',
+                                showCancelButton: false,
                                 showConfirmButton: false
                             });
                         },
