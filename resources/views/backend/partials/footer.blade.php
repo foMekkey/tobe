@@ -597,8 +597,7 @@
                             swal({
                                 title: 'system message',
                                 text: 'please wait connecting to contabo',
-                                showCancelButton: false,
-                                showConfirmButton: false
+                                buttons: false
                             });
                         },
                         success: function(data) {
