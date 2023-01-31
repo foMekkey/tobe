@@ -857,6 +857,9 @@
                         $('#exampleModal').modal('toggle');
                         // location.reload(true);
                         $('#userFiles').DataTable().ajax.reload();
+                        swal("تم التعديل بنجاح", {
+                            icon: "success",
+                        });
 
                     },
                     error: function(data) {
