@@ -594,7 +594,9 @@
                         },
                         dataType: 'json',
                         beforeSend: function() {
-                            swal("please wait");
+                            swal("please wait", {
+                                showConfirmButton: false
+                            });
                         },
                         success: function(data) {
                             // location.reload(true);
@@ -602,7 +604,6 @@
                                 if (data.message == 'hasUsers') {
                                     swal("{{ __('jsMessage.cannotDeleteMessage') }}", {
                                         icon: "warning",
-                                        showConfirmButton: false,
                                     });
                                 }
                             } else {
