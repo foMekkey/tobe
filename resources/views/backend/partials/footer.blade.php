@@ -1,10 +1,10 @@
-
 </div>
 </div>
 </div>
 
 <!-- begin:: Footer -->
-<div class="kt-footer  kt-footer--extended  kt-grid__item" id="kt_footer" style="background-image: url('{{ url('site_assets/images/footer_bg.png') }}');">
+<div class="kt-footer  kt-footer--extended  kt-grid__item" id="kt_footer"
+    style="background-image: url('{{ url('site_assets/images/footer_bg.png') }}');">
     {{-- <div class="kt-footer__top">
         <div class="kt-container">
             <div class="row">
@@ -61,7 +61,8 @@
             <div class="kt-footer__wrapper">
                 <div class="kt-footer__logo">
                     <a class="kt-header__brand-logo" href="{{ url('/') }}">
-                        <img alt="Logo" src="{{ url('admin/assets/media/logos/logo-4-sm.png') }}" class="kt-header__brand-logo-sticky">
+                        <img alt="Logo" src="{{ url('admin/assets/media/logos/logo-4-sm.png') }}"
+                            class="kt-header__brand-logo-sticky">
                     </a>
                     <div class="kt-footer__copyright">
                         2020&nbsp;&copy;&nbsp;
@@ -89,9 +90,11 @@
 <div id="kt_quick_panel" class="kt-quick-panel">
     <a href="#" class="kt-quick-panel__close" id="kt_quick_panel_close_btn"><i class="flaticon2-delete"></i></a>
     <div class="kt-quick-panel__nav">
-        <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-brand  kt-notification-item-padding-x" role="tablist">
+        <ul class="nav nav-tabs nav-tabs-line nav-tabs-bold nav-tabs-line-3x nav-tabs-line-brand  kt-notification-item-padding-x"
+            role="tablist">
             <li class="nav-item active">
-                <a class="nav-link active" data-toggle="tab" href="#kt_quick_panel_tab_notifications" role="tab">Notifications</a>
+                <a class="nav-link active" data-toggle="tab" href="#kt_quick_panel_tab_notifications"
+                    role="tab">Notifications</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#kt_quick_panel_tab_logs" role="tab">Audit Logs</a>
@@ -371,7 +374,8 @@
                     </a>
                 </div>
             </div>
-            <div class="tab-pane kt-quick-panel__content-padding-x fade kt-scroll" id="kt_quick_panel_tab_settings" role="tabpanel">
+            <div class="tab-pane kt-quick-panel__content-padding-x fade kt-scroll" id="kt_quick_panel_tab_settings"
+                role="tabpanel">
                 <form class="kt-form">
                     <div class="kt-heading kt-heading--sm kt-heading--space-sm">Customer Care</div>
                     <div class="form-group form-group-xs row">
@@ -516,7 +520,7 @@
 <!--begin::Global Theme Bundle(used by all pages) -->
 <script src="{{ asset('admin/assets/vendors/global/vendors.bundle.js') }}" type="text/javascript"></script>
 <script>
-    $.extend( $.validator.messages, {
+    $.extend($.validator.messages, {
         required: "هذا الحقل إلزامي",
         remote: "يرجى تصحيح هذا الحقل للمتابعة",
         email: "رجاء إدخال عنوان بريد إلكتروني صحيح",
@@ -528,13 +532,13 @@
         creditcard: "رجاء إدخال رقم بطاقة ائتمان صحيح",
         equalTo: "رجاء إدخال نفس القيمة",
         extension: "رجاء إدخال ملف بامتداد موافق عليه",
-        maxlength: $.validator.format( "الحد الأقصى لعدد الحروف هو {0}" ),
-        minlength: $.validator.format( "الحد الأدنى لعدد الحروف هو {0}" ),
-        rangelength: $.validator.format( "عدد الحروف يجب أن يكون بين {0} و {1}" ),
-        range: $.validator.format( "رجاء إدخال عدد قيمته بين {0} و {1}" ),
-        max: $.validator.format( "رجاء إدخال عدد أقل من أو يساوي {0}" ),
-        min: $.validator.format( "رجاء إدخال عدد أكبر من أو يساوي {0}" )
-    } );
+        maxlength: $.validator.format("الحد الأقصى لعدد الحروف هو {0}"),
+        minlength: $.validator.format("الحد الأدنى لعدد الحروف هو {0}"),
+        rangelength: $.validator.format("عدد الحروف يجب أن يكون بين {0} و {1}"),
+        range: $.validator.format("رجاء إدخال عدد قيمته بين {0} و {1}"),
+        max: $.validator.format("رجاء إدخال عدد أقل من أو يساوي {0}"),
+        min: $.validator.format("رجاء إدخال عدد أكبر من أو يساوي {0}")
+    });
 </script>
 
 <script src="{{ asset('admin/assets/js/demo4/scripts.bundle.js') }}" type="text/javascript"></script>
@@ -543,86 +547,93 @@
 <script src="{{ asset('admin/assets/custom/js/jquery.nicescroll.min.js') }}"></script>
 
 <script>
-    $(document).ready( init());
+    $(document).ready(init());
 
     function init() {
-        let  lannn = new transLang();
+        let lannn = new transLang();
 
-        @if(app()->getLocale() == 'ar')
+        @if (app()->getLocale() == 'ar')
             lan = lannn.ar.translate;
         @else
             lan = lannn.en.translate;
         @endif
     }
 
-    $(document).ready(function(){
+    $(document).ready(function() {
         $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
             localStorage.setItem('activeTab', $(e.target).attr('href'));
         });
         var activeTab = localStorage.getItem('activeTab');
-        if(activeTab){
+        if (activeTab) {
             $('#myTab a[href="' + activeTab + '"]').tab('show');
         }
     });
 </script>
 
 <script>
-    $(document).on('click', '.destroy', function () {
+    $(document).on('click', '.destroy', function() {
         var route = $(this).data('route');
         var token = $(this).data('token');
         var rowId = $(this).data('id');
         console.log(rowId);
         swal({
-            title: "{{__('jsMessage.question-delete')}}",
-            text: "{{__('jsMessage.alert-delete')}}",
-            icon: "warning",
-            buttons: ["{{__('jsMessage.no')}}", "{{__('jsMessage.yes')}}"],
-            dangerMode: true,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                $.ajax({
-                    url: route,
-                    type: 'get',
-                    data: {_method: 'delete', _token: token},
-                    dataType: 'json',
-                    success: function (data) {
-                        // location.reload(true);
-                        if (typeof data == 'object'){
-                            if (data.message == 'hasUsers'){
-                                swal("{{__('jsMessage.cannotDeleteMessage')}}", {
-                                    icon: "warning",
+                title: "{{ __('jsMessage.question-delete') }}",
+                text: "{{ __('jsMessage.alert-delete') }}",
+                icon: "warning",
+                buttons: ["{{ __('jsMessage.no') }}", "{{ __('jsMessage.yes') }}"],
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: route,
+                        type: 'get',
+                        data: {
+                            _method: 'delete',
+                            _token: token
+                        },
+                        dataType: 'json',
+                        beforeSend: function() {
+                            swal("please wait");
+                        },
+                        success: function(data) {
+                            // location.reload(true);
+                            if (typeof data == 'object') {
+                                if (data.message == 'hasUsers') {
+                                    swal("{{ __('jsMessage.cannotDeleteMessage') }}", {
+                                        icon: "warning",
+                                    });
+                                }
+                            } else {
+                                swal("{{ __('jsMessage.deleteReturn') }}", {
+                                    icon: "success",
                                 });
+                                $("tr#" + data).remove();
                             }
-                        }else{
-                            swal("{{__('jsMessage.deleteReturn')}}", {
-                                icon: "success",
-                            });
-                            $("tr#" + data).remove();
-                        }
 
-                    },
-                    errors:function (data) {
-                        swal("{{__('jsMessage.delete-error')}}");
-                    }
-                });
-            } else {
-                swal("{{__('jsMessage.cancel-delete')}}");
-            }
-        });
+                        },
+                        errors: function(data) {
+                            swal("{{ __('jsMessage.delete-error') }}");
+                        }
+                    });
+                } else {
+                    swal("{{ __('jsMessage.cancel-delete') }}");
+                }
+            });
     });
-    
-    $('.kt-pulse').click(function(){
+
+    $('.kt-pulse').click(function() {
         $.ajax({
             type: "get",
             url: "{{ route('markNotificationsAsRead') }}",
             data: {},
             dataType: "json",
-            success: function (msg) {}
+            success: function(msg) {}
         });
     });
 </script>
 
 @yield('script')
 </body>
+
 </html>
