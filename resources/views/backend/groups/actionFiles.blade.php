@@ -11,6 +11,6 @@
 </a>
 
 
-<a class="btn btn-sm btn-clean btn-icon btn-icon-md " href="{{ $file }}" download="{{ $file }}">
+<a class="btn btn-sm btn-clean btn-icon btn-icon-md " href="{{ $file }}" download>
     <i class="la la-cloud-download"></i>
 </a>
