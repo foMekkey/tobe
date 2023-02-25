@@ -14,11 +14,11 @@
         </div>
     </section>
     <section class="article">
-	<div class="container-fluid">
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8 col-sm-8 col-xs-12">
                     <div class="article_text">
-                        <img src="{{ asset("uploads/" . $blog->image) }}">
+                        <img src="{{ config('filesystems.disks.contabo.url') . '/' . $blog->image }}">
                         <ul class="list-inline detail">
                             <li><span class="fa fa-user"></span>{{ __('site.by') }} {{ $blog->created_by }}</li>
                         </ul>
@@ -32,7 +32,8 @@
                         <h1>{{ __('site.serach') }}</h1>
                         <form>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="{{ __('site.enter_search_keyword') }}">
+                                <input type="text" class="form-control"
+                                    placeholder="{{ __('site.enter_search_keyword') }}">
                                 <span class="fa fa-search"></span>
                             </div>
                         </form>
@@ -42,20 +43,20 @@
                         <div class="last_news">
                             <h1>{{ __('site.latest_news') }}</h1>
                             @foreach ($latestNews as $oneNews)
-                            <div class="news_item">
-                                <a href="{{ url('site/blog/' . $oneNews->id) }}">
-                                    <img src="{{ asset("uploads/" . $oneNews->image) }}">
-                                    <p>
-                                        {{ $oneNews->title }}
-                                        <span>{{ \Carbon\Carbon::parse($oneNews->date)->format('F j, Y') }}</span>
-                                    </p>
-                                </a>
-                            </div>
+                                <div class="news_item">
+                                    <a href="{{ url('site/blog/' . $oneNews->id) }}">
+                                        <img src="{{ config('filesystems.disks.contabo.url') . '/' . $oneNews->image }}">
+                                        <p>
+                                            {{ $oneNews->title }}
+                                            <span>{{ \Carbon\Carbon::parse($oneNews->date)->format('F j, Y') }}</span>
+                                        </p>
+                                    </a>
+                                </div>
                             @endforeach
                         </div><!-- last_news -->
                     @endif
                 </div>
             </div>
-	</div>
+        </div>
     </section>
 @endsection
