@@ -194,10 +194,10 @@ class CoursesController extends Controller
         // $courses->end_date           = $timestamp_to;
         // $courses->duration           = $request->duration;
         // $courses->period_type           = $request->period_type;
-        // $courses->image              = ($request->hasFile('image')) ? $request->file('image')->storePublicly(
-        //     path: 'courses/images',
-        //     options: 'contabo'
-        // ) : $courses->image;
+        $courses->image              = ($request->hasFile('image')) ? $request->file('image')->storePublicly(
+            path: 'courses/images',
+            options: 'contabo'
+        ) : $courses->image;
         // $courses->complete_rules     = $request->complete_rules;
         $courses->update();
 
