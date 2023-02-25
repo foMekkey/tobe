@@ -77,6 +77,8 @@
                                             @if (Auth::check())
                                                 <a href="{{ route('logout') }}"
                                                     class="btn black_hover">{{ __('site.logout') }}</a>
+                                                <a href="{{ route('courses') }}"
+                                                    class="btn black_hover">{{ __('site.dashboard') }}</a>
                                             @else
                                                 <a href="{{ route('register') }}"
                                                     class="btn black_hover">{{ __('site.sign_up') }}</a>

@@ -123,6 +123,7 @@ return [
     'confirm_pass_not_match' => 'يجب أن يتطابق الحقل تأكيد كلمة المرور مع كلمة المرور',
     'you_must_agree_terms' => 'يجب الموافقة على شروط الموقع',
     'logout' => 'تسجيل الخروج',
+    'dashboard' => 'لوحة التحكم',
     'add_newsletter_success' => 'تم الإشتراك بنجاح',
     'add_newsletter_error' => 'أنت بالفعل مشترك لدينا',
     'session_type' => 'نوع الجلسة',
