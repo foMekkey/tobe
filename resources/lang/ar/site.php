@@ -5,7 +5,7 @@ return [
     'phone' => 'رقم الهاتف',
     'pending' => 'في انتطار بالرد',
     'subscribed' => 'مشترك',
-    'site_name' => 'ToBe',
+    'site_name' => 'tobe',
     'other_lang' => 'English',
     'left' => 'right',
     'right' => 'left',
