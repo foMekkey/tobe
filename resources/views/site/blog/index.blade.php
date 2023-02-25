@@ -13,7 +13,7 @@
             </ul>
         </div>
     </section>
-    
+
     <section class="blog">
         <div class="container-fluid">
             <div class="row">
@@ -26,21 +26,23 @@
                 </div>
 
                 @foreach ($blog as $singleBlog)
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="blog_block wow fadeIn" data-wow-duration=".5s" data-wow-delay="0.25s">
-                        <a href="{{ url('site/blog/' . $singleBlog->id) }}">
-                            <img src="{{ asset("uploads/".$singleBlog->image) }}">
-                            <h3 class="date">{{ \Carbon\Carbon::parse($singleBlog->date)->format('M j, Y') }}</h3>
-                            <div class="blog_info">
-                                <ul class="list-inline">
-                                    <li><i class="fas fa-user"></i>{{ __('site.by') }} {{ $singleBlog->created_by }}</li>
-                                </ul>
-                                <h1>{{ $singleBlog->title }}</h1>
-                                <a href="{{ url('site/blog/' . $singleBlog->id) }}">{{ __('site.read_more') }} <i class="fas fa-long-arrow-alt-{{ __('site.right') }}"></i></a>
-                            </div>
-                        </a>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="blog_block wow fadeIn" data-wow-duration=".5s" data-wow-delay="0.25s">
+                            <a href="{{ url('site/blog/' . $singleBlog->id) }}">
+                                <img src="{{ config('filesystems.disks.contabo.url') . '/' . $singleBlog->image }}">
+                                <h3 class="date">{{ \Carbon\Carbon::parse($singleBlog->date)->format('M j, Y') }}</h3>
+                                <div class="blog_info">
+                                    <ul class="list-inline">
+                                        <li><i class="fas fa-user"></i>{{ __('site.by') }} {{ $singleBlog->created_by }}
+                                        </li>
+                                    </ul>
+                                    <h1>{{ $singleBlog->title }}</h1>
+                                    <a href="{{ url('site/blog/' . $singleBlog->id) }}">{{ __('site.read_more') }} <i
+                                            class="fas fa-long-arrow-alt-{{ __('site.right') }}"></i></a>
+                                </div>
+                            </a>
+                        </div>
                     </div>
-                </div>
                 @endforeach
             </div>
 
