@@ -2,8 +2,12 @@
 
 Auth::routes();
 
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.reset');
+// Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.reset');
 // Route::get('password/email', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.email');
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.reset');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
 
 Route::get('test_mail_view', [
