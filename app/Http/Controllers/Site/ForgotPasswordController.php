@@ -66,7 +66,7 @@ class ForgotPasswordController extends Controller
       $message->subject('إستعادة كلمة المرور');
     });
     session()->flash('save', 'تم ارسال نموذج استعادة البيانات لحسابكم');
-    return redirect()->back()->with('msg', 'omar');
+    return redirect()->back()->with('msg', '');
   }
 
   public function passwordResBlade($token)
