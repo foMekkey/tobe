@@ -2,6 +2,7 @@
 
 Auth::routes();
 
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail');
 Route::get('test_mail_view', [
     'uses' => "Admin\SubscriptionsController@test_mail_view",
     'as' => 'addsubscripti',
