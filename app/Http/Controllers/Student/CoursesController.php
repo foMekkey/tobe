@@ -111,6 +111,7 @@ class CoursesController extends Controller
 
     public function show($id)
     {
+        $courseData = Courses::find($id);
         $coursesLessons = CoursesLessons::where('course_id', $id)->orderBy('number_lession')->get();
         $courseUser = CoursesUser::where(['user_id' => auth()->id(), 'course_id' => $id])->first();
         $completedLessons = $courseSurveys = $courseCompletedSurveys = [];
@@ -154,7 +155,8 @@ class CoursesController extends Controller
             'completedLessons',
             'courseSurveys',
             'courseCompletedSurveys',
-            'icons'
+            'icons',
+            'courseData'
         ));
     }
 
