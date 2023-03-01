@@ -99,7 +99,7 @@
                                                         class="fa fa-times close_search"></span></a>
                                             </div>
                                         </li>
-                                        <li class="lang"><a
+                                        <li class="lang" style="display: none;"><a
                                                 href="{{ url('site/switch_language/' . (app()->getLocale() == 'en' ? 'ar' : 'en')) }}"><i
                                                     class="fas fa-globe-americas"></i>{{ __('site.other_lang') }}</a>
                                         </li>
