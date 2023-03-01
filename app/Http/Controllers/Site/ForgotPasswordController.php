@@ -54,7 +54,7 @@ class ForgotPasswordController extends Controller
       return back();
     }
 
-    $user['reset_token'] = Str::random(60);
+    $user['reset_token'] = \Str::random(60);
     $user->save();
 
     $link = url('password/reset/' . $user['reset_token'] . '?email=' . urlencode($user['email']));
