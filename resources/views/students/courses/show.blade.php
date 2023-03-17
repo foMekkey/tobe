@@ -189,7 +189,7 @@
                             </div>
                         @endif
 
-                        <div class="word">
+                        <div class="word" style="display: none;">
                             @if ($course->user->image)
                                 <img src="{{ asset('uploads/' . $course->user->image) }}">
                             @endif
