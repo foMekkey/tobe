@@ -75,6 +75,11 @@
                             <h5>{{ __('pages.e_wallets') }}</h5>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('banks') }}">
+                            <h5>{{ __('pages.banks') }}</h5>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="kt-portlet__head-toolbar">
