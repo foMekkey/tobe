@@ -203,7 +203,8 @@
                         <div class="reviews">
                             <h3>{{ __('site.reviews') }}</h3>
 
-                            <h1>{{ $reviewsCount }}<span>{{ __('site.rankings') }}</span><i>{{ !count($reviewsGrouped) ? __('site.no_reviews') : '' }}</i>
+                            <h1>{{ $reviewsCount }}<span> {{ __('site.rankings') }}</span> <br>
+                                <i>{{ !count($reviewsGrouped) ? __('site.no_reviews') : '' }}</i>
                             </h1>
 
                             <ul>
