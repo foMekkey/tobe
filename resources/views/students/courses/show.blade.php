@@ -1,4 +1,4 @@
-@extends('backend.layouts.app')
+@extends('backend.layouts.subscripe-app')
 @section('page-main-title', __('pages.courses'))
 
 @section('meta-tags')
