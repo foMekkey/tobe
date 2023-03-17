@@ -1,9 +1,10 @@
 @extends('backend.layouts.app')
 
 @section('style')
-<link href="{{ asset('css/summernote.css') }}" rel="stylesheet" type="text/css" />
-<style>
-        .nav-pills, .nav-tabs {
+    <link href="{{ asset('css/summernote.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .nav-pills,
+        .nav-tabs {
             margin: 0;
         }
     </style>
@@ -20,7 +21,7 @@
                 <div class="kt-portlet__head-label">
                     <ul id="myTab" class="nav nav-pills nav-pills-sm nav-pills-label nav-pills-bold" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('services') }}">
+                            <a class="nav-link active">
                                 <h5>{{ __('pages.services') }}</h5>
                             </a>
                         </li>
@@ -50,7 +51,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active">
+                            <a class="nav-link" href="{{ route('newsletters') }}">
                                 <h5>{{ __('pages.store-newsletter') }}</h5>
                             </a>
                         </li>
@@ -59,12 +60,28 @@
                                 <h5>{{ __('pages.consultations') }}</h5>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('faqs') }}">
+                                <h5>{{ __('pages.faqs') }}</h5>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('e_wallets') }}">
+                                <h5>{{ __('pages.e_wallets') }}</h5>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('banks') }}">
+                                <h5>{{ __('pages.banks') }}</h5>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
 
             <!--begin::Form-->
-            <form class="kt-form kt-form--label-right" id="kt_form_1" method="post" action="{{ route('postaddnewsletters') }}" enctype="multipart/form-data">
+            <form class="kt-form kt-form--label-right" id="kt_form_1" method="post"
+                action="{{ route('postaddnewsletters') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="kt-portlet__body">
                     <div class="kt-form__content">
@@ -83,21 +100,25 @@
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">{{ __('pages.title') }}     <span style="color: red">*</span></label>
+                        <label class="col-xl-3 col-lg-3 col-form-label">{{ __('pages.title') }} <span
+                                style="color: red">*</span></label>
                         <div class="col-lg-9 col-xl-9">
-                            <input  class="form-control" id="kt_name" name="title" type="text" value="{{ old('title') }}">
+                            <input class="form-control" id="kt_name" name="title" type="text"
+                                value="{{ old('title') }}">
                         </div>
                     </div>
-                    
+
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.message') }} <span style="color: red">*</span></label>
+                        <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.message') }} <span
+                                style="color: red">*</span></label>
                         <div class="col-lg-9 col-xl-9">
                             <textarea id="summernote" name="content"></textarea>
                         </div>
                     </div>
                 </div>
                 <div class="kt-form__actions">
-                    <button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="submit" >
+                    <button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+                        type="submit">
                         {{ __('pages.save') }}
                     </button>
                 </div>
@@ -109,13 +130,13 @@
 @endsection
 
 @section('script')
-    <script src="{{ asset('js/summernote.min.js') }}" type="text/javascript"></script>    
+    <script src="{{ asset('js/summernote.min.js') }}" type="text/javascript"></script>
     <script>
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
-                    $('#imagePreview').css('background-image', 'url('+e.target.result +')');
+                    $('#imagePreview').css('background-image', 'url(' + e.target.result + ')');
                     $('#imagePreview').hide();
                     $('#imagePreview').fadeIn(650);
                 }
@@ -126,7 +147,7 @@
             readURL(this);
         });
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             $("#kt_form_1").validate({
                 // define validation rules
                 rules: {
@@ -138,7 +159,7 @@
                     }
                 },
                 //display error alert on form submit
-                invalidHandler: function (event, validator) {
+                invalidHandler: function(event, validator) {
                     var alert = $('#kt_form_1_msg');
                     alert.removeClass('kt--hide').show();
                     KTUtil.scrollTo('m_form_1_msg', -200);
@@ -150,7 +171,7 @@
         $('#summernote').summernote({
             callbacks: {
                 onImageUpload: function(files) {
-                    for(let i=0; i < files.length; i++) {
+                    for (let i = 0; i < files.length; i++) {
                         $.upload(files[i]);
                     }
                 }
@@ -158,7 +179,7 @@
             height: 300,
         });
 
-        $.upload = function (file) {
+        $.upload = function(file) {
             let out = new FormData();
             out.append('file', file, file.name);
 
@@ -169,10 +190,10 @@
                 cache: false,
                 processData: false,
                 data: out,
-                success: function (img) {
+                success: function(img) {
                     $('#summernote').summernote('insertImage', img);
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function(jqXHR, textStatus, errorThrown) {
                     console.error(textStatus + " " + errorThrown);
                 }
             });
