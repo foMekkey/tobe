@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 pull-right">
                     <div class="payment_method">
-                        <form>
+                        <form class="form_info" method="POST" action="{{ route('postaddstudentsubscription') }}">
                             <div class="form-group">
                                 <div class="block" id="pay_online"
                                     onclick="document.getElementById('payment_method').value = '1';">
@@ -193,8 +193,8 @@
         </div>
     </section>
     <!--
-                                                                         sub_payment
-                                                                            -->
+                                                                                 sub_payment
+                                                                                    -->
 @endsection
 
 
