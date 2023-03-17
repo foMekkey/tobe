@@ -10,7 +10,7 @@ use Session;
 use App\User;
 
 class LoginController extends Controller
-{   
+{
     # login page
     public function getLogin()
     {
@@ -25,11 +25,12 @@ class LoginController extends Controller
             'email'    => 'required|email'
         ]);
 
-
-        if( auth()->attempt($request->only(['email','password']),$request->rememberme))
-        {
-             return redirect()->route('home');
-        }else{
+        $getUserByEmail = User::where('email', $request->email)->first();
+        if ($getUserByEmail)
+            \DB::table('sessions')->where('user_id', $getUserByEmail->id)->delete();
+        if (auth()->attempt($request->only(['email', 'password']), $request->rememberme)) {
+            return redirect()->route('home');
+        } else {
             return redirect()->route('login');
         }
     }
@@ -47,9 +48,9 @@ class LoginController extends Controller
             'f_name'      => 'required',
             'l_name'      => 'required',
             'user_name'   => 'required',
-            'email'       =>'max:190|unique:users',
+            'email'       => 'max:190|unique:users',
             'password'    => 'required'
-        ],[
+        ], [
             'f_name.required' => __('pages.first_name_required'),
             'l_name.required' => __('pages.second_name_required'),
             'user_name.required' => __('pages.username_required'),
@@ -67,7 +68,7 @@ class LoginController extends Controller
         $user->save();
 
         Auth::loginUsingId($user->id);
-        return back(); 
+        return back();
     }
 
     # logout
@@ -86,9 +87,9 @@ class LoginController extends Controller
     public function sendResetLinkEmail(Request $request)
     {
         $this->validate($request, ['email' => 'required|email']);
-        $userModel = User::where('email', $request->only('email','activation_code'))->first();
+        $userModel = User::where('email', $request->only('email', 'activation_code'))->first();
         Mail::to($userModel->email)->send(new passwordNotification($userModel));
-        return redirect(url('/'))->with('success','check your email');
+        return redirect(url('/'))->with('success', 'check your email');
     }
 
     public function resendRememberToken()
@@ -99,7 +100,7 @@ class LoginController extends Controller
     # ar lang
     public function ArLang()
     {
-        session()->put('lang','ar');
+        session()->put('lang', 'ar');
         App::setlocale('ar');
         // return session()->get('lang');
         return back();
@@ -108,10 +109,9 @@ class LoginController extends Controller
     # en lang
     public function EnLang()
     {
-        session()->put('lang','en');
+        session()->put('lang', 'en');
         App::setlocale('en');
         // return session()->get('lang');
         return back();
     }
-
 }
