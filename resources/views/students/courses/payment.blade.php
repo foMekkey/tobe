@@ -46,6 +46,60 @@
                                 <hr>
                             </div>
 
+                            <div class="pay_online_form" id="pay_online_form" style="display: none;">
+                                <form class="form_info" method="POST" action="{{ route('postaddstudentsubscription') }}">
+                                    @csrf
+                                    <input type="text" name="payment_method" value="1" hidden>
+                                    <input type="text" name="user_id" value="{{ auth()->user()->id }}" hidden>
+                                    <input type="text" name="course_id" value="{{ $course->id }}" hidden>
+                                    <div class="form-group">
+                                        <label><span>*</span>اختر المحفظة الالكترونية</label>
+                                        <select name="e_wallet_id" class="form-control" required>
+                                            <option value="" selected> {{ __('pages.choose-e_wallet') }} </option>
+                                            @foreach ($e_wallets as $e_wallet)
+                                                <option value="{{ $e_wallet->id }}">{{ $e_wallet->company_name_en }}
+                                                    {{ $e_wallet->number }}</option>
+                                            @endforeach
+                                        </select>
+                                        <span class="fas fa-credit-card"></span>
+                                    </div>
+
+                                    <div class="form-group" style="width: 48%;float: right;">
+                                        <label><span>*</span>رقم المحفظة</label>
+                                        <input type="text" name="user_e_wallet_number" class="form-control"
+                                            placeholder="رقم المحفظة" required>
+                                        <span class="far fa-credit-card"></span>
+                                    </div>
+
+                                    <div class="form-group" style="width: 48%;float: left;">
+                                        <label><span>*</span>تاريخ التحويل</label>
+                                        <input type="date" name="transfer_date" class="form-control"
+                                            placeholder="تاريخ التحويل" required>
+                                        <span class="fas fa-calendar-alt"></span>
+                                    </div>
+
+                                    <div class="form-group" style="width: 48%;float: right;">
+                                        <label><span>*</span>المبلغ</label>
+                                        <input type="number" name="amount" class="form-control" placeholder="المبلغ"
+                                            required>
+                                        <span class="fas fa-money-bill-wave"></span>
+                                    </div>
+
+                                    <div class="form-group" style="width: 48%;float: left;">
+                                        <label>العملة</label>
+                                        <input type="text" name="currency" class="form-control" placeholder="العملة">
+                                        <span class="fas fa-coins"></span>
+                                    </div>
+
+                                    <div class="clearfix"></div>
+
+                                    <div class="form-group">
+                                        <input type="submit" class="btn black_hover" value="ارسال">
+                                    </div>
+
+                                </form>
+                            </div>
+
                             <div class="form-group">
                                 <div class="block" id="bank_accounts">
                                     <div><img src="{{ asset('site_assets') }}/images/payment_4.png" style="width: 64px;">
@@ -56,58 +110,6 @@
                             </div>
                         </form>
 
-                        <div class="pay_online_form" id="pay_online_form" style="display: none;">
-                            <form class="form_info" method="POST" action="{{ route('postaddstudentsubscription') }}">
-                                @csrf
-                                <input type="text" name="payment_method" value="1" hidden>
-                                <input type="text" name="user_id" value="{{ auth()->user()->id }}" hidden>
-                                <input type="text" name="course_id" value="{{ $course->id }}" hidden>
-                                <div class="form-group">
-                                    <label><span>*</span>اختر المحفظة الالكترونية</label>
-                                    <select name="e_wallet_id" class="form-control" required>
-                                        <option value="" selected> {{ __('pages.choose-e_wallet') }} </option>
-                                        @foreach ($e_wallets as $e_wallet)
-                                            <option value="{{ $e_wallet->id }}">{{ $e_wallet->company_name_en }}
-                                                {{ $e_wallet->number }}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="fas fa-credit-card"></span>
-                                </div>
-
-                                <div class="form-group" style="width: 48%;float: right;">
-                                    <label><span>*</span>رقم المحفظة</label>
-                                    <input type="text" name="user_e_wallet_number" class="form-control"
-                                        placeholder="رقم المحفظة" required>
-                                    <span class="far fa-credit-card"></span>
-                                </div>
-
-                                <div class="form-group" style="width: 48%;float: left;">
-                                    <label><span>*</span>تاريخ التحويل</label>
-                                    <input type="date" name="transfer_date" class="form-control"
-                                        placeholder="تاريخ التحويل" required>
-                                    <span class="fas fa-calendar-alt"></span>
-                                </div>
-
-                                <div class="form-group" style="width: 48%;float: right;">
-                                    <label><span>*</span>المبلغ</label>
-                                    <input type="number" name="amount" class="form-control" placeholder="المبلغ" required>
-                                    <span class="fas fa-money-bill-wave"></span>
-                                </div>
-
-                                <div class="form-group" style="width: 48%;float: left;">
-                                    <label>العملة</label>
-                                    <input type="text" name="currency" class="form-control" placeholder="العملة">
-                                    <span class="fas fa-coins"></span>
-                                </div>
-
-                                <div class="clearfix"></div>
-
-                                <div class="form-group">
-                                    <input type="submit" class="btn black_hover" value="ارسال">
-                                </div>
-
-                            </form>
-                        </div>
                         <div class="bank_accounts_form" style="display: none;">
                             <form class="form_info" method="POST" action="{{ route('postaddstudentsubscription') }}">
                                 @csrf
@@ -179,21 +181,21 @@
                                 </div>
 
                                 <!--
-                                                    <div class="col-md-12 col-sm-12 col-xs-12">
-                                                    <div class="form-group">
-                                                    <label><span>*</span>المدة </label>
-                                                    <select class="form-control" name="days" required="">
-                                                    <option value="1">شهر</option>
-                                                    <option value="2">3 أشهر</option>
-                                                    <option value="3">6 أشهر</option>
-                                                    </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                    <label>الرساله </label>
-                                                    <textarea class="form-control" name="notes" placeholder="قم بكتابه الرساله"></textarea>
-                                                    </div>
-                                                    </div>
-                                                -->
+                                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                                        <div class="form-group">
+                                                        <label><span>*</span>المدة </label>
+                                                        <select class="form-control" name="days" required="">
+                                                        <option value="1">شهر</option>
+                                                        <option value="2">3 أشهر</option>
+                                                        <option value="3">6 أشهر</option>
+                                                        </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                        <label>الرساله </label>
+                                                        <textarea class="form-control" name="notes" placeholder="قم بكتابه الرساله"></textarea>
+                                                        </div>
+                                                        </div>
+                                                    -->
 
 
                                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -209,8 +211,8 @@
         </div>
     </section>
     <!--
-                                                 sub_payment
-                                                    -->
+                                                     sub_payment
+                                                        -->
 @endsection
 
 
