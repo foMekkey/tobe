@@ -88,8 +88,9 @@
             <div class="row">
                 <div class="col-md-8 col-sm-12 col-xs-12">
                     <div class="course_detail">
-                        <img class="img-fluid" src="{{ config('filesystems.disks.contabo.url') . '/' . $courseData->image }}"
-                            alt="" style="border-radius: 4px;">
+                        <img class="img-fluid"
+                            src="{{ config('filesystems.disks.contabo.url') . '/' . $courseData->image }}" alt=""
+                            style="border-radius: 4px;">
                         <h2>{{ $course->category->name ?? '' }}</h2>
                         <div class="course_subscribe">
                             <div class="course_info">
@@ -245,7 +246,7 @@
                                 <div class="form-group">
                                     @csrf
                                     <input type="hidden" name="course_id" value="{{ $course->id }}" />
-                                    <input type="submit" class="btn black_hover" id="add_review"
+                                    <input type="submit" class="btn black_hover btn-success" id="add_review"
                                         value="{{ __('site.send') }}">
                                 </div>
                             </form>
