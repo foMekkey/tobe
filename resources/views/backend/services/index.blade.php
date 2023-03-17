@@ -67,7 +67,12 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('faqs') }}">
-                            <h5>{{ __('pages.consultations') }}</h5>
+                            <h5>{{ __('pages.faqs') }}</h5>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('e-wallets') }}">
+                            <h5>{{ __('pages.e-wallets') }}</h5>
                         </a>
                     </li>
                 </ul>
