@@ -94,7 +94,7 @@
                                     <div class="clearfix"></div>
 
                                     <div class="form-group">
-                                        <input type="submit" class="btn black_hover" value="ارسال">
+                                        <input type="submit" class="btn black_hover btn-success" value="ارسال">
                                     </div>
 
                                 </form>
@@ -180,27 +180,9 @@
                                     <span class="fas fa-coins"></span>
                                 </div>
 
-                                <!--
-                                                        <div class="col-md-12 col-sm-12 col-xs-12">
-                                                        <div class="form-group">
-                                                        <label><span>*</span>المدة </label>
-                                                        <select class="form-control" name="days" required="">
-                                                        <option value="1">شهر</option>
-                                                        <option value="2">3 أشهر</option>
-                                                        <option value="3">6 أشهر</option>
-                                                        </select>
-                                                        </div>
-                                                        <div class="form-group">
-                                                        <label>الرساله </label>
-                                                        <textarea class="form-control" name="notes" placeholder="قم بكتابه الرساله"></textarea>
-                                                        </div>
-                                                        </div>
-                                                    -->
-
-
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="form-group">
-                                        <input type="submit" class="btn" value="ارسال">
+                                        <input type="submit" class="btn  btn-success" value="ارسال">
                                     </div>
                                 </div>
                             </form>
@@ -211,8 +193,8 @@
         </div>
     </section>
     <!--
-                                                     sub_payment
-                                                        -->
+                                                                         sub_payment
+                                                                            -->
 @endsection
 
 
