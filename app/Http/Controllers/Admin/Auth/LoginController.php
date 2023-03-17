@@ -26,6 +26,7 @@ class LoginController extends Controller
         ]);
 
         $getUserByEmail = User::where('email', $request->email)->first();
+        dd($getUserByEmail);
         if ($getUserByEmail)
             \DB::table('sessions')->where('user_id', $getUserByEmail->id)->delete();
         if (auth()->attempt($request->only(['email', 'password']), $request->rememberme)) {
