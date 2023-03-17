@@ -3,7 +3,7 @@
 @include('backend.partials.subHeader')
 
 <!-- begin:: Content -->
-<div class="row kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content" style="margin: 15% 0px 15% 0px; ">
+<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content" style="margin: 15% 0px 15% 0px; ">
 
     @yield('content')
 
