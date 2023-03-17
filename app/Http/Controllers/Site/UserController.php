@@ -23,7 +23,9 @@ class UserController extends Controller
             'password' => 'required|min:6',
             'email'    => 'required|email'
         ]);
-
+        $getUserByEmail = User::where('email', $request->email)->first();
+        if ($getUserByEmail)
+            \DB::table('sessions')->where('user_id', $getUserByEmail->id)->delete();
         if (auth()->attempt($request->only(['email', 'password']), $request->rememberme)) {
             if (!empty($request->referrer_url)) {
                 return redirect($request->referrer_url);
