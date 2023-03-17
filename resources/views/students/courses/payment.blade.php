@@ -2,21 +2,20 @@
 
 @section('content')
     <section class="sub_head">
-        <div class="row">
-            <div class="container-fluid">
-                <div class="sub_title">
-                    <h1>وسائل الدفع</h1>
-                    <h3>يشارك أكثر من 2000 عميل أفكارهم عنا</h3>
-                </div>
-                <ul class="list-inline">
-                    <li><a href="#">الرئيسية</a></li>
-                    <li><a href="#">الدفع</a></li>
-                </ul>
+        <div class="container-fluid">
+            <div class="sub_title">
+                <h1>وسائل الدفع</h1>
+                <h3>يشارك أكثر من 2000 عميل أفكارهم عنا</h3>
             </div>
+            <ul class="list-inline">
+                <li><a href="#">الرئيسية</a></li>
+                <li><a href="#">الدفع</a></li>
+            </ul>
+        </div>
     </section>
     <!--
-             sub_head
-               -->
+     sub_head
+       -->
     <section class="payment">
         <div class="container-fluid">
             <div class="row" style="flex-direction: row-reverse;">
@@ -136,8 +135,7 @@
                                 <ul class="list-inline">
                                     @foreach ($banks as $bank)
                                         <li>{{ $bank->bank_name_ar }} <br> {{ $bank->acc_name_ar }}</li>
-                                        <li>رقم الحساب {{ $bank->acc_num }}&#x202A;<br>الايبان {{ $bank->iban }}
-                                        </li>
+                                        <li>رقم الحساب {{ $bank->acc_num }}&#x202A;<br>الايبان {{ $bank->iban }}</li>
                                     @endforeach
                                 </ul>
                                 <hr>
@@ -196,21 +194,21 @@
                                 </div>
 
                                 <!--
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="form-group">
-                <label><span>*</span>المدة </label>
-                <select class="form-control" name="days" required="">
-                <option value="1">شهر</option>
-                <option value="2">3 أشهر</option>
-                <option value="3">6 أشهر</option>
-                </select>
-                </div>
-                <div class="form-group">
-                <label>الرساله </label>
-                <textarea class="form-control" name="notes" placeholder="قم بكتابه الرساله"></textarea>
-                </div>
-                </div>
-            -->
+        <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="form-group">
+        <label><span>*</span>المدة </label>
+        <select class="form-control" name="days" required="">
+        <option value="1">شهر</option>
+        <option value="2">3 أشهر</option>
+        <option value="3">6 أشهر</option>
+        </select>
+        </div>
+        <div class="form-group">
+        <label>الرساله </label>
+        <textarea class="form-control" name="notes" placeholder="قم بكتابه الرساله"></textarea>
+        </div>
+        </div>
+    -->
 
 
                                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -224,11 +222,10 @@
                 </div>
             </div>
         </div>
-        </div>
     </section>
     <!--
-             sub_payment
-                -->
+     sub_payment
+        -->
 @endsection
 
 
