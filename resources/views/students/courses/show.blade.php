@@ -88,7 +88,8 @@
             <div class="row">
                 <div class="col-md-8 col-sm-12 col-xs-12">
                     <div class="course_detail">
-                        <img src="{{ asset('uploads/' . $course->image) }}" class="main_img">
+                        <img class="img-fluid" src="{{ config('filesystems.disks.contabo.url') . '/' . $courseData->image }}"
+                            alt="" style="border-radius: 4px;">
                         <h2>{{ $course->category->name ?? '' }}</h2>
                         <div class="course_subscribe">
                             <div class="course_info">
