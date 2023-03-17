@@ -76,7 +76,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('banks') }}">
+                        <a class="nav-link active" href="{{ route('banks') }}">
                             <h5>{{ __('pages.banks') }}</h5>
                         </a>
                     </li>

@@ -26,7 +26,7 @@
             <div class="kt-portlet__head-label">
                 <ul id="myTab" class="nav nav-pills nav-pills-sm nav-pills-label nav-pills-bold" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active">
+                        <a class="nav-link">
                             <h5>{{ __('pages.services') }}</h5>
                         </a>
                     </li>
@@ -46,7 +46,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('contact_messages') }}">
+                        <a class="nav-link active" href="{{ route('contact_messages') }}">
                             <h5>{{ __('pages.contact_messages') }}</h5>
                         </a>
                     </li>
