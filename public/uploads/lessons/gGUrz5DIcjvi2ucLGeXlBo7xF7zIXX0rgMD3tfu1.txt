@@ -1,14 +1,14 @@
 #EXTM3U
 #EXTINF:0,Star 
-https://lcgid8xu.rocketcdn.com/startvhd.stream_720p/chunklist.m3u8
+http://lcgid8xu.rocketcdn.com/startvhd.stream_720p/chunklist.m3u8
 #EXTINF:0,NTV 
-https://nt4p9nef.rocketcdn.com/ntvhd.stream_720p/chunklist.m3u8
+http://nt4p9nef.rocketcdn.com/ntvhd.stream_720p/chunklist.m3u8
 #EXTINF:0,KanalD 
-https://soledge13.dogannet.tv/S2/HLS_LIVE/kanaldnp/track_4_1000/playlist.m3u8
+http://soledge13.dogannet.tv/S2/HLS_LIVE/kanaldnp/track_4_1000/playlist.m3u8
 #EXTINF:0,TEVE 2 
-https://soledge7.dogannet.tv/S1/HLS_LIVE/tv2/1000/prog_index.m3u8
+http://soledge7.dogannet.tv/S1/HLS_LIVE/tv2/1000/prog_index.m3u8
 #EXTINF:0,TRT 1 
-https://trtcanlitv-lh.akamaihd.net/i/TRT1HD_1@181842/index_1500_av-p.m3u8
+http://trtcanlitv-lh.akamaihd.net/i/TRT1HD_1@181842/index_1500_av-p.m3u8
 #EXTINF:0,DMAX 
 https://jviqfbc2.rocketcdn.com/dmax.smil/chunklist_b2328000_sltur.m3u8
 #EXTINF:0,TLC 
@@ -16,87 +16,87 @@ https://pa9agxjg.rocketcdn.com/tlctv.smil/chunklist_b2328000_sltur.m3u8
 #EXTINF:0,ShowMax 
 https://mn-nl.mncdn.com/showmax/smil:showmax.smil/chunklist_b1264000.m3u8
 #EXTINF:0,ASTRO ARENA HD
-https://playbackn5.aotg-video.astro.com.my/CH1/master_ARENA_8.m3u8
+http://playbackn5.aotg-video.astro.com.my/CH1/master_ARENA_8.m3u8
 #EXTINF:0,ASTRO Go SHOP
-https://playback01.aotg-video.astro.com.my/AOTGHLS/master_AGSS.m3u8
+http://playback01.aotg-video.astro.com.my/AOTGHLS/master_AGSS.m3u8
 #EXTINF:0,KBS WORLD
-https://edge.linknetott.swiftserve.com/channelgroup5/cg542production/ch262/03.m3u8
+http://edge.linknetott.swiftserve.com/channelgroup5/cg542production/ch262/03.m3u8
 #EXTINF:0,Foodie Channel
-https://edge.linknetott.swiftserve.com/live/BSgroup/amlst:foodiee/playlist.m3u8
+http://edge.linknetott.swiftserve.com/live/BSgroup/amlst:foodiee/playlist.m3u8
 #EXTINF:-1,A1 Sport
-https://178.132.6.97:8080/A1Sport1/index.m3u8
+http://178.132.6.97:8080/A1Sport1/index.m3u8
 #EXTINF:-1,A1 Sports
-https://178.132.6.97:80/A1Sport1/index.m3u8
+http://178.132.6.97:80/A1Sport1/index.m3u8
 #EXTINF:-1,A1 World
-https://178.132.6.97:8080/A1World1/index.m3u8
+http://178.132.6.97:8080/A1World1/index.m3u8
 #EXTINF:-1,A1 Bosnia
-https://178.132.6.97:8080/A1Bosnia1/index.m3u8
+http://178.132.6.97:8080/A1Bosnia1/index.m3u8
 #EXTINF:-1,A1 Espana
-https://178.132.6.97:8080/A1Espana1/index.m3u8
+http://178.132.6.97:8080/A1Espana1/index.m3u8
 #EXTINF:-1,SLON Extra
-https://178.132.6.97:8080/RTV:SLON1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/RTV:SLON1/tracks-v1a1/index.m3u8
 #EXTINF:-1,RTV CAZIN
-https://178.132.6.97:8080/RTVCAZIN1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/RTVCAZIN1/tracks-v1a1/index.m3u8
 #EXTINF:-1,Sharri HD
-https://178.132.6.97:8080/TV:SharriHD1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/TV:SharriHD1/tracks-v1a1/index.m3u8
 #EXTINF:-1,Sehara TV
-https://178.132.6.97:8080/SeharaTV1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/SeharaTV1/tracks-v1a1/index.m3u8
 #EXTINF:-1,OTV Valentino
-https://178.132.6.97:8080/OTVValentino1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/OTVValentino1/tracks-v1a1/index.m3u8
 #EXTINF:-1,Spin TV
-https://178.132.6.97:8080/SpinTV1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/SpinTV1/tracks-v1a1/index.m3u8
 #EXTINF:-1,ROMA TV
-https://178.132.6.97:8080/ROMATV1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/ROMATV1/tracks-v1a1/index.m3u8
 #EXTINF:-1,RTK 4
-https://178.132.6.97:8080/RTK4/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/RTK4/tracks-v1a1/index.m3u8
 #EXTINF:-1,RTK3
-https://178.132.6.97:8080/RTK3/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/RTK3/tracks-v1a1/index.m3u8
 #EXTINF:-1,RTK2
-https://178.132.6.97:8080/RTK2/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/RTK2/tracks-v1a1/index.m3u8
 #EXTINF:-1,RTK1
-https://178.132.6.97:8080/RTK11/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/RTK11/tracks-v1a1/index.m3u8
 #EXTINF:-1,Sky Folk Makedonija
-https://178.132.6.97:8080/SkyFolkMakedonija1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/SkyFolkMakedonija1/tracks-v1a1/index.m3u8
 #EXTINF:-1,TV Plisi
-https://178.132.6.97:8080/TVPlisi1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/TVPlisi1/tracks-v1a1/index.m3u8
 #EXTINF:-1,TV7 TUZLA
-https://178.132.6.97:8080/TV7TUZLA1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/TV7TUZLA1/tracks-v1a1/index.m3u8
 #EXTINF:-1,SYRIBLUE HDTV
-https://178.132.6.97:8080/SYRIBLUEHDTV1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/SYRIBLUEHDTV1/tracks-v1a1/index.m3u8
 #EXTINF:-1,Rtv Iliria Gjeneve
-https://178.132.6.97:8080/RtvIliriaGjeneve1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/RtvIliriaGjeneve1/tracks-v1a1/index.m3u8
 #EXTINF:-1,Samara Gis
-https://178.132.6.97:8080/samaragis1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/samaragis1/tracks-v1a1/index.m3u8
 #EXTINF:-1,PLUS TV
-https://178.132.6.97:8080/PLUSTV1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/PLUSTV1/tracks-v1a1/index.m3u8
 #EXTINF:-1,Tv2 Gostivar
-https://178.132.6.97:8080/tv2gostivar1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/tv2gostivar1/tracks-v1a1/index.m3u8
 #EXTINF:-1,Satellite TV
-https://178.132.6.97:8080/canal11madrid1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/canal11madrid1/tracks-v1a1/index.m3u8
 #EXTINF:-1,TV5 HD
-https://178.132.6.97:8080/TV5HD1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/TV5HD1/tracks-v1a1/index.m3u8
 #EXTINF:-1,OSM Pale
-https://178.132.6.97:8080/RS:OSMPale1/index.m3u8
+http://178.132.6.97:8080/RS:OSMPale1/index.m3u8
 #EXTINF:-1,a1vikom
-https://178.132.6.97:8080/a1vikom1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/a1vikom1/tracks-v1a1/index.m3u8
 #EXTINF:-1,TRT HABER
-https://178.132.6.97:8080/TR:TRTHABER1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/TR:TRTHABER1/tracks-v1a1/index.m3u8
 #EXTINF:-1,RTV 21
-https://178.132.6.97:8080/RTV211/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/RTV211/tracks-v1a1/index.m3u8
 #EXTINF:-1,tvlir
-https://178.132.6.97:8080/tvlir1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/tvlir1/tracks-v1a1/index.m3u8
 #EXTINF:-1,imltvhd
-https://178.132.6.97:8080/imltvhd1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/imltvhd1/tracks-v1a1/index.m3u8
 #EXTINF:-1,a1rtvnovipazar
-https://178.132.6.97:8080/a1rtvnovipazar1/index.m3u8
+http://178.132.6.97:8080/a1rtvnovipazar1/index.m3u8
 #EXTINF:-1,MRT1
-https://178.132.6.97:8080/MRT21/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/MRT21/tracks-v1a1/index.m3u8
 #EXTINF:-1,MRT1
-https://178.132.6.97:8080/MRT11/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/MRT11/tracks-v1a1/index.m3u8
 #EXTINF:-1,SMART TV TESANJ
-https://178.132.6.97:8080/bs:SMARTTVTESANJ1/tracks-v1a1/index.m3u8
+http://178.132.6.97:8080/bs:SMARTTVTESANJ1/tracks-v1a1/index.m3u8
 #EXTINF:-1,JazzeraAL
-https://178.132.6.97:/JazzeraAL1/tracks-v1a1/index.m3u8
+http://178.132.6.97:/JazzeraAL1/tracks-v1a1/index.m3u8
 #EXTINF:-1,sport 1
 https://tinyurl.com/yb7tbtgk
 #EXTINF:-1,sport2
@@ -110,38 +110,38 @@ https://tinyurl.com/ycst6wa6
 #EXTINF:-1,Sport 6
 https://tinyurl.com/ydb3e5wd
 #EXTINF:0,Combat Go
-https://bcoveliveios-i.akamaihd.net/hls/live/632424/5725327446001_02/playlist.m3u8
+http://bcoveliveios-i.akamaihd.net/hls/live/632424/5725327446001_02/playlist.m3u8
 #EXTINF:0,sport1
-https://83.240.95.152:4022/udp/239.1.2.34:11111
+http://83.240.95.152:4022/udp/239.1.2.34:11111
 #EXTINF:0,Iraqia Sport
-https://51.255.76.200:8000/live/bq41HE7N173gh2/8674542L8a3336/2486.ts
+http://51.255.76.200:8000/live/bq41HE7N173gh2/8674542L8a3336/2486.ts
 #EXTINF:0,MBC PRO SPORTS 1 HD
-https://51.255.76.200:8000/live/bq41HE7N173gh2/8674542L8a3336/2460.ts
+http://51.255.76.200:8000/live/bq41HE7N173gh2/8674542L8a3336/2460.ts
 #EXTINF:0,MBC PROSPORTS 2 HD
-https://51.255.76.200:8000/live/bq41HE7N173gh2/8674542L8a3336/2459.ts
+http://51.255.76.200:8000/live/bq41HE7N173gh2/8674542L8a3336/2459.ts
 #EXTINF:0,MBC PROSPORTS 3 HD
-https://51.255.76.200:8000/live/bq41HE7N173gh2/8674542L8a3336/2458.ts
+http://51.255.76.200:8000/live/bq41HE7N173gh2/8674542L8a3336/2458.ts
 #EXTINF:0,Astro Arena
-https://playbackn5.aotg-video.astro.com.my/CH1/master_ARENA_8_02.m3u8
+http://playbackn5.aotg-video.astro.com.my/CH1/master_ARENA_8_02.m3u8
 #EXTINF:-1,CCTV5 FHD
-https://120.198.235.68/112.50.243.7/PLTV/88888888/224/3221225939/1.m3u8
+http://120.198.235.68/112.50.243.7/PLTV/88888888/224/3221225939/1.m3u8
 #EXTINF:-1,BFM Business
-https://bfmlive-i.akamaihd.net/hls/live/254438/876450612001/DVMR_BFMBusiness2/master.m3u8
+http://bfmlive-i.akamaihd.net/hls/live/254438/876450612001/DVMR_BFMBusiness2/master.m3u8
 #EXTINF:0,La Liga TV
-https://swf.x10.bz/swe/twich.php?canal=pirataloco1&f=.m3u8
+http://swf.x10.bz/swe/twich.php?canal=pirataloco1&f=.m3u8
 #EXTINF:0,Lucha Libre AAA
-https://swf.x10.bz/swe/twich.php?canal=luchalibreaaa&f=.m3u8
+http://swf.x10.bz/swe/twich.php?canal=luchalibreaaa&f=.m3u8
 #EXTINF:0,CCTV1FHD
-https://223.110.242.130:6610/cntv/live1/HD-2500k-1080P-cctv1/HD-2500k-1080P-cctv1
+http://223.110.242.130:6610/cntv/live1/HD-2500k-1080P-cctv1/HD-2500k-1080P-cctv1
 #EXTINF:0,CCTV3FHD
-https://223.110.242.130:6610/cntv/live1/HD-2500k-1080P-cctv3/HD-2500k-1080P-cctv3
+http://223.110.242.130:6610/cntv/live1/HD-2500k-1080P-cctv3/HD-2500k-1080P-cctv3
 #EXTINF:0,Smash TV
-https://144.76.182.50:25461/live/smash/smash/1.ts
+http://144.76.182.50:25461/live/smash/smash/1.ts
 #EXTINF:0,Smash TV +1
-https://144.76.182.50:25461/live/smash/smash/33.ts
+http://144.76.182.50:25461/live/smash/smash/33.ts
 #EXTINF:0,Smash Music
-https://144.76.182.50:25461/live/smash/smash/2.ts
+http://144.76.182.50:25461/live/smash/smash/2.ts
 #EXTINF:0,Smash Jazz
-https://144.76.182.50:25461/live/smash/smash/32.ts
+http://144.76.182.50:25461/live/smash/smash/32.ts
 #EXTINF:0,Smash Food
-https://144.76.182.50:25461/live/smash/smash/3.ts
+http://144.76.182.50:25461/live/smash/smash/3.ts
