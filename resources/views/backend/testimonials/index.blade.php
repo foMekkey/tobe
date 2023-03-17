@@ -50,8 +50,8 @@
                             <h5>{{ __('pages.contact_messages') }}</h5>
                         </a>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ route('testimonials') }}">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('testimonials') }}">
                             <h5>{{ __('pages.testimonials') }}</h5>
                         </a>
                     </li>

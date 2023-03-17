@@ -40,8 +40,8 @@
                             <h5>{{ __('pages.site_setting') }}</h5>
                         </a>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ route('pages') }}">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('pages') }}">
                             <h5>{{ __('pages.pages') }}</h5>
                         </a>
                     </li>

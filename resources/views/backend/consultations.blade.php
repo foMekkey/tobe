@@ -60,8 +60,8 @@
                             <h5>{{ __('pages.store-newsletter') }}</h5>
                         </a>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ route('consultations') }}">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('consultations') }}">
                             <h5>{{ __('pages.consultations') }}</h5>
                         </a>
                     </li>
