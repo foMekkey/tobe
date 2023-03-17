@@ -14,8 +14,8 @@
         </div>
     </section>
     <!--
-     sub_head
-       -->
+             sub_head
+               -->
     <section class="payment">
         <div class="container-fluid">
             <div class="row" style="flex-direction: row-reverse;">
@@ -40,7 +40,8 @@
                             <div class="form-group">
                                 <div class="block" id="pay_online"
                                     onclick="document.getElementById('payment_method').value = '1';">
-                                    <div><img src="{{ asset('site_assets') }}/images/payment_2.png"></div>
+                                    <div><img src="{{ asset('site_assets') }}/images/payment_2.png" style="width: 64px;">
+                                    </div>
                                     <h4>المحافظ الالكترونية</h4>
                                     <input type="radio" name="payment" class="pay_online_input">
                                 </div>
@@ -48,7 +49,8 @@
 
                             <div class="form-group">
                                 <div class="block" id="bank_accounts">
-                                    <div><img src="{{ asset('site_assets') }}/images/payment_4.png"></div>
+                                    <div><img src="{{ asset('site_assets') }}/images/payment_4.png" style="width: 64px;">
+                                    </div>
                                     <h4>تحويل بنكي</h4>
                                     <input type="radio" name="payment" class="bank_accounts_input">
                                 </div>
@@ -194,21 +196,21 @@
                                 </div>
 
                                 <!--
-        <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="form-group">
-        <label><span>*</span>المدة </label>
-        <select class="form-control" name="days" required="">
-        <option value="1">شهر</option>
-        <option value="2">3 أشهر</option>
-        <option value="3">6 أشهر</option>
-        </select>
-        </div>
-        <div class="form-group">
-        <label>الرساله </label>
-        <textarea class="form-control" name="notes" placeholder="قم بكتابه الرساله"></textarea>
-        </div>
-        </div>
-    -->
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                <label><span>*</span>المدة </label>
+                <select class="form-control" name="days" required="">
+                <option value="1">شهر</option>
+                <option value="2">3 أشهر</option>
+                <option value="3">6 أشهر</option>
+                </select>
+                </div>
+                <div class="form-group">
+                <label>الرساله </label>
+                <textarea class="form-control" name="notes" placeholder="قم بكتابه الرساله"></textarea>
+                </div>
+                </div>
+            -->
 
 
                                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -224,8 +226,8 @@
         </div>
     </section>
     <!--
-     sub_payment
-        -->
+             sub_payment
+                -->
 @endsection
 
 
