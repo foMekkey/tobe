@@ -1,21 +1,6 @@
 @extends('backend.layouts.subscripe-app')
 
 @section('content')
-    <section class="sub_head">
-        <div class="container-fluid">
-            <div class="sub_title">
-                <h1>وسائل الدفع</h1>
-                <h3>يشارك أكثر من 2000 عميل أفكارهم عنا</h3>
-            </div>
-            <ul class="list-inline">
-                <li><a href="#">الرئيسية</a></li>
-                <li><a href="#">الدفع</a></li>
-            </ul>
-        </div>
-    </section>
-    <!--
-                     sub_head
-                       -->
     <section class="payment">
         <div class="container-fluid">
             <div class="row" style="flex-direction: row-reverse;">
@@ -47,6 +32,20 @@
                                 </div>
                             </div>
 
+                            <div class="pay_online_info" style="display: none;">
+                                <div>
+                                    <h3>يرجي تأكيد التحويل من خلال ارسال بيانات التحويل من <a href="#pay_online_form"
+                                            id="pay_online_btn">هنا</a></h3>
+                                </div>
+                                <h3>المحافظ الالكترونية</h3>
+                                <ul class="list-inline">
+                                    @foreach ($e_wallets as $e_wallet)
+                                        <li>{{ $e_wallet->company_name_en }} {{ $e_wallet->number }}</li>
+                                    @endforeach
+                                </ul>
+                                <hr>
+                            </div>
+
                             <div class="form-group">
                                 <div class="block" id="bank_accounts">
                                     <div><img src="{{ asset('site_assets') }}/images/payment_4.png" style="width: 64px;">
@@ -56,22 +55,6 @@
                                 </div>
                             </div>
                         </form>
-
-                        <div class="pay_online_info" style="display: none;">
-
-                            <div>
-                                <h3>يرجي تأكيد التحويل من خلال ارسال بيانات التحويل من <a href="#pay_online_form"
-                                        id="pay_online_btn">هنا</a></h3>
-                            </div>
-
-                            <h3>المحافظ الالكترونية</h3>
-                            <ul class="list-inline">
-                                @foreach ($e_wallets as $e_wallet)
-                                    <li>{{ $e_wallet->company_name_en }} {{ $e_wallet->number }}</li>
-                                @endforeach
-                            </ul>
-                            <hr>
-                        </div>
 
                         <div class="pay_online_form" id="pay_online_form" style="display: none;">
                             <form class="form_info" method="POST" action="{{ route('postaddstudentsubscription') }}">
@@ -196,21 +179,21 @@
                                 </div>
 
                                 <!--
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="form-group">
-                        <label><span>*</span>المدة </label>
-                        <select class="form-control" name="days" required="">
-                        <option value="1">شهر</option>
-                        <option value="2">3 أشهر</option>
-                        <option value="3">6 أشهر</option>
-                        </select>
-                        </div>
-                        <div class="form-group">
-                        <label>الرساله </label>
-                        <textarea class="form-control" name="notes" placeholder="قم بكتابه الرساله"></textarea>
-                        </div>
-                        </div>
-                    -->
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="form-group">
+                                    <label><span>*</span>المدة </label>
+                                    <select class="form-control" name="days" required="">
+                                    <option value="1">شهر</option>
+                                    <option value="2">3 أشهر</option>
+                                    <option value="3">6 أشهر</option>
+                                    </select>
+                                    </div>
+                                    <div class="form-group">
+                                    <label>الرساله </label>
+                                    <textarea class="form-control" name="notes" placeholder="قم بكتابه الرساله"></textarea>
+                                    </div>
+                                    </div>
+                                -->
 
 
                                 <div class="col-md-12 col-sm-12 col-xs-12">
@@ -226,8 +209,8 @@
         </div>
     </section>
     <!--
-                     sub_payment
-                        -->
+                                 sub_payment
+                                    -->
 @endsection
 
 
