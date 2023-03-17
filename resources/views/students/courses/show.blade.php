@@ -103,7 +103,7 @@
                                 <h3>{{ $course->category->name ?? '' }}</h3>
                             </div>
                             <div class="course_info">
-                                <ul class="list-inline rate">
+                                <ul class="list-inline rate" style="display:inline-flex;">
                                     @for ($i = 1; $i < 6; $i++)
                                         @if ($i <= (int) $reviewsAvg)
                                             <li><span class="fas fa-star"></span></li>
@@ -207,7 +207,7 @@
                                 <i>{{ !count($reviewsGrouped) ? __('site.no_reviews') : '' }}</i>
                             </h1>
 
-                            <ul>
+                            <ul style="">
                                 <li>{{ $reviewsGrouped[5] ?? 0 }} <span></span>{{ __('site.stars') }} 5</li>
                                 <li>{{ $reviewsGrouped[4] ?? 0 }} <span></span>{{ __('site.stars') }} 4</li>
                                 <li>{{ $reviewsGrouped[3] ?? 0 }} <span></span>{{ __('site.stars') }} 3</li>
