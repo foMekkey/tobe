@@ -436,6 +436,7 @@ return [
         'slider_en' => 'محتوى السلايدر (انجليزي)',
         'certificates_count' => 'عدد الشهادات',
         'trainees_count' => 'عدد المتدربون',
+        'certs_count' => 'عدد الشهادات',
         'training_hours_count' => 'عدد ساعات التدريب',
         'courses_count' => 'عدد الكورسات',
         'linkedin_link' => 'رابط LinkedIn',

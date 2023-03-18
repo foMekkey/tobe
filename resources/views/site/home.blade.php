@@ -37,6 +37,12 @@
                         </div>
                         <h3>{{ __('site.the_trainees') }}</h3>
                         <p class="aaa">{{ $settings['trainees_count'] }}</p>
+                        <div class="img_container">
+                            <img src="{{ asset('site_assets') }}/images/knowledge1.png" class="icon1">
+                            <img src="{{ asset('site_assets') }}/images/knowledge2.png" class="icon2">
+                        </div>
+                        <h3>{{ __('site.certificates_count') }}</h3>
+                        <p class="aaa">{{ $settings['certificates_count'] }}</p>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-6 col-xs-12">
