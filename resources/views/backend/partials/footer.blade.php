@@ -545,6 +545,7 @@
 <script src="{{ asset('admin/assets/js/trans.js') }}"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{{ asset('admin/assets/custom/js/jquery.nicescroll.min.js') }}"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <script>
     $(document).ready(init());
