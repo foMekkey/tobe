@@ -17,22 +17,22 @@ class ConsultationDatatable extends DataTable
     public function dataTable($query)
     {
         return datatables($query)
-            ->editColumn('session_type',function($query){
+            ->editColumn('session_type', function ($query) {
                 if ($query->session_type == 1) {
                     return __('pages.direct');
                 }
-                
+
                 return __('pages.remotely');
             })
-            ->editColumn('user_id',function($query){
+            ->editColumn('user_id', function ($query) {
                 $user = \App\User::find($query->user_id);
                 if ($user) {
-                   return $user->edit_link;
+                    return $user->edit_link;
                 }
-                
+
                 return '';
             })
-            ->editColumn('status',function($query){
+            ->editColumn('status', function ($query) {
                 if ($query->status === 0) {
                     return '<span class="kt-badge kt-badge--success kt-badge--inline kt-badge--pill">ينتظر الرد</span>
                         <button type="button" class="btn btn-sm btn-clean btn-icon btn-icon-md reply_btn" data-toggle="modal"
@@ -48,6 +48,7 @@ class ConsultationDatatable extends DataTable
             })
             ->rawColumns(['status'])
             ->escapeColumns([])
+            ->setRowId('id')
             ->addIndexColumn();
     }
 
@@ -90,18 +91,17 @@ class ConsultationDatatable extends DataTable
     protected function getColumns()
     {
         $cols =  [
-            'DT_RowIndex' => ['name' => 'id' ,'data' => 'DT_RowIndex' ,'title' => '#'],
-            'user_id' => ['name' => 'user_id' ,'data' => 'user_id' , 'title' => __('pages.user')],
-            'date' => ['name' => 'date' ,'data' => 'date' , 'title' => __('pages.date')],
-            'hours' => ['name' => 'hours' ,'data' => 'hours' , 'title' => __('pages.hours')],
-            'session_type' => ['name' => 'session_type' ,'data' => 'session_type' , 'title' =>__('pages.session_type')],
-            'subject' => ['name' => 'subject' ,'data' => 'subject' , 'title' =>__('pages.subject')],
-            'created_at' => ['name' => 'created_at' ,'data' => 'created_at' , 'title' =>__('pages.created_at')],
-            'status' => ['name' => 'status' ,'data' => 'status' , 'title' =>__('pages.status-column')],
+            'DT_RowIndex' => ['name' => 'id', 'data' => 'DT_RowIndex', 'title' => '#'],
+            'user_id' => ['name' => 'user_id', 'data' => 'user_id', 'title' => __('pages.user')],
+            'date' => ['name' => 'date', 'data' => 'date', 'title' => __('pages.date')],
+            'hours' => ['name' => 'hours', 'data' => 'hours', 'title' => __('pages.hours')],
+            'session_type' => ['name' => 'session_type', 'data' => 'session_type', 'title' => __('pages.session_type')],
+            'subject' => ['name' => 'subject', 'data' => 'subject', 'title' => __('pages.subject')],
+            'created_at' => ['name' => 'created_at', 'data' => 'created_at', 'title' => __('pages.created_at')],
+            'status' => ['name' => 'status', 'data' => 'status', 'title' => __('pages.status-column')],
         ];
 
         return $cols;
-
     }
 
     /**

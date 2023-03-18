@@ -6,6 +6,7 @@ use App\Groups;
 use App\User;
 use Yajra\DataTables\Services\DataTable;
 use DB;
+
 class StudentGroupsDataTable extends DataTable
 {
     /**
@@ -19,6 +20,7 @@ class StudentGroupsDataTable extends DataTable
         return datatables($query)
             ->editColumn('action', 'students.groups.btn.action')
             ->rawColumns(['action'])
+            ->setRowId('id')
             ->addIndexColumn();
     }
 
@@ -30,8 +32,10 @@ class StudentGroupsDataTable extends DataTable
      */
     public function query(Groups $model)
     {
-        return DB::table('groups')->join('group_members','groups.id','group_members.group_id')->where('group_members.student_id',auth()->id()
-        )->select('groups.id','name', 'desc','status', 'groups.created_at')->distinct('groups.id')->get();
+        return DB::table('groups')->join('group_members', 'groups.id', 'group_members.group_id')->where(
+            'group_members.student_id',
+            auth()->id()
+        )->select('groups.id', 'name', 'desc', 'status', 'groups.created_at')->distinct('groups.id')->get();
     }
 
     /**
@@ -49,8 +53,7 @@ class StudentGroupsDataTable extends DataTable
                 'responsive' => true,
                 'order'   => [[0, 'desc']],
                 "lengthMenu" => [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                'buttons' => [
-                ],
+                'buttons' => [],
                 'language' => ['url' => asset('ar-datatable.json')],
             ]);
     }
@@ -63,16 +66,15 @@ class StudentGroupsDataTable extends DataTable
     protected function getColumns()
     {
         $cols =  [
-            'DT_RowIndex' => ['name' => 'id' ,'data' => 'DT_RowIndex' ,'title' => '#'],
-            'name' => ['name' => 'name' ,'data' => 'name' , 'title' => __('pages.name-group')],
-            'desc' => ['name' => 'desc' ,'data' => 'desc' , 'title' => __('pages.desc')],
-            
-            'created_at' => ['name' => 'created_at' ,'data' => 'created_at' , 'title' => __('pages.register_at')],
-             'action' => [ 'exportable' => false, 'printable'  => false, 'searchable' => false, 'orderable'  => false, 'title' => __('pages.action')]
+            'DT_RowIndex' => ['name' => 'id', 'data' => 'DT_RowIndex', 'title' => '#'],
+            'name' => ['name' => 'name', 'data' => 'name', 'title' => __('pages.name-group')],
+            'desc' => ['name' => 'desc', 'data' => 'desc', 'title' => __('pages.desc')],
+
+            'created_at' => ['name' => 'created_at', 'data' => 'created_at', 'title' => __('pages.register_at')],
+            'action' => ['exportable' => false, 'printable'  => false, 'searchable' => false, 'orderable'  => false, 'title' => __('pages.action')]
         ];
 
         return $cols;
-
     }
 
     /**

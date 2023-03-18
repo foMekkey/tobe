@@ -45,6 +45,7 @@ class StudentMissionsDatatable extends DataTable
                 return '';
             })
             ->rawColumns(['action', 'status', 'trainer_rate'])
+            ->setRowId('id')
             ->addIndexColumn();
     }
 

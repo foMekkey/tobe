@@ -19,16 +19,15 @@ class BanksDataTable  extends DataTable
 
             ->editColumn('action', 'backend.banks.action') // 
 
-            ->editColumn('status',function($query){
-               if($query->status == 1)
-                {
+            ->editColumn('status', function ($query) {
+                if ($query->status == 1) {
                     return '<span class="kt-badge kt-badge--brand kt-badge--inline kt-badge--pill">فعال</span>';
-                }else{
+                } else {
                     return '<span class="kt-badge  kt-badge--success kt-badge--inline kt-badge--pill">متوقف</span>';
-
                 }
             })
             ->rawColumns(['action', 'status'])
+            ->setRowId('id')
             ->addIndexColumn();
     }
 
@@ -40,7 +39,7 @@ class BanksDataTable  extends DataTable
      */
     public function query(Bank $model)
     {
-            return $model->newQuery()->select('id', 'bank_name_ar', 'bank_name_en', 'acc_name_ar','acc_name_en','acc_num','iban', 'active', 'created_at');
+        return $model->newQuery()->select('id', 'bank_name_ar', 'bank_name_en', 'acc_name_ar', 'acc_name_en', 'acc_num', 'iban', 'active', 'created_at');
     }
 
     /**
@@ -59,8 +58,8 @@ class BanksDataTable  extends DataTable
                 'order'   => [[0, 'desc']],
                 "lengthMenu" => [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 'buttons' => [
-                    ['extend' => 'excel', 'text' => '<i class="fa fa-download"></i>Excel' , 'className' =>'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
-                    ['extend' => 'print' , 'text' => '<i class="fa fa-print"></i>Print' , 'className' =>'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
+                    ['extend' => 'excel', 'text' => '<i class="fa fa-download"></i>Excel', 'className' => 'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
+                    ['extend' => 'print', 'text' => '<i class="fa fa-print"></i>Print', 'className' => 'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
 
                 ],
                 'language' => ['url' => asset('ar-datatable.json')],
@@ -75,20 +74,19 @@ class BanksDataTable  extends DataTable
     protected function getColumns()
     {
         $cols =  [
-            'DT_RowIndex' => ['name' => 'id' ,'data' => 'DT_RowIndex' ,'title' => '#'],
-            'bank_name_ar' => ['name' => 'bank_name_ar' ,'data' => 'bank_name_ar' , 'title' => __('pages.bank_name_ar')],
-            'bank_name_en' => ['name' => 'bank_name_en' ,'data' => 'bank_name_en' , 'title' => __('pages.bank_name_en')],
-            'acc_name_ar' => ['name' => 'acc_name_ar' ,'data' => 'acc_name_ar' , 'title' => __('pages.acc_name_ar')],
-            'acc_name_en' => ['name' => 'acc_name_en' ,'data' => 'acc_name_en' , 'title' => __('pages.acc_name_en')],
-            'acc_num' => ['name' => 'acc_num' ,'data' => 'acc_num' , 'title' => __('pages.acc_num')],
-            'iban' => ['name' => 'iban' ,'data' => 'iban' , 'title' => __('pages.iban')],
-            'active' => ['name' => 'status' ,'data' => 'active' , 'title' => __('pages.status')],
-            'created_at' => ['name' => 'created_at' ,'data' => 'created_at' , 'title' => __('pages.register_at')],
-            'action' => [ 'exportable' => false, 'printable'  => false, 'searchable' => false, 'orderable'  => false, 'title' => __('pages.action')]
+            'DT_RowIndex' => ['name' => 'id', 'data' => 'DT_RowIndex', 'title' => '#'],
+            'bank_name_ar' => ['name' => 'bank_name_ar', 'data' => 'bank_name_ar', 'title' => __('pages.bank_name_ar')],
+            'bank_name_en' => ['name' => 'bank_name_en', 'data' => 'bank_name_en', 'title' => __('pages.bank_name_en')],
+            'acc_name_ar' => ['name' => 'acc_name_ar', 'data' => 'acc_name_ar', 'title' => __('pages.acc_name_ar')],
+            'acc_name_en' => ['name' => 'acc_name_en', 'data' => 'acc_name_en', 'title' => __('pages.acc_name_en')],
+            'acc_num' => ['name' => 'acc_num', 'data' => 'acc_num', 'title' => __('pages.acc_num')],
+            'iban' => ['name' => 'iban', 'data' => 'iban', 'title' => __('pages.iban')],
+            'active' => ['name' => 'status', 'data' => 'active', 'title' => __('pages.status')],
+            'created_at' => ['name' => 'created_at', 'data' => 'created_at', 'title' => __('pages.register_at')],
+            'action' => ['exportable' => false, 'printable'  => false, 'searchable' => false, 'orderable'  => false, 'title' => __('pages.action')]
         ];
 
         return $cols;
-
     }
 
     /**

@@ -19,7 +19,7 @@ class ServiceDatatable extends DataTable
         return datatables($query)
 
             ->editColumn('action', 'backend.services.action')
-            ->editColumn('lang',function($query){
+            ->editColumn('lang', function ($query) {
                 if ($query->lang == 'ar') {
                     return 'العربية';
                 } else {
@@ -27,6 +27,7 @@ class ServiceDatatable extends DataTable
                 }
             })
             ->rawColumns(['action'])
+            ->setRowId('id')
             ->addIndexColumn();
     }
 
@@ -69,15 +70,14 @@ class ServiceDatatable extends DataTable
     protected function getColumns()
     {
         $cols =  [
-            'DT_RowIndex' => ['name' => 'id' ,'data' => 'DT_RowIndex' ,'title' => '#'],
-            'lang' => ['name' => 'lang' ,'data' => 'lang' , 'title' => __('pages.language')],
-            'title' => ['name' => 'title' ,'data' => 'title' , 'title' => __('pages.title')],
-            'desc' => ['name' => 'desc' ,'data' => 'desc' , 'title' =>__('pages.desc')],
-            'action' => [ 'exportable' => false, 'printable'  => false, 'searchable' => false, 'orderable'  => false, 'title' => __('pages.action')]
+            'DT_RowIndex' => ['name' => 'id', 'data' => 'DT_RowIndex', 'title' => '#'],
+            'lang' => ['name' => 'lang', 'data' => 'lang', 'title' => __('pages.language')],
+            'title' => ['name' => 'title', 'data' => 'title', 'title' => __('pages.title')],
+            'desc' => ['name' => 'desc', 'data' => 'desc', 'title' => __('pages.desc')],
+            'action' => ['exportable' => false, 'printable'  => false, 'searchable' => false, 'orderable'  => false, 'title' => __('pages.action')]
         ];
 
         return $cols;
-
     }
 
     /**

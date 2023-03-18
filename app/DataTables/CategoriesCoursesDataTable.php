@@ -18,7 +18,7 @@ class CategoriesCoursesDataTable extends DataTable
     {
         return datatables($query)
             ->editColumn('action', 'backend.categories.action')
-            ->editColumn('lang',function($query){
+            ->editColumn('lang', function ($query) {
                 if ($query->lang == 'ar') {
                     return 'العربية';
                 } else {
@@ -26,6 +26,7 @@ class CategoriesCoursesDataTable extends DataTable
                 }
             })
             ->rawColumns(['action'])
+            ->setRowId('id')
             ->addIndexColumn();
     }
 
@@ -37,7 +38,7 @@ class CategoriesCoursesDataTable extends DataTable
      */
     public function query(CategoiresCourses $model)
     {
-        return $model->newQuery()->select('id','name','created_at');
+        return $model->newQuery()->select('id', 'name', 'created_at');
     }
 
     /**
@@ -56,8 +57,8 @@ class CategoriesCoursesDataTable extends DataTable
                 'order'   => [[0, 'desc']],
                 "lengthMenu" => [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 'buttons' => [
-                    ['extend' => 'excel', 'text' => '<i class="fa fa-download"></i>Excel' , 'className' =>'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
-                    ['extend' => 'print' , 'text' => '<i class="fa fa-print"></i>Print' , 'className' =>'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
+                    ['extend' => 'excel', 'text' => '<i class="fa fa-download"></i>Excel', 'className' => 'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
+                    ['extend' => 'print', 'text' => '<i class="fa fa-print"></i>Print', 'className' => 'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
 
                 ],
                 'language' => ['url' => asset('ar-datatable.json')],
@@ -72,15 +73,14 @@ class CategoriesCoursesDataTable extends DataTable
     protected function getColumns()
     {
         $cols =  [
-            'DT_RowIndex' => ['name' => 'id' ,'data' => 'DT_RowIndex' ,'title' => '#'],
-            'lang' => ['name' => 'lang' ,'data' => 'lang' , 'title' => __('pages.language')],
-            'name' => ['name' => 'name' ,'data' => 'name' , 'title' => __('pages.category-name')],
-            'created_at' => ['name' => 'created_at' ,'data' => 'created_at' , 'title' => __('pages.created_at')],
-            'action' => [ 'exportable' => false, 'printable'  => false, 'searchable' => false, 'orderable'  => false, 'title' => __('pages.action')]
+            'DT_RowIndex' => ['name' => 'id', 'data' => 'DT_RowIndex', 'title' => '#'],
+            'lang' => ['name' => 'lang', 'data' => 'lang', 'title' => __('pages.language')],
+            'name' => ['name' => 'name', 'data' => 'name', 'title' => __('pages.category-name')],
+            'created_at' => ['name' => 'created_at', 'data' => 'created_at', 'title' => __('pages.created_at')],
+            'action' => ['exportable' => false, 'printable'  => false, 'searchable' => false, 'orderable'  => false, 'title' => __('pages.action')]
         ];
 
         return $cols;
-
     }
 
 

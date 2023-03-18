@@ -27,6 +27,7 @@ class BlogDatatable extends DataTable
                 }
             })
             ->rawColumns(['action'])
+            ->setRowId('id')
             ->addIndexColumn();
     }
 

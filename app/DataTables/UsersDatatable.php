@@ -31,6 +31,7 @@ class UsersDatatable extends DataTable
                 return '<span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">' . __('pages.no-permission-detected') . '</span>';
             })
             ->rawColumns(['action', 'status', 'type', 'image'])
+            ->setRowId('id')
             ->addIndexColumn();
     }
 

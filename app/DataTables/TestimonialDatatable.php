@@ -19,13 +19,14 @@ class TestimonialDatatable extends DataTable
     {
         return datatables($query)
             ->editColumn('action', 'backend.testimonials.action')
-            ->editColumn('datetime',function($query){
+            ->editColumn('datetime', function ($query) {
                 return Carbon::parse($query->datetime)->format('Y-m-d');
             })
-            ->editColumn('user_id',function($query){
-               $user = User::find($query->user_id);
-               return $user->f_name . ' ' . $user->l_name;
+            ->editColumn('user_id', function ($query) {
+                $user = User::find($query->user_id);
+                return $user->f_name . ' ' . $user->l_name;
             })
+            ->setRowId('id')
             ->addIndexColumn();
     }
 
@@ -68,15 +69,14 @@ class TestimonialDatatable extends DataTable
     protected function getColumns()
     {
         $cols =  [
-            'DT_RowIndex' => ['name' => 'id' ,'data' => 'DT_RowIndex' ,'title' => '#'],
-            'user_id' => ['name' => 'user_id' ,'data' => 'user_id' ,'title' =>__('pages.user')],
-            'message' => ['name' => 'message' ,'data' => 'message' , 'title' =>__('pages.message')],
-            'datetime' => ['name' => 'datetime' ,'data' => 'datetime' , 'title' =>__('pages.created')],
-            'action' => [ 'exportable' => false, 'printable'  => false, 'searchable' => false, 'orderable'  => false, 'title' => __('pages.action')]
+            'DT_RowIndex' => ['name' => 'id', 'data' => 'DT_RowIndex', 'title' => '#'],
+            'user_id' => ['name' => 'user_id', 'data' => 'user_id', 'title' => __('pages.user')],
+            'message' => ['name' => 'message', 'data' => 'message', 'title' => __('pages.message')],
+            'datetime' => ['name' => 'datetime', 'data' => 'datetime', 'title' => __('pages.created')],
+            'action' => ['exportable' => false, 'printable'  => false, 'searchable' => false, 'orderable'  => false, 'title' => __('pages.action')]
         ];
 
         return $cols;
-
     }
 
     /**

@@ -22,15 +22,16 @@ class TrainerDiscussionsDatatable extends DataTable
             ->editColumn('action', 'trainer.discussions.action')
 
 
-            ->editColumn('course_id',function($query){
+            ->editColumn('course_id', function ($query) {
                 if ($query->course_id) {
                     $category = Courses::find($query->course_id);
                     return $category->name ?? '';
                 }
-                
+
                 return '';
             })
             ->rawColumns(['action'])
+            ->setRowId('id')
             ->addIndexColumn();
     }
 
@@ -42,8 +43,8 @@ class TrainerDiscussionsDatatable extends DataTable
      */
     public function query(Discussion $model)
     {
-        return $model->newQuery()->select( 'id', 'user_id','title','course_id','created_at', 'updated_at')->where(function($q) {
-            $q->where('user_id',auth()->user()->id);
+        return $model->newQuery()->select('id', 'user_id', 'title', 'course_id', 'created_at', 'updated_at')->where(function ($q) {
+            $q->where('user_id', auth()->user()->id);
             $q->orWhereNull('course_id');
         });
     }
@@ -64,8 +65,8 @@ class TrainerDiscussionsDatatable extends DataTable
                 'order'   => [[0, 'desc']],
                 "lengthMenu" => [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 'buttons' => [
-                    ['extend' => 'excel', 'text' => '<i class="fa fa-download"></i>Excel' , 'className' =>'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
-                    ['extend' => 'print' , 'text' => '<i class="fa fa-print"></i>Print' , 'className' =>'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
+                    ['extend' => 'excel', 'text' => '<i class="fa fa-download"></i>Excel', 'className' => 'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
+                    ['extend' => 'print', 'text' => '<i class="fa fa-print"></i>Print', 'className' => 'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
 
                 ],
                 'language' => ['url' => asset('ar-datatable.json')],
@@ -80,11 +81,11 @@ class TrainerDiscussionsDatatable extends DataTable
     protected function getColumns()
     {
         return [
-            'DT_RowIndex' => ['name' => 'id' ,'data' => 'DT_RowIndex' ,'title' => '#'],
-            'title'       => ['name' => 'title' ,'data' => 'title' ,'title' =>__('pages.discussions-title')],
-            'course_id'   => ['name' => 'course_id' ,'data' => 'course_id' ,'title' =>__('pages.course-name')],
-            'created_at' => ['name' => 'created_at' ,'data' => 'created_at' , 'title' => __('pages.register_at')],
-            'action' => [ 'exportable' => false, 'printable'  => false, 'searchable' => false, 'orderable'  => false, 'title' => __('pages.action')]
+            'DT_RowIndex' => ['name' => 'id', 'data' => 'DT_RowIndex', 'title' => '#'],
+            'title'       => ['name' => 'title', 'data' => 'title', 'title' => __('pages.discussions-title')],
+            'course_id'   => ['name' => 'course_id', 'data' => 'course_id', 'title' => __('pages.course-name')],
+            'created_at' => ['name' => 'created_at', 'data' => 'created_at', 'title' => __('pages.register_at')],
+            'action' => ['exportable' => false, 'printable'  => false, 'searchable' => false, 'orderable'  => false, 'title' => __('pages.action')]
 
         ];
     }

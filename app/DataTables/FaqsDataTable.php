@@ -17,8 +17,9 @@ class FaqsDataTable extends DataTable
     {
         return datatables($query)
             ->editColumn('action', 'backend.faqs.action') // 
-            
+
             ->rawColumns(['action'])
+            ->setRowId('id')
             ->addIndexColumn();
     }
 
@@ -30,7 +31,7 @@ class FaqsDataTable extends DataTable
      */
     public function query(Faq $model)
     {
-            return $model->newQuery()->select('id', 'question', 'answer', 'created_at', 'updated_at');
+        return $model->newQuery()->select('id', 'question', 'answer', 'created_at', 'updated_at');
     }
 
     /**
@@ -49,8 +50,8 @@ class FaqsDataTable extends DataTable
                 'order'   => [[0, 'desc']],
                 "lengthMenu" => [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 'buttons' => [
-                    ['extend' => 'excel', 'text' => '<i class="fa fa-download"></i>Excel' , 'className' =>'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
-                    ['extend' => 'print' , 'text' => '<i class="fa fa-print"></i>Print' , 'className' =>'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
+                    ['extend' => 'excel', 'text' => '<i class="fa fa-download"></i>Excel', 'className' => 'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
+                    ['extend' => 'print', 'text' => '<i class="fa fa-print"></i>Print', 'className' => 'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
 
                 ],
                 'language' => ['url' => asset('ar-datatable.json')],
@@ -65,18 +66,17 @@ class FaqsDataTable extends DataTable
     protected function getColumns()
     {
         $cols =  [
-            'DT_RowIndex' => ['name' => 'id' ,'data' => 'DT_RowIndex' ,'title' => '#'],
-            'question' => ['name' => 'question' ,'data' => 'question' , 'title' => __('pages.question')],
-            'answer' => ['name' => 'answer' ,'data' => 'answer' , 'title' => __('pages.answer')],
-            
-            'created_at' => ['name' => 'created_at' ,'data' => 'created_at' , 'title' => __('pages.register_at')],
-            'updated_at' => ['name' => 'updated_at' ,'data' => 'updated_at' , 'title' => __('pages.updated_at')],
-            'action' => [ 'exportable' => false, 'printable'  => false, 'searchable' => false, 'orderable'  => false, 'title' => __('pages.action')]
-            
+            'DT_RowIndex' => ['name' => 'id', 'data' => 'DT_RowIndex', 'title' => '#'],
+            'question' => ['name' => 'question', 'data' => 'question', 'title' => __('pages.question')],
+            'answer' => ['name' => 'answer', 'data' => 'answer', 'title' => __('pages.answer')],
+
+            'created_at' => ['name' => 'created_at', 'data' => 'created_at', 'title' => __('pages.register_at')],
+            'updated_at' => ['name' => 'updated_at', 'data' => 'updated_at', 'title' => __('pages.updated_at')],
+            'action' => ['exportable' => false, 'printable'  => false, 'searchable' => false, 'orderable'  => false, 'title' => __('pages.action')]
+
         ];
 
         return $cols;
-
     }
 
     /**

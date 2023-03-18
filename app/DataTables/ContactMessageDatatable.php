@@ -17,9 +17,10 @@ class ContactMessageDatatable extends DataTable
     public function dataTable($query)
     {
         return datatables($query)
-            ->editColumn('datetime',function($query){
+            ->editColumn('datetime', function ($query) {
                 return Carbon::parse($query->datetime)->format('Y-m-d');
             })
+            ->setRowId('id')
             ->addIndexColumn();
     }
 
@@ -62,15 +63,14 @@ class ContactMessageDatatable extends DataTable
     protected function getColumns()
     {
         $cols =  [
-            'DT_RowIndex' => ['name' => 'id' ,'data' => 'DT_RowIndex' ,'title' => '#'],
-            'name' => ['name' => 'name' ,'data' => 'name' , 'title' => __('pages.name')],
-            'email' => ['name' => 'email' ,'data' => 'email' , 'title' => __('pages.email')],
-            'message' => ['name' => 'message' ,'data' => 'message' , 'title' =>__('pages.message')],
-            'datetime' => ['name' => 'datetime' ,'data' => 'datetime' , 'title' =>__('pages.created')],
+            'DT_RowIndex' => ['name' => 'id', 'data' => 'DT_RowIndex', 'title' => '#'],
+            'name' => ['name' => 'name', 'data' => 'name', 'title' => __('pages.name')],
+            'email' => ['name' => 'email', 'data' => 'email', 'title' => __('pages.email')],
+            'message' => ['name' => 'message', 'data' => 'message', 'title' => __('pages.message')],
+            'datetime' => ['name' => 'datetime', 'data' => 'datetime', 'title' => __('pages.created')],
         ];
 
         return $cols;
-
     }
 
     /**
