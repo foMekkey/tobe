@@ -143,6 +143,12 @@ class GroupsController extends Controller
         $check = $groups->delete();
 
         if ($check) {
+            CoursesGroup::where('group_id', $id)->delete();
+            $files = File::where('group_id', $id)->get();
+            foreach ($files as $file) {
+                \Storage::disk('contabo')->delete($file->url);
+                $file->delete();
+            }
             return Response::json($id, '200');
         } else {
             return redirect()->back()->with('error',  __('pages.delete-success'));
