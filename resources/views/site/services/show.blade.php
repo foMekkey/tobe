@@ -13,13 +13,13 @@
             </ul>
         </div>
     </section>
-    
+
     <section class="single_service">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-8 col-sm-8 col-xs-12">
                     <div class="serv_name">
-                        <img src="{{ asset("uploads/".$service->image) }}">
+                        <img src="{{ asset('uploads/' . $service->image) }}">
                         <h3>{{ $service->title }}</h3>
                         {!! $service->content !!}
                     </div>
@@ -27,10 +27,12 @@
 
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     <div class="other_services">
-                        <h1>Other services</h1>
+                        <h1>خدمات اخرى</h1>
                         <ul>
                             @foreach ($latestServices as $latestService)
-                                <li><a href="{{ url('site/service/' . $latestService->id) }}"><img src="{{ asset("uploads/".$latestService->image) }}" width="29">{{ $latestService->title }}</a></li>
+                                <li><a href="{{ url('site/service/' . $latestService->id) }}"><img
+                                            src="{{ asset('uploads/' . $latestService->image) }}"
+                                            width="29">{{ $latestService->title }}</a></li>
                             @endforeach
                         </ul>
                     </div>
