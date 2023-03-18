@@ -27,7 +27,7 @@
 
                 <div class="col-md-4 col-sm-4 col-xs-12">
                     <div class="other_services">
-                        <h1>خدمات اخرى</h1>
+                        <h1>خدمات أخرى</h1>
                         <ul>
                             @foreach ($latestServices as $latestService)
                                 <li><a href="{{ url('site/service/' . $latestService->id) }}"><img
