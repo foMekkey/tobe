@@ -135,9 +135,12 @@ class GroupsController extends Controller
     public function destroy($id)
     {
 
-        $courses = Groups::find($id);
-        $groupMembers = GroupMember::where('group_id', $id)->delete();
-        $check = $courses->delete();
+        $groups = Groups::find($id);
+        $groupMembers = (int)GroupMember::where('group_id', $id)->count();
+        if ($groupMembers > 0) {
+            return redirect()->back()->with('error',  'المجموعة تحتوي علي مستخدمين .. لا يمكن اتمام عملية الحذف');
+        }
+        $check = $groups->delete();
 
         if ($check) {
             return Response::json($id, '200');
