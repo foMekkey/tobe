@@ -135,8 +135,8 @@ class GroupsController extends Controller
     public function destroy($id)
     {
 
-        $courses = Courses::find($id);
-
+        $courses = Groups::find($id);
+        $groupMembers = GroupMember::where('group_id', $id)->delete();
         $check = $courses->delete();
 
         if ($check) {
