@@ -617,6 +617,7 @@
 
                         },
                         errors: function(data) {
+                            $('.swal-overlay--show-modal').hide();
                             swal(data);
                         }
                     });
