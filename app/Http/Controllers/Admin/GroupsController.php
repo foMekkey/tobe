@@ -138,7 +138,7 @@ class GroupsController extends Controller
         $groups = Groups::find($id);
         $groupMembers = (int)GroupMember::where('group_id', $id)->count();
         if ($groupMembers > 0) {
-            return redirect()->back()->with('error',  'المجموعة تحتوي علي مستخدمين .. لا يمكن اتمام عملية الحذف');
+            return Response::json('المجموعة تحتوي علي مستخدمين .. لا يمكن اتمام عملية الحذف', 422);
         }
         $check = $groups->delete();
 

@@ -617,7 +617,7 @@
 
                         },
                         errors: function(data) {
-                            swal("{{ __('jsMessage.delete-error') }}");
+                            swal(data);
                         }
                     });
                 } else {
