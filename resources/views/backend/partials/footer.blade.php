@@ -595,8 +595,8 @@
                         dataType: 'json',
                         beforeSend: function() {
                             swal({
-                                title: 'system message',
-                                text: 'please wait ...',
+                                title: 'برجاء الإنتظار ...',
+                                text: '',
                                 buttons: false
                             });
                         },
