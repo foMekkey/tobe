@@ -259,6 +259,7 @@
                                             </li> --}}
                                         <li><a href="{{ url('site/blog') }}">{{ __('site.blog') }}</a></li>
                                         <li><a href="{{ url('site/courses') }}">{{ __('site.courses') }}</a></li>
+                                        <li><a href="{{ url('site/faq') }}">{{ __('site.faq') }}</a></li>
                                         <li><a href="{{ url('site/contact') }}">{{ __('site.contact') }}</a></li>
                                     </ul>
                                 </div>
