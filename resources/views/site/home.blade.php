@@ -48,8 +48,8 @@
                             </div>
                         </div>
                         <div class="img_container">
-                            <img src="{{ asset('site_assets') }}/images/knowledge1.png" class="icon1">
-                            <img src="{{ asset('site_assets') }}/images/knowledge2.png" class="icon2">
+                            <img src="{{ asset('site_assets') }}/images/course_icon1.png" class="icon1">
+                            <img src="{{ asset('site_assets') }}/images/course_icon2.png" class="icon2">
                         </div>
                         <h3>{{ __('site.certificates_count') }}</h3>
                         <p class="aaa">{{ $settings['certificates_count'] }}</p>
