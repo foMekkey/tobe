@@ -127,7 +127,7 @@
                 <div class="content">
                     <img src="{{ asset('site_assets') }}/images/advice_logo.png">
                     <h1>{{ __('site.contact_intro') }}</h1>
-                    <a href="#" class="btn">{{ __('site.ask_for_advice') }} <i
+                    <a href="{{ url('site/contact') }}" class="btn">{{ __('site.ask_for_advice') }} <i
                             class="fas fa-long-arrow-alt-{{ __('site.right') }}"></i></a>
                 </div>
             </div>
