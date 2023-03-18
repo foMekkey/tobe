@@ -13,7 +13,7 @@ use App\Consultation;
 use App\Faq;
 use App\NewsletterSubscription;
 use App\Page;
-
+use App\Rules\Recaptcha;
 use Illuminate\Http\Request;
 use Validator;
 use Session;
@@ -85,7 +85,8 @@ class HomeController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',
-            'message' => 'required'
+            'message' => 'required',
+            'g-recaptcha-response' => ['required', new Recaptcha],
         ]);
         if ($validator->fails()) {
             return response()->json(['error' => 'invalid_request']);
