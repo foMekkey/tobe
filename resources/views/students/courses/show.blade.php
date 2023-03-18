@@ -94,7 +94,7 @@
                         <h2>{{ $course->category->name ?? '' }}</h2>
                         <div class="course_subscribe">
                             <div class="course_info">
-                                <img src="{{ asset('site_assets') }}/images/graduated (1).png">
+                                <img src="{{ asset('site_assets') }}/images/graduated (1).png" style="width:128px;">
                                 <div>
                                     <h4>{{ __('site.the_lecturer') }}</h4>
                                     <h3>{{ ($course->user->f_name ?? '') . ' ' . ($course->user->l_name ?? '') }}</h3>
