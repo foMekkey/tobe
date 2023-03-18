@@ -23,7 +23,7 @@
     <section class="sections">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="col-md-3 col-sm-6 col-xs-12">
                     <div class="section_block wow bounceIn" data-wow-duration=".5s" data-wow-delay="0.5s">
                         <div class="pie-wrapper progress-45 style-2">
                             <div class="pie">
@@ -39,7 +39,7 @@
                         <p class="aaa">{{ $settings['trainees_count'] }}</p>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="col-md-3 col-sm-6 col-xs-12">
                     <div class="section_block wow bounceIn" data-wow-duration=".5s" data-wow-delay="0.5s">
                         <div class="pie-wrapper progress-45 style-2">
                             <div class="pie">
@@ -51,11 +51,11 @@
                             <img src="{{ asset('site_assets') }}/images/knowledge1.png" class="icon1">
                             <img src="{{ asset('site_assets') }}/images/knowledge2.png" class="icon2">
                         </div>
-                        <h3>{{ __('pages.certificates_count') }}</h3>
+                        <h3>{{ __('site.certificates_count') }}</h3>
                         <p class="aaa">{{ $settings['certificates_count'] }}</p>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="col-md-3 col-sm-6 col-xs-12">
                     <div class="section_block wow bounceIn" data-wow-duration=".5s" data-wow-delay="0.75s">
                         <div class="pie-wrapper progress-45 style-2">
                             <div class="pie">
@@ -71,7 +71,7 @@
                         <p class="aaa">{{ $settings['training_hours_count'] }}</p>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="col-md-3 col-sm-6 col-xs-12">
                     <div class="section_block wow bounceIn" data-wow-duration=".5s" data-wow-delay="1s">
                         <div class="pie-wrapper progress-45 style-2">
                             <div class="pie">

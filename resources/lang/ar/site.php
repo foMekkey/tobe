@@ -130,6 +130,7 @@ return [
     'direct' => 'مباشر',
     'remotely' => 'عن بعد',
     'hours' => 'عدد الساعات',
+    'certificates_count' => 'عدد الشهادات',
     'consultation_subject' => 'موضوع الاستشارة',
     'upload_file' => 'رفع ملف',
     'add_consult_success' => 'تم إرسال الطلب بنجاح',
