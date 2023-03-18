@@ -596,7 +596,7 @@
                         beforeSend: function() {
                             swal({
                                 title: 'system message',
-                                text: 'please wait connecting to contabo',
+                                text: 'please wait ...',
                                 buttons: false
                             });
                         },
