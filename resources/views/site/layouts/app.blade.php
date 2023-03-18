@@ -333,6 +333,8 @@
     <script src="{{ asset('site_assets') }}/js/animate-number.js"></script>
     <script src="{{ asset('site_assets') }}/js/script.js"></script>
     <script src="{{ asset('site_assets') }}/js/jquery.validate.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
     <script>
         @if (app()->getLocale() == 'ar')
             $.extend($.validator.messages, {
