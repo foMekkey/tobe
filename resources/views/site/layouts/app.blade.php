@@ -160,6 +160,8 @@
                                                     src="{{ asset('site_assets') }}/images/advice_logo.png"></a></li>
                                         <li><a href="{{ url('site/courses') }}">{{ __('site.courses') }}<img
                                                     src="{{ asset('site_assets') }}/images/advice_logo.png"></a></li>
+                                        <li><a href="{{ url('site/faq') }}">{{ __('site.faq') }}<img
+                                                    src="{{ asset('site_assets') }}/images/advice_logo.png"></a></li>
                                         <li><a href="{{ url('site/contact') }}">{{ __('site.contact') }}<img
                                                     src="{{ asset('site_assets') }}/images/advice_logo.png"></a></li>
                                     </ul>
