@@ -10,6 +10,7 @@ use App\Testimonial;
 use App\Blog;
 use App\ContactMessage;
 use App\Consultation;
+use App\Faq;
 use App\NewsletterSubscription;
 use App\Page;
 
@@ -66,6 +67,12 @@ class HomeController extends Controller
         $page = Page::where('lang', $this->locale)->where('key', $key)->first();
 
         return view('site.page', compact('page', 'key'));
+    }
+
+    public function faq()
+    {
+        $faqs = Faq::all();
+        return view('site.faq', compact('faqs'));
     }
 
     public function contact()
