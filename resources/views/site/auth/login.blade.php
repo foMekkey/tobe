@@ -21,8 +21,11 @@
                 <h4>{{ __('site.welcome_please') }} <span>{{ __('site.login') }}</span></h4>
                 <form action="{{ route('do-login') }}" method="post">
                     @error('login')
-                        <div class="alert alert-danger">{{ session('message') ?? __('site.login_error') }}</div>
+                        <div class="alert alert-danger">{{ __('site.login_error') }}</div>
                     @enderror
+                    @if (session('message'))
+                        <div class="alert alert-danger">{{ session('message') ?? __('site.login_error') }}</div>
+                    @endif
 
                     <div class="form-group">
                         <label>{{ __('site.email') }}</label>
