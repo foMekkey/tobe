@@ -9,6 +9,9 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset');
 
+Route::get('/email/verify', 'VerificationController@show')->name('verification.notice');
+Route::get('/email/verify/{id}/{hash}', 'VerificationController@verify')->name('verification.verify')->middleware(['signed']);
+Route::post('/email/resend', 'VerificationController@resend')->name('verification.resend');
 
 Route::get('test_mail_view', [
     'uses' => "Admin\SubscriptionsController@test_mail_view",
