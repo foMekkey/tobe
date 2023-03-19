@@ -26,8 +26,8 @@ class UserController extends Controller
         if ($getUserByEmail)
             \DB::table('sessions')->where('user_id', $getUserByEmail->id)->delete();
         if (auth()->attempt($request->only(['email', 'password']), $request->rememberme)) {
-            if ($getUserByEmail->email_verified_at === null) {
-                return redirect()->to('login')->withErrors('لم يتم التحقق من البريد الإلكتروني فضلاً قم بتأكيد البريد الإلكتروني الخاص بك من خلال الضغط علي زر التحقق من خلال البريد الإلكتروني الخاص بك');
+            if ($getUserByEmail->email_verified_at == null) {
+                return redirect()->route('login')->withErrors('لم يتم التحقق من البريد الإلكتروني فضلاً قم بتأكيد البريد الإلكتروني الخاص بك من خلال الضغط علي زر التحقق من خلال البريد الإلكتروني الخاص بك');
             }
             if (!empty($request->referrer_url)) {
                 return redirect($request->referrer_url);
