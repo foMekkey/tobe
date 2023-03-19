@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Site\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 use Auth;
 use App\User;
 
