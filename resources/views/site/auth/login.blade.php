@@ -13,17 +13,17 @@
             </ul>
         </div>
     </section>
-    
+
     <section class="login">
         <div class="container-fluid">
             <div class="login_content">
                 <h3>{{ __('site.login') }}</h3>
                 <h4>{{ __('site.welcome_please') }} <span>{{ __('site.login') }}</span></h4>
-                <form action="{{route('do-login')}}" method="post">
+                <form action="{{ route('do-login') }}" method="post">
                     @error('login')
                         <div class="alert alert-danger">{{ __('site.login_error') }}</div>
                     @enderror
-                    
+
                     <div class="form-group">
                         <label>{{ __('site.email') }}</label>
                         <input type="text" class="form-control" name="email" placeholder="{{ __('site.email') }}">
@@ -31,7 +31,8 @@
                     </div>
                     <div class="form-group">
                         <label>{{ __('site.password') }}</label>
-                        <input type="password" class="form-control" name="password" placeholder="{{ __('site.password') }}">
+                        <input type="password" class="form-control" name="password"
+                            placeholder="{{ __('site.password') }}">
                         <span class="fa fa-lock"></span>
                     </div>
                     <div class="form-group">
@@ -39,14 +40,15 @@
                             <input type="checkbox"><i>Auto save</i>
                             <span class="checkmark"></span>
                         </label> --}}
-                        <a href="{{route('forgotPassword')}}" class="forgot_pw">{{ __('site.forgot_password') }}</a>
+                        <a href="{{ url('forgot-your-password') }}" class="forgot_pw">{{ __('site.forgot_password') }}</a>
                         <div class="clearfix"></div>
                     </div>
                     <div class="form-group">
-                        {{csrf_field()}}
+                        {{ csrf_field() }}
                         <input type="hidden" name="referrer_url" value="{{ Session::get('referrer_url') ?? '' }}" />
                         <input type="submit" class="btn black_hover" value="{{ __('site.login_submit') }}">
-                        <h5 class="register">{{ __('site.do_not_have_account') }} <a href="{{route('register')}}">{{ __('site.register_account') }}</a></h5>
+                        <h5 class="register">{{ __('site.do_not_have_account') }} <a
+                                href="{{ route('register') }}">{{ __('site.register_account') }}</a></h5>
                     </div>
                 </form>
             </div>
