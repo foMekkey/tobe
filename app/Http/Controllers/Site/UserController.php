@@ -92,8 +92,8 @@ class UserController extends Controller
         $user->role      = 3;
         $user->status    = 1;
         $user->save();
-
-        Auth::loginUsingId($user->id);
+        event(new Registered($user));
+        // Auth::loginUsingId($user->id);
         return back();
     }
 
