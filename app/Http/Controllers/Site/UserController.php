@@ -23,9 +23,9 @@ class UserController extends Controller
         ]);
         $getUserByEmail = User::where('email', $request->email)->first();
         if ($getUserByEmail) {
-            if ($getUserByEmail->email_verified_at == null) {
-                return redirect()->route('login')->with('message', 'لم يتم التحقق من البريد الإلكتروني فضلاً قم بتأكيد البريد الإلكتروني الخاص بك من خلال الضغط علي زر التحقق من خلال البريد الإلكتروني الخاص بك');
-            }
+            // if ($getUserByEmail->email_verified_at == null) {
+            //     return redirect()->route('login')->with('message', 'لم يتم التحقق من البريد الإلكتروني فضلاً قم بتأكيد البريد الإلكتروني الخاص بك من خلال الضغط علي زر التحقق من خلال البريد الإلكتروني الخاص بك');
+            // }
             \DB::table('sessions')->where('user_id', $getUserByEmail->id)->delete();
         }
         if (auth()->attempt($request->only(['email', 'password']), $request->rememberme)) {
@@ -91,7 +91,7 @@ class UserController extends Controller
         $user->role      = 3;
         $user->status    = 1;
         $user->save();
-        event(new Registered($user));
+        // event(new Registered($user));
         // Auth::loginUsingId($user->id);
         return back();
     }
