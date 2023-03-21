@@ -79,51 +79,98 @@
                 </div>
             </div>
 
-            <!--begin::Form-->
-            <form class="kt-form kt-form--label-right" id="kt_form_1" method="post"
-                action="{{ route('postaddnewsletters') }}" enctype="multipart/form-data">
-                @csrf
-                <div class="kt-portlet__body">
-                    <div class="kt-form__content">
-                        <div class="kt-alert m-alert--icon alert alert-danger kt-hidden" role="alert" id="kt_form_1_msg">
-                            <div class="kt-alert__icon">
-                                <i class="la la-warning"></i>
-                            </div>
-                            <div class="kt-alert__text">
-                                Oh snap! Change a few things up and try submitting again.
-                            </div>
-                            <div class="kt-alert__close">
-                                <button type="button" class="close" data-close="alert" aria-label="Close">
-                                </button>
-                            </div>
+            <div class="kt-portlet__body">
+                <ul class="nav nav-pills nav-fill" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link tab-link active" data-toggle="tab" href="#kt_tabs_5_1">ارسال النشرة الإخبارية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link tab-link" data-toggle="tab" href="#kt_tabs_5_2">المستخدمين</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="kt_tabs_5_1" role="tabpanel">
+                        <div class="course_content">
+                            <!--begin::Form-->
+                            <form class="kt-form kt-form--label-right" id="kt_form_1" method="post"
+                                action="{{ route('postaddnewsletters') }}" enctype="multipart/form-data">
+                                @csrf
+                                <div class="kt-portlet__body">
+                                    <div class="kt-form__content">
+                                        <div class="kt-alert m-alert--icon alert alert-danger kt-hidden" role="alert"
+                                            id="kt_form_1_msg">
+                                            <div class="kt-alert__icon">
+                                                <i class="la la-warning"></i>
+                                            </div>
+                                            <div class="kt-alert__text">
+                                                Oh snap! Change a few things up and try submitting again.
+                                            </div>
+                                            <div class="kt-alert__close">
+                                                <button type="button" class="close" data-close="alert" aria-label="Close">
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label">{{ __('pages.title') }} <span
+                                                style="color: red">*</span></label>
+                                        <div class="col-lg-9 col-xl-9">
+                                            <input class="form-control" id="kt_name" name="title" type="text"
+                                                value="{{ old('title') }}">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.message') }} <span
+                                                style="color: red">*</span></label>
+                                        <div class="col-lg-9 col-xl-9">
+                                            <textarea id="summernote" name="content"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="kt-form__actions">
+                                    <button
+                                        class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+                                        type="submit">
+                                        {{ __('pages.save') }}
+                                    </button>
+                                </div>
+                            </form>
+                            <!--end::Form-->
                         </div>
                     </div>
+                    <div class="tab-pane" id="kt_tabs_5_2" role="tabpanel">
+                        <div class="tab-pane" id="kt_apps_user_edit_tab_2" role="tabpanel">
+                            <div class="kt-form kt-form--label-right">
+                                <div class="kt-form__body">
+                                    <div class="kt-section kt-section--first">
+                                        <div class="kt-section__body">
+                                            <div class="row">
+                                                <label class="col-xl-3"></label>
+                                            </div>
 
-                    <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">{{ __('pages.title') }} <span
-                                style="color: red">*</span></label>
-                        <div class="col-lg-9 col-xl-9">
-                            <input class="form-control" id="kt_name" name="title" type="text"
-                                value="{{ old('title') }}">
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.message') }} <span
-                                style="color: red">*</span></label>
-                        <div class="col-lg-9 col-xl-9">
-                            <textarea id="summernote" name="content"></textarea>
+                                            <table class="table table-striped- table-bordered table-hover table-checkable"
+                                                id="userCourses">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>name</th>
+                                                        <th>join</th>
+                                                        <th>group</th>
+                                                        <th>type</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="kt-form__actions">
-                    <button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
-                        type="submit">
-                        {{ __('pages.save') }}
-                    </button>
-                </div>
-            </form>
-            <!--end::Form-->
+            </div>
+
         </div>
         <!--end::Portlet-->
     </div>
@@ -179,6 +226,43 @@
             height: 300,
         });
 
+        $('#userCourses').DataTable({
+            processing: true,
+            searching: true,
+            serverSide: true,
+            ajax: '{!! url('lessons/datatable-users-lesson/') !!}' + '/' + courses,
+            "language": {
+                "url": "{{ asset('ar-datatable.json') }}"
+            },
+            columns: [{
+                    data: 'id',
+                    name: 'id',
+                    'title': '#'
+                },
+                {
+                    data: 'user_name',
+                    name: 'user_name',
+                    'title': 'الاسم'
+                },
+                {
+                    data: 'created_at',
+                    name: 'created_at',
+                    'title': 'تاريخ الالتحاق'
+                },
+                // { data: 'ended', name: 'ended' ,'title':'تاريخ الانتهاء'},
+                {
+                    data: 'group',
+                    name: 'group',
+                    'title': 'المجموعة'
+                },
+                {
+                    data: 'type',
+                    name: 'type',
+                    'title': 'الدور'
+                },
+                // { data: 'options', name: 'options' ,'title':'العمليات' },
+            ],
+        });
         $.upload = function(file) {
             let out = new FormData();
             out.append('file', file, file.name);
