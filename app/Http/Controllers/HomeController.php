@@ -178,7 +178,7 @@ class HomeController extends Controller
             })
 
             ->addColumn('options', function ($query) {
-                $id = $query->email;
+                $id = urlencode($query->email);
                 return view('backend.newsletters.action', compact('id'));
             })
             ->rawColumns(['options', 'type'])
