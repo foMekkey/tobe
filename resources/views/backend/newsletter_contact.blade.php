@@ -154,7 +154,6 @@
                                                 id="userCourses">
                                                 <thead>
                                                     <tr>
-                                                        <th>#</th>
                                                         <th>name</th>
                                                         <th>join</th>
                                                     </tr>
