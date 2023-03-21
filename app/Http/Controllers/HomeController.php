@@ -177,11 +177,10 @@ class HomeController extends Controller
                 return  $query->datetime ?? '';
             })
 
-            // ->addColumn('options', function ($query)  use ($courses) {
-            //     $user_id = $query->id;
-            //     $course_id = $courses->id;
-            //     return view('backend.courses.actionUsers', compact('course_id', 'user_id'));
-            // })
+            ->addColumn('options', function ($query) {
+                $user_id = $query->id;
+                return view('backend.subscriptions.action', compact('user_id'));
+            })
             ->rawColumns(['options', 'type'])
             ->make(true);
     }

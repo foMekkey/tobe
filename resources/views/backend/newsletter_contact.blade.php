@@ -156,6 +156,7 @@
                                                     <tr>
                                                         <th>name</th>
                                                         <th>join</th>
+                                                        <th>options</th>
                                                     </tr>
                                                 </thead>
                                             </table>
@@ -253,8 +254,11 @@
                     name: 'datetime',
                     'title': 'تاريخ الالتحاق'
                 },
-                // { data: 'ended', name: 'ended' ,'title':'تاريخ الانتهاء'},
-                // { data: 'options', name: 'options' ,'title':'العمليات' },
+                {
+                    data: 'options',
+                    name: 'options',
+                    'title': 'العمليات'
+                },
             ],
         });
         $.upload = function(file) {
