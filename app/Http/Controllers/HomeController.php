@@ -194,7 +194,7 @@ class HomeController extends Controller
         $check = $subscription->delete();
 
         if ($check) {
-            return Response::json($id, '200');
+            return response()->json($id, '200');
         } else {
             return redirect()->back()->with('error', __('pages.success-delete'));
         }
