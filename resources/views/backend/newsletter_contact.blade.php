@@ -175,6 +175,18 @@
 @endsection
 
 @section('script')
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.0.3/js/dataTables.buttons.min.js"></script>
+    <script src="{{ asset('/vendor/datatables/buttons.server-side.js') }}"></script>
+    <!--begin::Page Vendors(used by this page) -->
+    <script src="{{ asset('admin/assets/vendors/custom/datatables/datatables.bundle.js') }}" type="text/javascript">
+    </script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js">
+    </script>
+    <!--end::Page Vendors -->
+    <!--begin::Page Scripts(used by this page) -->
+    <script src="{{ asset('admin/assets/js/demo1/pages/crud/datatables/advanced/column-rendering.js') }}"
+        type="text/javascript"></script>
     <script src="{{ asset('js/summernote.min.js') }}" type="text/javascript"></script>
     <script>
         function readURL(input) {
