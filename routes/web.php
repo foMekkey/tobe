@@ -353,7 +353,7 @@ Route::group(['middleware' => ['auth']], function () {
         'title' => 'عرض المشتركين في النشرة البريدية',
     ]);
 
-    Route::delete('/delete-newsletters-subscription/{id}', [
+    Route::get('/delete-newsletters-subscription/{id}', [
         'uses' => 'HomeController@destroyNewslettersUser',
         'as' => 'DeleteNewslettersSubscription',
         'title' => 'حذف مشترك من النشرة البريدية',
