@@ -179,7 +179,7 @@ class HomeController extends Controller
 
             ->addColumn('options', function ($query) {
                 $user_id = $query->id;
-                return view('backend.subscriptions.action', compact('user_id'));
+                return view('backend.subscriptions.action', compact('id'));
             })
             ->rawColumns(['options', 'type'])
             ->make(true);
