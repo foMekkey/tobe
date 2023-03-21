@@ -182,7 +182,7 @@ class HomeController extends Controller
                 return view('backend.newsletters.action', compact('id'));
             })
             ->rawColumns(['options', 'type'])
-            ->setRowId('email')
+            ->setRowId('id')
             ->make(true);
     }
 
