@@ -345,6 +345,12 @@ Route::group(['prefix' => 'courses', 'middleware' => ['auth', 'checkRole']], fun
     ]);
 });
 
+Route::get('/datatable-users-news-letters', [
+    'uses' => 'HomeController@DataTableUsersNewsLetters',
+    'as' => 'DataTableUsersNewsLetters',
+    'title' => 'عرض المشتركين في النشرة البريدية',
+]);
+
 Route::group(['prefix' => 'lessons', 'middleware' => ['auth', 'checkRole']], function () {
 
     # groups index

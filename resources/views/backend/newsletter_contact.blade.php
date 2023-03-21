@@ -85,7 +85,7 @@
                         <a class="nav-link tab-link active" data-toggle="tab" href="#kt_tabs_5_1">ارسال النشرة الإخبارية</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link tab-link" data-toggle="tab" href="#kt_tabs_5_2">المستخدمين</a>
+                        <a class="nav-link tab-link" data-toggle="tab" href="#kt_tabs_5_2">المشتركين</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -157,8 +157,6 @@
                                                         <th>#</th>
                                                         <th>name</th>
                                                         <th>join</th>
-                                                        <th>group</th>
-                                                        <th>type</th>
                                                     </tr>
                                                 </thead>
                                             </table>
@@ -230,36 +228,21 @@
             processing: true,
             searching: true,
             serverSide: true,
-            ajax: '{!! url('lessons/datatable-users-lesson/') !!}' + '/' + courses,
+            ajax: '{!! url('datatable-users-news-letters/') !!}',
             "language": {
                 "url": "{{ asset('ar-datatable.json') }}"
             },
             columns: [{
-                    data: 'id',
-                    name: 'id',
-                    'title': '#'
-                },
-                {
-                    data: 'user_name',
-                    name: 'user_name',
+                    data: 'email',
+                    name: 'email',
                     'title': 'الاسم'
                 },
                 {
-                    data: 'created_at',
-                    name: 'created_at',
+                    data: 'datetime',
+                    name: 'datetime',
                     'title': 'تاريخ الالتحاق'
                 },
                 // { data: 'ended', name: 'ended' ,'title':'تاريخ الانتهاء'},
-                {
-                    data: 'group',
-                    name: 'group',
-                    'title': 'المجموعة'
-                },
-                {
-                    data: 'type',
-                    name: 'type',
-                    'title': 'الدور'
-                },
                 // { data: 'options', name: 'options' ,'title':'العمليات' },
             ],
         });

@@ -16,18 +16,18 @@ use Carbon\Carbon;
 
 class HomeController extends Controller
 {
-//    /**
-//     * Create a new controller instance.
-//     *
-//     * @return void
-//     */
+    //    /**
+    //     * Create a new controller instance.
+    //     *
+    //     * @return void
+    //     */
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
             if (!Auth::check()) {
                 return redirect(route('site-home'));
             }
-            
+
             return $next($request);
         });
         //$this->middleware('auth');
@@ -50,28 +50,28 @@ class HomeController extends Controller
 
         //return view('home');
     }
-    
+
     public function contactMessages(ContactMessageDatatable $contactMessageDatatable)
     {
         return $contactMessageDatatable->render('backend.contact_messages');
     }
-    
+
     public function consultations(ConsultationDatatable $consultationDatatable)
     {
         return $consultationDatatable->render('backend.consultations');
     }
-    
+
     public function consultationReply(Request $request)
     {
         if (empty($request->id) || empty($request->status) || ($request->status == '2' && empty($request->suggested_date))) {
             return response()->json(['error' => true], '200');
         }
-        
+
         $consultation = \App\Consultation::where(['id' => $request->id, 'status' => '0'])->first();
         if (!$consultation) {
             return response()->json(['error' => true], '200');
         }
-        
+
         $msg = 'تم اعتماد موعد الإستشارة" ' . $consultation->subject . '"';
         $consultation->status = $request->status;
         if ($request->status == '2') {
@@ -79,7 +79,7 @@ class HomeController extends Controller
             $msg = 'تم ارسال تعديل مقترح لموعد الإستشارة" ' . $consultation->subject . '"';
         }
         $consultation->save();
-        
+
         $notificationData = [
             'type' => 2,
             'user_id' => $consultation->user_id,
@@ -91,30 +91,30 @@ class HomeController extends Controller
         UserNotification::insert($notificationData);
 
         Session::flash('success', 'تم تعديل الحالة بنجاح');
-        
+
         return response()->json(['success' => true], '200');
     }
-    
+
     public function consultationSuggestedAction(Request $request)
     {
         if (empty($request->id) || empty($request->action) || !in_array($request->action, ['accept', 'reject'])) {
             return response()->json(['error' => true], '200');
         }
-        
+
         $consultation = \App\Consultation::where(['id' => $request->id, 'status' => '2'])->first();
         if (!$consultation) {
             return response()->json(['error' => true], '200');
         }
-        
+
         $msg = 'تم رفض الموعد المقترح للإستشارة " ' . $consultation->subject . '"';
         $consultation->status = ($request->action == 'accept' ? 1 : 3);
         if ($request->action == 'accept') {
             $msg = 'تم قبول الموعد المقترح للإستشارة " ' . $consultation->subject . '"';
-            
+
             $consultation->date = $consultation->suggested_date;
         }
         $consultation->save();
-        
+
         $notificationData = [
             'type' => 2,
             'user_id' => 1,
@@ -130,22 +130,22 @@ class HomeController extends Controller
         } else {
             Session::flash('success', 'تم رفض الموعد المقترح للإستشارة ');
         }
-        
+
         return response()->json(['success' => true], '200');
     }
-    
+
     public function consultationShow($id)
     {
         $consultation = \App\Consultation::findOrFail($id);
-        
+
         return view('students.consultation_show', compact('consultation'));
     }
-    
+
     public function testimonials(TestimonialDatatable $testimonialDatatable)
     {
         return $testimonialDatatable->render('backend.testimonials');
     }
-    
+
     public function upload(Request $request)
     {
         $folder = 'services';
@@ -155,32 +155,54 @@ class HomeController extends Controller
         if (isset($request->file) ||  $request->file != null) {
             return url('uploads/' . $request->file->store($folder));
         }
-        
+
         return '';
     }
-    
-    public function newsletters() {
+
+    public function newsletters()
+    {
         return view('backend.newsletter_contact');
     }
-    
+
+    public function DataTableUsersNewsLetters()
+    {
+        $subscriptionsUsers = NewsletterSubscription::all();
+        return \DataTables::of($subscriptionsUsers)
+
+            ->editColumn('user_name', function ($query) {
+                return  $query->email;
+            })
+
+            ->editColumn('group', function ($query) {
+                return  $query->datetime ?? '';
+            })
+
+            // ->addColumn('options', function ($query)  use ($courses) {
+            //     $user_id = $query->id;
+            //     $course_id = $courses->id;
+            //     return view('backend.courses.actionUsers', compact('course_id', 'user_id'));
+            // })
+            ->rawColumns(['options', 'type'])
+            ->make(true);
+    }
     public function newslettersContact(Request $request)
     {
-        $this->validate($request,[
-            'title'=>'required',
-            'content'=>'required'
+        $this->validate($request, [
+            'title' => 'required',
+            'content' => 'required'
         ]);
-        
+
         $senderEmail = SiteSetting::where('name', 'email')->first()->value;
         $emails = NewsletterSubscription::get(['email']);
-        foreach($emails as $email){
-            Mail::send('emails.newsletter', ['content' => $request->content], function ($message) use($email, $senderEmail, $request) {
+        foreach ($emails as $email) {
+            Mail::send('emails.newsletter', ['content' => $request->content], function ($message) use ($email, $senderEmail, $request) {
                 $message->to($email->email)->from($senderEmail)->subject($request->title);
             });
         }
-        
+
         return redirect('newsletters')->with(['success' =>  __('pages.success-send_newsletter')]);
     }
-    
+
     public function markNotificationsAsRead()
     {
         \App\UserNotification::where('user_id', Auth::id())->update(['read_at' => \Carbon\Carbon::now()]);
