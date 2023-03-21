@@ -178,11 +178,26 @@ class HomeController extends Controller
             })
 
             ->addColumn('options', function ($query) {
-                $id = $query->id;
-                return view('backend.subscriptions.action', compact('id'));
+                $id = $query->email;
+                return view('backend.newsletters.action', compact('id'));
             })
             ->rawColumns(['options', 'type'])
+            ->setRowId('email')
             ->make(true);
+    }
+
+    public function destroyNewslettersUser($id)
+    {
+
+        $subscription = NewsletterSubscription::find($id);
+
+        $check = $subscription->delete();
+
+        if ($check) {
+            return Response::json($id, '200');
+        } else {
+            return redirect()->back()->with('error', __('pages.success-delete'));
+        }
     }
     public function newslettersContact(Request $request)
     {
