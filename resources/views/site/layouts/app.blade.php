@@ -77,8 +77,16 @@
                                             @if (Auth::check())
                                                 <a href="{{ route('logout') }}"
                                                     class="btn black_hover">{{ __('site.logout') }}</a>
-                                                <a href="{{ ((int) auth()->user()->role === 1 ? route('courses') : (int) auth()->user()->role === 3) ? route('StudentCourses') : route('TrainerCourses') }}"
-                                                    class="btn black_hover">{{ __('site.dashboard') }}</a>
+                                                @if ((int) auth()->user()->role === 1)
+                                                    <a href="{{ route('courses') }}"
+                                                        class="btn black_hover">{{ __('site.dashboard') }}</a>
+                                                @elseif ((int) auth()->user()->role === 3)
+                                                    <a href="{{ route('StudentCourses') }}"
+                                                        class="btn black_hover">{{ __('site.dashboard') }}</a>
+                                                @else
+                                                    <a href="{{ route('TrainerCourses') }}"
+                                                        class="btn black_hover">{{ __('site.dashboard') }}</a>
+                                                @endif
                                             @else
                                                 <a href="{{ route('register') }}"
                                                     class="btn black_hover">{{ __('site.sign_up') }}</a>
