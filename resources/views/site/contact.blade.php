@@ -63,7 +63,6 @@
                         <p>
 
                             * {{ __('site.contact_agreement') }}
-                            {{ __('site.i_agree') }}
                             <a href="{{ url('site/page/terms_conditions') }}" data-target="#terms_conditions_modal"
                                 data-toggle="modal">{{ __('site.terms') }}</a>
                         </p>
