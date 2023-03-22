@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 @section('page-main-title', __('pages.courses'))
-@section('page-main-url', route('StudentCourses') )
+@section('page-main-url', route('StudentCourses'))
 
 @section('style')
     <style>
@@ -33,8 +33,9 @@
                         <div class="dropdown dropdown-inline">
                             <select class="form-control" id="category_id">
                                 <option value="">{{ __('pages.all_categories') }}</option>
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}" @if($categoryId == $category->id) selected @endif>{{ $category->name }}</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}" @if ($categoryId == $category->id) selected @endif>
+                                        {{ $category->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -46,14 +47,17 @@
         <div class="kt-portlet__body">
             <div class="col-xl-12">
                 <div class="kt-widget5">
-                    @foreach($courses as $course)
+                    @foreach ($courses as $course)
                         <div class="kt-widget5__item">
                             <div class="col-md-12">
                                 <div class="col-md-2 pull-right text-center">
-                                    <img class="img-fluid" src="{{ config("filesystems.disks.contabo.url").'/'.$course->image }}" alt="">
+                                    <img class="img-fluid"
+                                        src="{{ config('filesystems.disks.contabo.url') . '/' . $course->image }}"
+                                        alt="">
                                 </div>
                                 <div class="col-md-8 pull-right">
-                                    <a href="{{ route('showCourseDetailsStudent', $course->id) }}" class="kt-widget5__title">
+                                    <a href="{{ route('showCourseDetailsStudent', $course->id) }}"
+                                        class="kt-widget5__title">
                                         <h3>{{ $course->name }}</h3>
                                     </a>
                                     <div class="kt-widget5__info">
@@ -64,10 +68,12 @@
                                     </p>
                                 </div>
                                 <div class="col-md-2 pull-right">
-                                    @if(in_array($course->id, $userCourses))
-                                        <a href="#" class="btn btn-default disabled pull-left">{{ __('pages.you_have_this_course') }}</a>
+                                    @if (in_array($course->id, $userCourses))
+                                        <a href="#"
+                                            class="btn btn-default disabled pull-left">{{ __('pages.you_have_this_course') }}</a>
                                     @else
-                                        <a href="#" class="btn btn-brand btn-elevate join_course pull-left" rel="{{ $course->id }}">{{ __('pages.got_course') }}</a>
+                                        <a href="{{ url('/student/courses/catalog/$course->id') }}"
+                                            class="btn btn-brand btn-elevate join_course pull-left">{{ __('pages.got_course') }}</a>
                                     @endif
                                 </div>
                             </div>
@@ -83,22 +89,6 @@
     <script>
         $('#category_id').change(function() {
             location.href = "{{ route('StudentCatalog') }}/" + $(this).val();
-        });
-
-        $('.join_course').click(function(event) {
-            btn = this;
-            event.preventDefault();
-
-            $.ajax({
-                type: "POST",
-                url: "{{ route('StudentCatalogJoinCourse') }}",
-                data: {'_token': "{{ csrf_token() }}", 'id': $(this).attr('rel')},
-                success: function (msg) {
-                    //$(btn).attr('class', 'btn btn-default disabled');
-                    //$(btn).text('{{ __("pages.you_have_joined_this_course") }}');
-                    location.href = "{{ url('student/courses/show') }}/" + $(btn).attr('rel');
-                }
-            });
         });
     </script>
 @endsection
