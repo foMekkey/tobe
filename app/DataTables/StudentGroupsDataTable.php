@@ -35,7 +35,7 @@ class StudentGroupsDataTable extends DataTable
         return DB::table('groups')->join('group_members', 'groups.id', 'group_members.group_id')->where(
             'group_members.student_id',
             auth()->id()
-        )->select('groups.id', 'name', 'desc', 'status', 'groups.created_at')->distinct('groups.id')->get();
+        )->where('status', 1)->select('groups.id', 'name', 'desc', 'status', 'groups.created_at')->distinct('groups.id')->get();
     }
 
     /**
