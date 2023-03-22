@@ -189,16 +189,15 @@ function EditPermissions3($id)
     }
 
     $checked = '';
-    if ($failedCounter['admin'] == 0 && $successCounter['admin'] != 0) {
+    if ($successCounter['admin'] != 0) {
         $checked = 'checked';
     }
-    echo $failedCounter['admin'] . "-" . $successCounter['admin'];
     echo '<li><label class="kt-checkbox"><input type="checkbox" ' . $checked . ' value=""><span></span> </label><a href="#">' . __('pages.Admin') . '</a><br><ul>';
     echo $output['admin'];
     echo '</ul></li>';
 
     $checked = '';
-    if ($failedCounter['trainer'] == 0 && $successCounter['trainer'] != 0) {
+    if ($successCounter['trainer'] != 0) {
         $checked = 'checked';
     }
     echo '<li><label class="kt-checkbox"><input type="checkbox" ' . $checked . ' value=""><span></span> </label><a href="#">' . __('pages.Trainer') . '</a><br><ul>';
@@ -206,7 +205,7 @@ function EditPermissions3($id)
     echo '</ul></li>';
 
     $checked = '';
-    if ($failedCounter['student'] == 0 && $successCounter['student'] != 0) {
+    if ($successCounter['student'] != 0) {
         $checked = 'checked';
     }
     echo '<li><label class="kt-checkbox"><input type="checkbox" ' . $checked . ' value=""><span></span> </label><a href="#">' . __('pages.Student') . '</a><br><ul>';
