@@ -121,9 +121,10 @@
                                 <h3>الحسابات البنكيه</h3>
                                 @foreach ($banks as $bank)
                                     <div class="alert alert-info">
-                                        <p><b>{{ $bank->bank_name_ar }}</b> : <br> {{ $bank->acc_name_ar }}</p>
-                                        <p><b>رقم الحساب</b> : <br> {{ $bank->acc_num }} </p>
-                                        <p><b>الايبان </b> : <br> {{ $bank->iban }}</p>
+
+                                        <div class="col-md-3">{{ $bank->bank_name_ar }} {{ $bank->acc_name_ar }} </div>
+                                        <div class="col-md-3"> رقم الحساب {{ $bank->acc_num }} </div>
+                                        <div class="col-md-3">الايبان {{ $bank->iban }}</div>
                                     </div>
                                 @endforeach
                                 <hr>
@@ -194,8 +195,8 @@
         </div>
     </section>
     <!--
-                                                                                             sub_payment
-                                                                                                -->
+                                                                                                 sub_payment
+                                                                                                    -->
 @endsection
 
 
