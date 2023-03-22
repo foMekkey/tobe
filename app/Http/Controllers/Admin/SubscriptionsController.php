@@ -40,7 +40,7 @@ class SubscriptionsController extends Controller
         $students = User::where('type', 3)->pluck('user_name', 'id')->toArray();
         $courses = Courses::all()->pluck('name', 'id');
         $banks = Bank::select('acc_name_ar', 'acc_num', 'id')->get();
-        $e_wallets = E_Wallet::select('number', 'company_name_ar', 'id')->where('active', 1)->get();
+        $e_wallets = E_Wallet::select('number', 'company_name_ar', 'id')->get();
         return view('backend.subscriptions.create', compact('courses', 'students', 'banks', 'e_wallets'));
     }
 
