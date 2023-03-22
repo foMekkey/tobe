@@ -20,7 +20,7 @@ class CategoriesCoursesDataTable extends DataTable
             ->editColumn('action', 'backend.categories.action')
             ->editColumn('lang', function ($query) {
                 if ($query->lang == 'ar') {
-                    return 'العربية';
+                    return 'العربية sss';
                 } else {
                     return 'الإنجليزية';
                 }
