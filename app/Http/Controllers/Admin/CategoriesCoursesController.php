@@ -58,7 +58,7 @@ class CategoriesCoursesController extends Controller
 
         $categories = CategoiresCourses::find($id);
         if ($categories->courses()->count() > 0) {
-            return response()->json(['message' => 'hasUsers', 'countUsers' => $categories->courses()->count() > 0, 'countGroups' => $categories->courses()->count() > 0]);
+            return response()->json(['message' => 'hasUsers', 'countUsers' => $categories->courses()->count(), 'countGroups' => $categories->courses()->count()]);
         }
         $check = $categories->delete();
 
