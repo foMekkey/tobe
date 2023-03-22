@@ -38,11 +38,12 @@
                                             id="pay_online_btn">هنا</a></h3>
                                 </div>
                                 <h3>المحافظ الالكترونية</h3>
-                                <ul class="list-inline">
-                                    @foreach ($e_wallets as $e_wallet)
-                                        <li>{{ $e_wallet->company_name_en }} {{ $e_wallet->number }}</li>
-                                    @endforeach
-                                </ul>
+                                @foreach ($e_wallets as $e_wallet)
+                                    <div class="alert alert-info">
+                                        <div class="col-md-6">{{ $e_wallet->company_name_en }}</div>
+                                        <div class="col-md-6">{{ $e_wallet->number }}</div>
+                                    </div>
+                                @endforeach
                                 <hr>
                             </div>
 
@@ -121,7 +122,6 @@
                                 <h3>الحسابات البنكيه</h3>
                                 @foreach ($banks as $bank)
                                     <div class="alert alert-info">
-
                                         <div class="col-md-4">{{ $bank->bank_name_ar }} <br> {{ $bank->acc_name_ar }}
                                         </div>
                                         <div class="col-md-4"> رقم الحساب <br> {{ $bank->acc_num }} </div>
@@ -196,8 +196,8 @@
         </div>
     </section>
     <!--
-                                                                                                                 sub_payment
-                                                                                                                    -->
+                                                                                                                         sub_payment
+                                                                                                                            -->
 @endsection
 
 
