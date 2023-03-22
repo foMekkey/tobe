@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CategoriesCoursesRequest extends FormRequest
@@ -21,10 +22,16 @@ class CategoriesCoursesRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(Request $request)
     {
-        $rules['name'] = 'required';
-
-        return $rules;
+        return [
+            'name' => [
+                'required',
+                Rule::unique('course_categories')->where(function ($query) use ($request) {
+                    return $query->where('name', $request->name)
+                        ->where('lang', $request->lang);
+                })
+            ]
+        ];
     }
 }
