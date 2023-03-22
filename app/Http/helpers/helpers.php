@@ -172,7 +172,7 @@ function EditPermissions3($id)
                 //$routes = Route::getRoutes();
                 foreach ($routes as $value) {
                     if ($value->getName() !== null && $value->getName() === $child) {
-                        $output[$group] .= '<li>ss' . $value->getAction()['title'];
+                        $output[$group] .= '<li>' . $value->getAction()['title'];
                         $output[$group] .= '<div class="kt-checkbox-single"><label class="kt-checkbox">';
                         if (in_array($value->getName(), $arr)) {
                             $output[$group] .= '<input type="checkbox" class="form-control" checked="" name="permissions[]" value="' . $value->getName() . '"> ';
@@ -192,7 +192,7 @@ function EditPermissions3($id)
     if ($failedCounter['admin'] == 0 && $successCounter['admin'] != 0) {
         $checked = 'checked';
     }
-    echo '<li><label class="kt-checkbox"><input type="checkbox" ' . $checked . ' value=""><span></span> </label><a href="#">' . __('pages.Admin') . '</a><br><ul>';
+    echo '<li>ss<label class="kt-checkbox"><input type="checkbox" ' . $checked . ' value=""><span></span> </label><a href="#">' . __('pages.Admin') . '</a><br><ul>';
     echo $output['admin'];
     echo '</ul></li>';
 
