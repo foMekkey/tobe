@@ -159,13 +159,11 @@ function EditPermissions3($id)
             }
             $output[$group] .= '<li><label class="kt-checkbox"><input type="checkbox" ' . $checked . ' name="permissions[]"  value="' . $value->getName() . '"><span></span> </label><a href="#">' . $value->getAction()['title'] . '</a><br><ul>';
 
-            /*if(in_array($value->getName(),$arr))
-            {
-                echo '<div class="col-sm-3"><li><label class="kt-checkbox"><input type="checkbox"  name="permissions[]"  value="'.$value->getName().'"><span></span></label><a href="#">'.$value->getAction()['title'].'</a><br><ul>';
-            }else{
-                echo '<div class="col-sm-3"><li><label class="kt-checkbox"><input type="checkbox"  name="permissions[]"  value="'.$value->getName().'"><span></span></label><a href="#">'.$value->getAction()['title'].'</a><br><ul>';
-
-            }*/
+            if (in_array($value->getName(), $arr)) {
+                echo '<div class="col-sm-3"><li><label class="kt-checkbox"><input type="checkbox"  name="permissions[]"  value="' . $value->getName() . '"><span></span></label><a href="#">' . $value->getAction()['title'] . '</a><br><ul>';
+            } else {
+                echo '<div class="col-sm-3"><li><label class="kt-checkbox"><input type="checkbox"  name="permissions[]"  value="' . $value->getName() . '"><span></span></label><a href="#">' . $value->getAction()['title'] . '</a><br><ul>';
+            }
             foreach ($value->getAction()['child'] as $child) {
 
                 #foreach for sub links

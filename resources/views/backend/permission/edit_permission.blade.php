@@ -194,7 +194,7 @@
 
                         <div class="row">
 
-                            {{ EditPermissions($role->id) }}
+                            {{ EditPermissions3($role->id) }}
 
                         </div>
 
