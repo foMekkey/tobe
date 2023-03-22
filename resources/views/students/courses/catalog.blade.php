@@ -72,7 +72,7 @@
                                         <a href="#"
                                             class="btn btn-default disabled pull-left">{{ __('pages.you_have_this_course') }}</a>
                                     @else
-                                        <a href="{{ url('/student/courses/catalog/$course->id') }}"
+                                        <a href="{{ url('/student/courses/catalog/' . $course->id) }}"
                                             class="btn btn-brand btn-elevate join_course pull-left">{{ __('pages.got_course') }}</a>
                                     @endif
                                 </div>
