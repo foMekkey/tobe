@@ -38,7 +38,7 @@ class CategoriesCoursesDataTable extends DataTable
      */
     public function query(CategoiresCourses $model)
     {
-        return $model->newQuery()->select('id', 'name', 'created_at');
+        return $model->newQuery()->select('id', 'name', 'lang', 'created_at');
     }
 
     /**
