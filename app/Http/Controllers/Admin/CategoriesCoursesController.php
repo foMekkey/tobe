@@ -44,12 +44,15 @@ class CategoriesCoursesController extends Controller
     {
 
         $this->validate($request, [
-            'name' => 'required',
-            Rule::unique('course_categories')->where(function ($query) use ($request, $id) {
-                return $query->where('name', $request->name)
-                    ->where('lang', $request->lang)
-                    ->where('id', '!=', $id);
-            })
+            'name' => [
+                'required',
+                Rule::unique('course_categories')->where(function ($query) use ($request, $id) {
+                    return $query->where('name', $request->name)
+                        ->where('lang', $request->lang)
+                        ->where('id', '!=', $id);
+                })
+            ],
+
         ]);
 
         $categories = CategoiresCourses::find($id);
