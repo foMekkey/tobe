@@ -159,18 +159,20 @@ function EditPermissions3($id)
             }
             $output[$group] .= '<li><label class="kt-checkbox"><input type="checkbox" ' . $checked . ' name="permissions[]"  value="' . $value->getName() . '"><span></span> </label><a href="#">' . $value->getAction()['title'] . '</a><br><ul>';
 
-            if (in_array($value->getName(), $arr)) {
-                echo '<div class="col-sm-3"><li><label class="kt-checkbox"><input type="checkbox"  name="permissions[]"  value="' . $value->getName() . '"><span></span></label><a href="#">' . $value->getAction()['title'] . '</a><br><ul>';
-            } else {
-                echo '<div class="col-sm-3"><li><label class="kt-checkbox"><input type="checkbox"  name="permissions[]"  value="' . $value->getName() . '"><span></span></label><a href="#">' . $value->getAction()['title'] . '</a><br><ul>';
-            }
+            // /*if(in_array($value->getName(),$arr))
+            // {
+            //     echo '<div class="col-sm-3"><li><label class="kt-checkbox"><input type="checkbox"  name="permissions[]"  value="'.$value->getName().'"><span></span></label><a href="#">'.$value->getAction()['title'].'</a><br><ul>';
+            // }else{
+            //     echo '<div class="col-sm-3"><li><label class="kt-checkbox"><input type="checkbox"  name="permissions[]"  value="'.$value->getName().'"><span></span></label><a href="#">'.$value->getAction()['title'].'</a><br><ul>';
+
+            // }*/
             foreach ($value->getAction()['child'] as $child) {
 
                 #foreach for sub links
                 //$routes = Route::getRoutes();
                 foreach ($routes as $value) {
                     if ($value->getName() !== null && $value->getName() === $child) {
-                        $output[$group] .= '<li>' . $value->getAction()['title'];
+                        $output[$group] .= '<li>ss' . $value->getAction()['title'];
                         $output[$group] .= '<div class="kt-checkbox-single"><label class="kt-checkbox">';
                         if (in_array($value->getName(), $arr)) {
                             $output[$group] .= '<input type="checkbox" class="form-control" checked="" name="permissions[]" value="' . $value->getName() . '"> ';
