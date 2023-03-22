@@ -192,7 +192,8 @@ function EditPermissions3($id)
     if ($failedCounter['admin'] == 0 && $successCounter['admin'] != 0) {
         $checked = 'checked';
     }
-    echo '<li>ss<label class="kt-checkbox"><input type="checkbox" ' . $checked . ' value=""><span></span> </label><a href="#">' . __('pages.Admin') . '</a><br><ul>';
+    echo $failedCounter['admin'] . "-" . $successCounter['admin'];
+    echo '<li><label class="kt-checkbox"><input type="checkbox" ' . $checked . ' value=""><span></span> </label><a href="#">' . __('pages.Admin') . '</a><br><ul>';
     echo $output['admin'];
     echo '</ul></li>';
 
