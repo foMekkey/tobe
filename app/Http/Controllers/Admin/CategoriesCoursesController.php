@@ -28,6 +28,7 @@ class CategoriesCoursesController extends Controller
 
         $categoriesCourses = new CategoiresCourses();
         $categoriesCourses->name      = $categoriesCoursesRequest->name;
+        $categoriesCourses->lang      = $categoriesCoursesRequest->lang;
         $categoriesCourses->save();
 
         return redirect('categories')->with(['success' => __('pages.success-add')]);
@@ -53,6 +54,7 @@ class CategoriesCoursesController extends Controller
 
         $categories = CategoiresCourses::find($id);
         $categories->name               = $request->name;
+        $categories->lang               = $request->lang;
         $categories->update();
 
         return redirect('categories')->with(['success' => __('pages.success-edit')]);
