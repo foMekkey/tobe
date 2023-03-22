@@ -7,6 +7,7 @@ use App\DataTables\CategoriesCoursesDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoriesCoursesRequest;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Response;
 
 class CategoriesCoursesController extends Controller
@@ -43,6 +44,11 @@ class CategoriesCoursesController extends Controller
 
         $this->validate($request, [
             'name' => 'required',
+            Rule::unique('course_categories')->where(function ($query) use ($request, $id) {
+                return $query->where('name', $request->name)
+                    ->where('lang', $request->lang)
+                    ->where('id', '!=', $id);
+            })
         ]);
 
         $categories = CategoiresCourses::find($id);
