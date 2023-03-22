@@ -546,5 +546,6 @@ return [
     'StudentDiscussions' => 'المناقشات',
     'StudentMissions' => 'التكليفات',
     'StudentEvents' => 'الأحداث',
-    'StudentSubscription' => 'الإشتراكات'
+    'StudentSubscription' => 'الإشتراكات',
+    'edit-faq' => 'تعديل الأسئلة الشائعة'
 ];
