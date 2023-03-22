@@ -274,7 +274,6 @@
                     @else
                         <span class="kt-header__topbar-username">{{ Auth::user()->user_name }}</span>
                     @endif
-                    <span class="kt-header__topbar-username">{{ Auth::user()->user_name }}</span>
                     <a href="{{ route('logout') }}" class="kt-header__topbar-username"><i
                             class="fa fa-sign-out fa-lg fa-flip-horizontal" aria-hidden="true"></i></a>
                     {{-- <span class="kt-header__topbar-icon"><b>S</b></span> --}}
