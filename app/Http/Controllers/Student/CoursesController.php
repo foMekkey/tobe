@@ -73,7 +73,7 @@ class CoursesController extends Controller
             ) {
                 return redirect()->back();
             }
-            $banks = Bank::all();
+            $banks = Bank::where('active', 1)->get();
             $e_wallets = E_Wallet::where('active', 1)->get();
             $course = Courses::find($id);
             return view('students.courses.payment', compact('course', 'banks', 'e_wallets'));
