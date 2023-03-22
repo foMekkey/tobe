@@ -122,9 +122,10 @@
                                 @foreach ($banks as $bank)
                                     <div class="alert alert-info">
 
-                                        <div class="col-md-3">{{ $bank->bank_name_ar }} {{ $bank->acc_name_ar }} </div>
-                                        <div class="col-md-3"> رقم الحساب {{ $bank->acc_num }} </div>
-                                        <div class="col-md-3">الايبان {{ $bank->iban }}</div>
+                                        <div class="col-md-4">{{ $bank->bank_name_ar }} <br> {{ $bank->acc_name_ar }}
+                                        </div>
+                                        <div class="col-md-4"> رقم الحساب <br> {{ $bank->acc_num }} </div>
+                                        <div class="col-md-4">الايبان <br> {{ $bank->iban }}</div>
                                     </div>
                                 @endforeach
                                 <hr>
@@ -195,8 +196,8 @@
         </div>
     </section>
     <!--
-                                                                                                 sub_payment
-                                                                                                    -->
+                                                                                                                 sub_payment
+                                                                                                                    -->
 @endsection
 
 
