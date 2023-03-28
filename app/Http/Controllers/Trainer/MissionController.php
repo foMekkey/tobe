@@ -59,7 +59,7 @@ class MissionController extends Controller
         $mission->expire_date      = Carbon::createFromFormat('m/d/Y', $missionsRequest->expire_date);
 
         if (isset($missionsRequest->file) ||  $missionsRequest->file != null) {
-            $mission->file =  $missionsRequest->file('image')->storePublicly(
+            $mission->file =  $missionsRequest->file('file')->storePublicly(
                 path: 'missions/files',
                 options: 'contabo'
             );
