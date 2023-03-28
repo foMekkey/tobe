@@ -23,7 +23,6 @@ class TraineeCourseRequest extends FormRequest
      */
     public function rules()
     {
-        $rules['user_id'] = 'required';
         $rules['category_id'] = 'required';
         $rules['name'] = 'required';
         $rules['level'] = 'required';

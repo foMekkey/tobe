@@ -64,13 +64,6 @@ class CoursesController extends Controller
         $timestamp_from = Carbon::createFromFormat('m/d/Y', trim($dateFrom));
         $timestamp_to = Carbon::createFromFormat('m/d/Y', trim($dateTo));
 
-        if (isset($coursesRequest->status) ||  $coursesRequest->status != null) {
-            $stauts = $coursesRequest->status;
-        } else {
-            $stauts = 0;
-        }
-
-
         if (isset($coursesRequest->image) ||  $coursesRequest->image != null) {
             $image = $coursesRequest->file('image')->storePublicly(
                 path: 'courses/images',
