@@ -619,7 +619,10 @@
                         },
                         error: function(data) {
                             $('.swal-overlay--show-modal').hide();
-                            swal(data.responseJSON.error);
+                            console.log(data.responseJSON.error);
+                            swal(data.responseJSON.error, {
+                                icon: "warning",
+                            });
                         }
                     });
                 } else {
