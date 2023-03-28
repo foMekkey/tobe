@@ -36,9 +36,9 @@ class MissionController extends Controller
      */
     public function create()
     {
-        $groups = Groups::where('trainer_id',Auth::user()->id)->get();
-    	$students = User::where('type',3)->get();
-        
+        $groups = Groups::where('trainer_id', Auth::user()->id)->get();
+        $students = User::where('type', 3)->get();
+
         return view('trainer.missions.create', compact('groups', 'students'));
     }
 
@@ -57,9 +57,12 @@ class MissionController extends Controller
         $mission->mission_to_id    = $missionsRequest->mission_to == '1' ? $missionsRequest->student_id : $missionsRequest->group_id;
         $mission->period           = $missionsRequest->period;
         $mission->expire_date      = Carbon::createFromFormat('m/d/Y', $missionsRequest->expire_date);
-        
+
         if (isset($missionsRequest->file) ||  $missionsRequest->file != null) {
-            $mission->file = $missionsRequest->file->store('missions');
+            $mission->file =  $missionsRequest->file('image')->storePublicly(
+                path: 'missions/files',
+                options: 'contabo'
+            );
         }
 
         $mission->save();
@@ -68,10 +71,10 @@ class MissionController extends Controller
         $currentTime = Carbon::now();
         if ($missionsRequest->mission_to == '1') {
             $user = User::find($missionsRequest->student_id);
-            Mail::send('emails.assigned_mission', ['mission' => $mission, 'user' => $user], function ($message) use($user, $senderEmail) {
+            Mail::send('emails.assigned_mission', ['mission' => $mission, 'user' => $user], function ($message) use ($user, $senderEmail) {
                 $message->to($user->email)->from($senderEmail)->subject('مهمة جديدة !!');
             });
-            
+
             $notificationData = [
                 'type' => 2,
                 'user_id' => $user->id,
@@ -86,10 +89,10 @@ class MissionController extends Controller
             if ($userIds) {
                 $users = User::whereIn('id', $userIds)->get();
                 foreach ($users as $user) {
-                    Mail::send('emails.assigned_mission', ['mission' => $mission, 'user' => $user], function ($message) use($user, $senderEmail) {
+                    Mail::send('emails.assigned_mission', ['mission' => $mission, 'user' => $user], function ($message) use ($user, $senderEmail) {
                         $message->to($user->email)->from($senderEmail)->subject('مهمة جديدة !!');
                     });
-                    
+
                     $notificationData = [
                         'type' => 2,
                         'user_id' => $user->id,
@@ -102,44 +105,44 @@ class MissionController extends Controller
                 }
             }
         }
-        
+
         return redirect('trainer/missions')->with(['success' =>  __('pages.success-add')]);
     }
-    
+
     public function replies($id, TrainerMissionsRepliesDatatable $trainerMissionsRepliesDatatable)
     {
         return $trainerMissionsRepliesDatatable->with('id', $id)->render('trainer.missions.replies');
     }
-    
+
     public function showReply($id)
     {
-        $reply = MissionReply::where('id', $id)->whereHas('mission', function($q) {
+        $reply = MissionReply::where('id', $id)->whereHas('mission', function ($q) {
             $q->user_id = auth()->user()->id;
         })->first();
-        
-        return view('trainer.missions.show-reply',compact('reply'));
+
+        return view('trainer.missions.show-reply', compact('reply'));
     }
-    
+
     public function updateReply($id, Request $request)
     {
-        $this->validate($request,[
-            'trainer_rate'=>'required|in:1,2,3,4,5',
-            'status'=>'required|in:1,2'
+        $this->validate($request, [
+            'trainer_rate' => 'required|in:1,2,3,4,5',
+            'status' => 'required|in:1,2'
         ]);
-        
-        $reply = MissionReply::where('id', $id)->whereHas('mission', function($q) {
+
+        $reply = MissionReply::where('id', $id)->whereHas('mission', function ($q) {
             $q->user_id = auth()->user()->id;
         })->first();
-        
+
         if ($reply) {
             $reply->trainer_rate = $request->trainer_rate;
             $reply->trainer_comment = $request->trainer_comment;
             $reply->status = $request->status;
             $reply->save();
-            
+
             return redirect(route('TrainerMissionsReplies', $reply->mission_id))->with(['success' =>  __('pages.success-trainer-rating-add')]);
         }
-        
+
         return redirect()->back()->with('error', __('pages.unauthorized'));
     }
 }
