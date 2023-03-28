@@ -618,7 +618,6 @@
 
                         },
                         error: function(data) {
-                            console.log(data.responseJSON.error);
                             swal(data.responseJSON.error, {
                                 icon: "warning",
                             });
