@@ -2,7 +2,8 @@
 
 @section('style')
     <style>
-        .fa-star, .fa-star-o {
+        .fa-star,
+        .fa-star-o {
             color: #FF7F00;
             margin-left: 2px;
         }
@@ -22,7 +23,8 @@
         </div>
 
         <div class="kt-portlet__body">
-            <form action="{{ route('StudentMissionsAddReply', $mission->id) }}" method="post" id="kt_form_1" enctype="multipart/form-data">
+            <form action="{{ route('StudentMissionsAddReply', $mission->id) }}" method="post" id="kt_form_1"
+                enctype="multipart/form-data">
                 @csrf
                 <div class="kt-portlet__body">
                     <div class="kt-form__content">
@@ -39,48 +41,50 @@
                             </div>
                         </div>
                     </div>
-                
+
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.mission-title') }} </label>
+                        <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.mission-title') }} </label>
                         <div class="col-lg-9 col-xl-9">{{ $mission->name ?? '' }}</div>
                     </div>
-                    
+
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.mission-desc') }} </label>
+                        <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.mission-desc') }} </label>
                         <div class="col-lg-9 col-xl-9">{!! nl2br($mission->desc ?? '') !!}</div>
                     </div>
-                    
+
                     @if ($mission->file)
                         <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.mission-attached-file') }} </label>
+                            <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.mission-attached-file') }}
+                            </label>
                             <div class="col-lg-9 col-xl-9">
-                                <a href="{{ asset("uploads/".$mission->file) }}" download="">{{ __('pages.download') }}</a>
+                                <a href="{{ config('filesystems.disks.contabo.url') . '/' . $mission->file }}"
+                                    download="">{{ __('pages.download') }}</a>
                             </div>
                         </div>
                     @endif
-                    
+
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.instructor_name') }} </label>
+                        <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.instructor_name') }} </label>
                         <div class="col-lg-9 col-xl-9">{{ $mission->user->user_name ?? '' }}</div>
                     </div>
-                    
-                    @if($mission->period)
-                    <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.period') }} </label>
-                        <div class="col-lg-9 col-xl-9">{{ $mission->period }}</div>
-                    </div>
+
+                    @if ($mission->period)
+                        <div class="form-group row">
+                            <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.period') }} </label>
+                            <div class="col-lg-9 col-xl-9">{{ $mission->period }}</div>
+                        </div>
                     @endif
-                    
+
                     <div class="form-group row">
-                        <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.expire_date') }} </label>
+                        <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.expire_date') }} </label>
                         <div class="col-lg-9 col-xl-9">{{ $mission->expire_date }}</div>
                     </div>
-                    
-                    @if($reply)
+
+                    @if ($reply)
                         <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.status-column') }} </label>
+                            <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.status-column') }} </label>
                             <div class="col-lg-9 col-xl-9">
-                                @if($reply && $reply->status == '2')
+                                @if ($reply && $reply->status == '2')
                                     تم الإنجاز
                                 @else
                                     ينتظر المراجعة
@@ -88,10 +92,10 @@
                             </div>
                         </div>
                     @endif
-                    
+
                     @if (($reply && $reply->reply) || !$reply)
                         <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.the-reply') }} </label>
+                            <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.the-reply') }} </label>
                             <div class="col-lg-9 col-xl-9">
                                 @if ($reply)
                                     {!! nl2br($reply->reply) !!}
@@ -101,34 +105,38 @@
                             </div>
                         </div>
                     @endif
-                    
+
                     @if ($reply && $reply->file)
                         <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.reply-attachment-file') }} </label>
+                            <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.reply-attachment-file') }}
+                            </label>
                             <div class="col-lg-9 col-xl-9">
-                                <a href="{{ asset("uploads/".$reply->file) }}" download="">{{ __('pages.download') }}</a>
+                                <a href="{{ asset('uploads/' . $reply->file) }}"
+                                    download="">{{ __('pages.download') }}</a>
                             </div>
                         </div>
                     @elseif (!$reply)
                         <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.attached_file') }} </label>
+                            <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.attached_file') }} </label>
                             <div class="col-lg-9 col-xl-9">
                                 <input type="file" name="file" id="file" class="form-control">
                             </div>
                         </div>
                     @endif
-                    
+
                     @if ($reply)
                         <div class="form-group row">
-                            <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.sent_at') }} </label>
-                            <div class="col-lg-9 col-xl-9">{{ $reply->sent_at ? \Carbon\Carbon::parse($reply->sent_at)->format('Y/m/d h:i a') : '' }}</div>
+                            <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.sent_at') }} </label>
+                            <div class="col-lg-9 col-xl-9">
+                                {{ $reply->sent_at ? \Carbon\Carbon::parse($reply->sent_at)->format('Y/m/d h:i a') : '' }}
+                            </div>
                         </div>
 
-                        @if($reply->trainer_rate)
+                        @if ($reply->trainer_rate)
                             <div class="form-group row">
-                                <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.trainer_rate') }} </label>
+                                <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.trainer_rate') }} </label>
                                 <div class="col-lg-9 col-xl-9">
-                                    @for ($i=1; $i<6; $i++)
+                                    @for ($i = 1; $i < 6; $i++)
                                         @if ($i <= $reply->trainer_rate)
                                             <span class="fa fa-star"></span>
                                         @else
@@ -138,23 +146,24 @@
                                 </div>
                             </div>
                         @endif
-                        
-                        @if($reply->trainer_comment)
+
+                        @if ($reply->trainer_comment)
                             <div class="form-group row">
-                                <label class="col-xl-3 col-lg-3 col-form-label">  {{ __('pages.comment') }} </label>
+                                <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.comment') }} </label>
                                 <div class="col-lg-9 col-xl-9">
                                     {!! nl2br($reply->trainer_comment) !!}
                                 </div>
                             </div>
                         @endif
                     @endif
-                    
+
                     @if (!$reply)
-                    <div class="kt-form__actions">
-                        <button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u" type="submit" >
-                            {{ __('pages.reply_send') }}
-                        </button>
-                    </div>
+                        <div class="kt-form__actions">
+                            <button class="btn btn-success btn-md btn-tall btn-wide kt-font-bold kt-font-transform-u"
+                                type="submit">
+                                {{ __('pages.reply_send') }}
+                            </button>
+                        </div>
                     @endif
                 </div>
             </form>
@@ -164,23 +173,23 @@
 
 @section('script')
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $("#kt_form_1").validate({
                 // define validation rules
                 rules: {
                     reply: {
-                        required: function(element){
+                        required: function(element) {
                             return !$("#file").val();
                         }
                     },
                     file: {
-                        required: function(element){
+                        required: function(element) {
                             return !$("#reply").val();
                         }
                     }
                 },
                 //display error alert on form submit
-                invalidHandler: function (event, validator) {
+                invalidHandler: function(event, validator) {
                     var alert = $('#kt_form_1_msg');
                     alert.removeClass('kt-hidden').show();
                     KTUtil.scrollTo('m_form_1_msg', -200);
