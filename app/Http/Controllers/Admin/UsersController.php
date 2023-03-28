@@ -129,7 +129,8 @@ class UsersController extends Controller
     {
 
         if ((int)$id === (int) auth()->user()->id)
-            return redirect()->back()->with('error', 'لا يمكن ان يتم حذف المستخدم لنفسه');
+            return response()->json(['error' => 'لا يمكن ان يتم حذف المستخدم لنفسه'], 401);
+        // return redirect()->back()->with('error', 'لا يمكن ان يتم حذف المستخدم لنفسه');
 
         $user = User::find($id);
 
