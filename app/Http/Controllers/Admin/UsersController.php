@@ -128,9 +128,10 @@ class UsersController extends Controller
     public function destroy($id)
     {
 
-        if ((int)$id === (int) auth()->user()->id)
+        $adminRolesCounter = Role::whereId(1)->count();
+        return $adminRolesCounter;
+        if ((int) $id === (int) auth()->user()->id)
             return response()->json(['error' => 'لا يمكن ان يتم حذف المستخدم لنفسه'], 401);
-        // return redirect()->back()->with('error', 'لا يمكن ان يتم حذف المستخدم لنفسه');
 
         $user = User::find($id);
 
