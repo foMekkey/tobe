@@ -619,8 +619,7 @@
                         },
                         error: function(data) {
                             $('.swal-overlay--show-modal').hide();
-                            console.log(data)
-                            swal(data);
+                            swal(data.responseJSON.error);
                         }
                     });
                 } else {
