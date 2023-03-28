@@ -4,15 +4,13 @@ namespace App\Http\Controllers\Trainer;
 
 use App\CategoiresCourses;
 use App\Courses;
-//use App\CourseSection;
 use App\CoursesGroup;
 use App\CoursesLessons;
 use App\CoursesUser;
 use App\CourseTerms;
 use App\DataTables\TrainerCoursesDatatable;
-use App\GroupMember;
 use App\Groups;
-use App\Http\Requests\CoursesRequest;
+use App\Http\Requests\TraineeCourseRequest;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -55,7 +53,7 @@ class CoursesController extends Controller
      * @param CoursesRequest $coursesRequest
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(CoursesRequest $coursesRequest)
+    public function store(TraineeCourseRequest $coursesRequest)
     {
 
         $full_date = explode("-", $coursesRequest->dateRange);
