@@ -181,11 +181,11 @@
                         <label class="col-xl-3 col-lg-3 col-form-label">{{ __('pages.types') }}</label>
                         <div class="col-lg-9 col-xl-6">
                             <div class="kt-checkbox-inline">
-                                <label class="kt-checkbox">
+                                <label class="kt-checkbox" style="display:none;">
                                     <input type="checkbox" name="status" value="1">{{ __('pages.status') }}
                                     <span></span>
                                 </label>
-                                <label class="kt-checkbox hidden" style="display:none;">
+                                <label class="kt-checkbox hidden">
                                     <input type="checkbox" name="hide_from_catalog" value="1"
                                         checked>{{ __('pages.catalog') }}
                                     <span></span>

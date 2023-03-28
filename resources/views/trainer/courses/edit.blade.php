@@ -246,11 +246,12 @@
                                             <div class="col-lg-9 col-xl-6">
                                                 <div class="kt-checkbox-inline">
                                                     <label class="kt-checkbox">
-                                                        <input type="checkbox" name="status" value="1"
+                                                        <input type="checkbox" style="display: none;" name="status"
+                                                            value="1"
                                                             @if ($courses->status == 1) checked @endif>{{ __('pages.status') }}
                                                         <span></span>
                                                     </label>
-                                                    <label class="kt-checkbox" style="display: none;">
+                                                    <label class="kt-checkbox">
                                                         <input type="checkbox" name="hide_from_catalog" value="1"
                                                             @if ($courses->hide_from_catalog == 1) checked @endif>{{ __('pages.catalog') }}
                                                         <span></span>
