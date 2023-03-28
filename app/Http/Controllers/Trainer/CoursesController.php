@@ -73,8 +73,8 @@ class CoursesController extends Controller
             $image = 'courses/download.jpeg';
         }
 
-        if (isset($coursesRequest->hide_from_catalog) ||  $coursesRequest->hide_from_catalog != null) {
-            $hide_from_catalog = $coursesRequest->hide_from_catalog;
+        if (isset($coursesRequest->status) ||  $coursesRequest->status != null) {
+            $hide_from_catalog = $coursesRequest->status;
         } else {
             $hide_from_catalog = 0;
         }
@@ -93,7 +93,7 @@ class CoursesController extends Controller
         $courses->start_date        = $timestamp_from;
         $courses->end_date          = $timestamp_to;
         $courses->duration          = $coursesRequest->duration;
-        $courses->period_type          = $coursesRequest->period_type;
+        $courses->period_type       = $coursesRequest->period_type;
         $courses->image             = $image;
         $courses->complete_rules    = $coursesRequest->complete_rules;
         $courses->save();
@@ -157,8 +157,8 @@ class CoursesController extends Controller
             'duration' => 'required',
         ]);
 
-        if (isset($request->hide_from_catalog) ||  $request->hide_from_catalog != null) {
-            $hide_from_catalog = $request->hide_from_catalog;
+        if (isset($request->status) ||  $request->status != null) {
+            $hide_from_catalog = $request->status;
         } else {
             $hide_from_catalog = 0;
         }
