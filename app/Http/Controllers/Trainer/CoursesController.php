@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Trainer;
+
 use App\CategoiresCourses;
 use App\Courses;
 //use App\CourseSection;
@@ -25,7 +26,7 @@ class CoursesController extends Controller
     public function showAll()
     {
         $courses = Courses::paginate(10);
-        return view('trainer.courses.showCourse',compact('courses'));
+        return view('trainer.courses.showCourse', compact('courses'));
     }
 
     /**
@@ -46,7 +47,7 @@ class CoursesController extends Controller
     {
 
         $categories = CategoiresCourses::all()->pluck('name', 'id');
-        return view('trainer.courses.create',compact('categories'));
+        return view('trainer.courses.create', compact('categories'));
     }
 
 
@@ -63,27 +64,27 @@ class CoursesController extends Controller
         $dateTo = $full_date[1];
 
         $timestamp_from = Carbon::createFromFormat('m/d/Y', trim($dateFrom));
-        $timestamp_to = Carbon::createFromFormat('m/d/Y',trim($dateTo));
+        $timestamp_to = Carbon::createFromFormat('m/d/Y', trim($dateTo));
 
-        if(isset($coursesRequest->status) ||  $coursesRequest->status != null)
-        {
+        if (isset($coursesRequest->status) ||  $coursesRequest->status != null) {
             $stauts = $coursesRequest->status;
-        }else{
+        } else {
             $stauts = 0;
         }
 
 
-        if(isset($coursesRequest->image) ||  $coursesRequest->image != null)
-        {
-            $image = $coursesRequest->image->store('courses');
-        }else{
+        if (isset($coursesRequest->image) ||  $coursesRequest->image != null) {
+            $image = $coursesRequest->file('image')->storePublicly(
+                path: 'courses/images',
+                options: 'contabo'
+            );
+        } else {
             $image = 'courses/download.jpeg';
         }
 
-        if(isset($coursesRequest->hide_from_catalog) ||  $coursesRequest->hide_from_catalog != null)
-        {
+        if (isset($coursesRequest->hide_from_catalog) ||  $coursesRequest->hide_from_catalog != null) {
             $hide_from_catalog = $coursesRequest->hide_from_catalog;
-        }else{
+        } else {
             $hide_from_catalog = 0;
         }
 
@@ -94,13 +95,14 @@ class CoursesController extends Controller
         $courses->level             = $coursesRequest->level;
         $courses->desc              = $coursesRequest->desc;
         $courses->content           = $coursesRequest->content;
-        $courses->status            = $stauts;
+        $courses->status            = $hide_from_catalog == 1 ? 0 : 1;
         $courses->hide_from_catalog = $hide_from_catalog;
         $courses->tags              = $coursesRequest->tags;
         $courses->price             = $coursesRequest->price;
         $courses->start_date        = $timestamp_from;
         $courses->end_date          = $timestamp_to;
         $courses->duration          = $coursesRequest->duration;
+        $courses->period_type          = $coursesRequest->period_type;
         $courses->image             = $image;
         $courses->complete_rules    = $coursesRequest->complete_rules;
         $courses->save();
@@ -118,11 +120,11 @@ class CoursesController extends Controller
     {
         $courseData = Courses::find($id);
         //$sections = CourseSection::where('course_id',$id)->get();
-        $terms = CourseTerms::where('course_id',$id)->first();
-        $coursesLessons = CoursesLessons::where('course_id',$id)->orderBy('number_lession')->get(); //LessonInSameSection($id);
+        $terms = CourseTerms::where('course_id', $id)->first();
+        $coursesLessons = CoursesLessons::where('course_id', $id)->orderBy('number_lession')->get(); //LessonInSameSection($id);
         //print_r($coursesLessons);exit;
-        $courses_count = CoursesLessons::where('course_id',$id)->count();
-        return view('trainer.courses.showCourse',compact('coursesLessons','courses_count','courseData'/*,'sections'*/,'terms'));
+        $courses_count = CoursesLessons::where('course_id', $id)->count();
+        return view('trainer.courses.showCourse', compact('coursesLessons', 'courses_count', 'courseData'/*,'sections'*/, 'terms'));
     }
 
 
@@ -144,7 +146,7 @@ class CoursesController extends Controller
         $startdate =   Carbon::parse($courses->start_date)->format('m/d/Y');
 
         $coursesCategories = CategoiresCourses::pluck('name', 'id')->toArray();
-        return  view('trainer.courses.edit',compact('courses','coursesCategories','startdate','enddate'));
+        return  view('trainer.courses.edit', compact('courses', 'coursesCategories', 'startdate', 'enddate'));
     }
 
 
@@ -157,25 +159,16 @@ class CoursesController extends Controller
     public function update(Request $request, $id)
     {
 
-        $this->validate($request,[
-            'name'=>'required',
-            'category_id'=>'required',
-            'level'=>'required',
-            'duration'=>'required',
+        $this->validate($request, [
+            'name' => 'required',
+            'category_id' => 'required',
+            'level' => 'required',
+            'duration' => 'required',
         ]);
 
-
-        if(isset($request->status) ||  $request->status != null)
-        {
-            $stauts = $request->status;
-        }else{
-            $stauts = 0;
-        }
-
-        if(isset($request->hide_from_catalog) ||  $request->hide_from_catalog != null)
-        {
+        if (isset($request->hide_from_catalog) ||  $request->hide_from_catalog != null) {
             $hide_from_catalog = $request->hide_from_catalog;
-        }else{
+        } else {
             $hide_from_catalog = 0;
         }
 
@@ -193,20 +186,21 @@ class CoursesController extends Controller
         $courses->level              = $request->level;
         $courses->desc               = $request->desc;
         $courses->content            = $request->content;
-        $courses->status             = $stauts;
+        $courses->status             = $hide_from_catalog == 1 ? 0 : 1;
         $courses->hide_from_catalog  = $hide_from_catalog;
         $courses->tags               = $request->tags;
         $courses->price              = $request->price;
         $courses->start_date         = $timestamp_from;
         $courses->end_date           = $timestamp_to;
         $courses->duration           = $request->duration;
-        $courses->image              = ($request->hasFile('image')) ? $request->image->store('courses') : $courses->image;
+        $courses->image              = ($request->hasFile('image')) ? $request->file('image')->storePublicly(
+            path: 'courses/images',
+            options: 'contabo'
+        ) : $courses->image;
         $courses->complete_rules     = $request->complete_rules;
         $courses->update();
 
         return redirect('trainer/courses')->with(['success' =>  __('pages.success-edit')]);
-
-
     }
 
     /**
@@ -217,8 +211,11 @@ class CoursesController extends Controller
      */
     public function destroy($id)
     {
-
         $courses = Courses::find($id);
+
+        if ($courses->users()->count() > 0 ||  $courses->groups()->count() > 0) {
+            return response()->json(['message' => 'hasUsers', 'countUsers' => $courses->users()->count(), 'countGroups' => $courses->groups()->count()]);
+        }
 
         $check = $courses->delete();
 
@@ -226,7 +223,6 @@ class CoursesController extends Controller
             return Response::json($id, '200');
         } else {
             return redirect()->back()->with('error', __('pages.success-delete'));
-
         }
     }
 
@@ -238,26 +234,20 @@ class CoursesController extends Controller
         $courses = Courses::find($id);
 
         return \DataTables::of($users)
-
-            ->editColumn('type',function($query){
-                if($query->type == 1)
-                {
-                    return '<span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">مسئول</span>';
-                }elseif ($query->type == 2){
-                    return '<td><span class="kt-badge kt-badge--danger kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-danger">مدرب</span></td>';
-                }else{
-                    return '<span class="kt-badge kt-badge--primary kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-primary">طالب</span>';
-                }
+            ->editColumn('type', function ($query) {
+                if ($query->roles)
+                    return '<span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">' . $query->roles->role . '</span>';
+                return '<span class="kt-badge kt-badge--success kt-badge--dot"></span>&nbsp;<span class="kt-font-bold kt-font-success">' . __('pages.no-permission-detected') . '</span>';
             })
 
-            ->addColumn('options', function($query)  use ($courses){
+            ->addColumn('options', function ($query)  use ($courses) {
                 $user_id = $query->id;
                 $course_id = $courses->id;
-                return view('trainer.courses.actionUsers', compact('course_id','user_id'));
+                return view('trainer.courses.actionUsers', compact('course_id', 'user_id'));
             })
 
 
-            ->rawColumns(['options','type'])
+            ->rawColumns(['options', 'type'])
             ->make(true);
     }
 
@@ -270,10 +260,10 @@ class CoursesController extends Controller
 
         return \DataTables::of($groups)
 
-            ->addColumn('options', function($query)  use ($courses){
+            ->addColumn('options', function ($query)  use ($courses) {
                 $group_id = $query->id;
                 $courses_id = $courses->id;
-                return view('trainer.courses.actionGroups', compact('group_id','courses_id'));
+                return view('trainer.courses.actionGroups', compact('group_id', 'courses_id'));
             })
 
             ->rawColumns(['options'])
@@ -283,18 +273,18 @@ class CoursesController extends Controller
 
 
 
-    public function destroyUserFromList($user_id,$course_id)
+    public function destroyUserFromList($user_id, $course_id)
     {
 
-        $user = CoursesUser::where('user_id',$user_id)->where('course_id',$course_id)->first();
+        $user = CoursesUser::where('user_id', $user_id)->where('course_id', $course_id)->first();
 
         $check = $user->delete();
 
-        return redirect()->back()->with('error',__('pages.success-delete'));
+        return redirect()->back()->with('error', __('pages.success-delete'));
     }
 
 
-    public function addUserFromList($user_id,$course_id)
+    public function addUserFromList($user_id, $course_id)
     {
 
         $course = new CoursesUser();
@@ -302,24 +292,24 @@ class CoursesController extends Controller
         $course->user_id = $user_id;
         $course->save();
 
-        return redirect()->back()->with('error',__('pages.success-join'));
+        return redirect()->back()->with('error', __('pages.success-join'));
     }
 
 
 
 
-    public function destroyGroupFromList($group_id,$course_id)
+    public function destroyGroupFromList($group_id, $course_id)
     {
 
-        $user = CoursesGroup::where('course_id',$course_id)->where('group_id',$group_id)->first();
+        $user = CoursesGroup::where('course_id', $course_id)->where('group_id', $group_id)->first();
 
         $check = $user->delete();
 
-        return redirect()->back()->with('error',__('pages.success-delete-join'));
+        return redirect()->back()->with('error', __('pages.success-delete-join'));
     }
 
 
-    public function addGroupFromList($group_id,$course_id)
+    public function addGroupFromList($group_id, $course_id)
     {
 
         $coursesGroup = new CoursesGroup();
@@ -327,9 +317,6 @@ class CoursesController extends Controller
         $coursesGroup->group_id = $group_id;
         $coursesGroup->save();
 
-        return redirect()->back()->with('error',__('pages.success-join'));
+        return redirect()->back()->with('error', __('pages.success-join'));
     }
-
-
-
 }
