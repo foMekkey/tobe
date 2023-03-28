@@ -128,6 +128,9 @@ class UsersController extends Controller
     public function destroy($id)
     {
 
+        if ((int)$id === (int) auth()->user()->id)
+            return redirect()->back()->with('error', 'لا يمكن ان يتم حذف المستخدم لنفسه');
+
         $user = User::find($id);
 
         $check = $user->delete();
