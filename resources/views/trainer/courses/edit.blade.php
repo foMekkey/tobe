@@ -245,9 +245,8 @@
                                                 class="col-xl-3 col-lg-3 col-form-label">{{ __('pages.types') }}</label>
                                             <div class="col-lg-9 col-xl-6">
                                                 <div class="kt-checkbox-inline">
-                                                    <label class="kt-checkbox">
-                                                        <input type="checkbox" style="display: none;" name="status"
-                                                            value="1"
+                                                    <label class="kt-checkbox" style="display: none;">
+                                                        <input type="checkbox" name="status" value="1"
                                                             @if ($courses->status == 1) checked @endif>{{ __('pages.status') }}
                                                         <span></span>
                                                     </label>
