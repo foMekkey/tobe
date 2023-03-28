@@ -127,8 +127,6 @@ class UsersController extends Controller
 
     public function destroy($id)
     {
-
-
         if ((int) $id === (int) auth()->user()->id)
             return response()->json(['error' => 'لا يمكن ان يتم حذف المستخدم لنفسه'], 401);
 
