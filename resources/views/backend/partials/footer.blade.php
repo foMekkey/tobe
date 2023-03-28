@@ -617,7 +617,7 @@
                             }
 
                         },
-                        errors: function(data) {
+                        error: function(data) {
                             $('.swal-overlay--show-modal').hide();
                             swal(data);
                         }
