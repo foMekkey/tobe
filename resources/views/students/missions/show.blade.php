@@ -222,6 +222,7 @@
                 _window.document.execCommand('SaveAs', true, fileName || fileURL)
                 _window.close();
             }
+            return false;
         }
     </script>
 @endsection
