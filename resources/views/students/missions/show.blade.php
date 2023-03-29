@@ -111,7 +111,7 @@
                             <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.reply-attachment-file') }}
                             </label>
                             <div class="col-lg-9 col-xl-9">
-                                <a href="{{ asset('uploads/' . $reply->file) }}"
+                                <a href="{{ config('filesystems.disks.contabo.url') . $reply->file }}"
                                     download="">{{ __('pages.download') }}</a>
                             </div>
                         </div>
