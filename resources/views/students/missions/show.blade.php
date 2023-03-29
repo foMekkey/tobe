@@ -112,7 +112,7 @@
                             </label>
                             <div class="col-lg-9 col-xl-9">
                                 <a href="{{ config('filesystems.disks.contabo.url') . $reply->file }}"
-                                    download="">{{ __('pages.download') }}</a>
+                                    download="{{ config('filesystems.disks.contabo.url') . $reply->file }}">{{ __('pages.download') }}</a>
                             </div>
                         </div>
                     @elseif (!$reply)
