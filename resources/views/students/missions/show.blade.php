@@ -111,8 +111,8 @@
                             <label class="col-xl-3 col-lg-3 col-form-label"> {{ __('pages.reply-attachment-file') }}
                             </label>
                             <div class="col-lg-9 col-xl-9">
-                                <a href="{{ config('filesystems.disks.contabo.url') . '/' . $reply->file }}"
-                                    download="{{ config('filesystems.disks.contabo.url') . '/' . $reply->file }}">{{ __('pages.download') }}</a>
+                                <a onclick="SaveToDisk('{{ config('filesystems.disks.contabo.url') . '/' . $reply->file }}','{{ config('filesystems.disks.contabo.url') . '/' . $reply->file }}')"
+                                    href="#">{{ __('pages.download') }}</a>
                             </div>
                         </div>
                     @elseif (!$reply)
@@ -196,5 +196,32 @@
                 },
             });
         });
+
+        function SaveToDisk(fileURL, fileName) {
+            // for non-IE
+            if (!window.ActiveXObject) {
+                var save = document.createElement('a');
+                save.href = fileURL;
+                save.target = '_blank';
+                save.download = fileName || 'unknown';
+
+                var evt = new MouseEvent('click', {
+                    'view': window,
+                    'bubbles': true,
+                    'cancelable': false
+                });
+                save.dispatchEvent(evt);
+
+                (window.URL || window.webkitURL).revokeObjectURL(save.href);
+            }
+
+            // for IE < 11
+            else if (!!window.ActiveXObject && document.execCommand) {
+                var _window = window.open(fileURL, '_blank');
+                _window.document.close();
+                _window.document.execCommand('SaveAs', true, fileName || fileURL)
+                _window.close();
+            }
+        }
     </script>
 @endsection
