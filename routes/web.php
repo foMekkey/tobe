@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Response;
 // Auth::routes();
 
 // Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.reset');
