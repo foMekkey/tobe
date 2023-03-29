@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Response;
 // Auth::routes();
 
 // Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.reset');
@@ -2345,5 +2344,8 @@ Route::group(['prefix' => 'student', 'middleware' => ['auth', 'checkRole']], fun
 Route::get('downloader/file', function () {
     $file = request()->filename;
     $fileExt = explode(".", $file);
-    Response::download($file, time() . '.' . end($fileExt));
+    $fileName = time() . '.' . end($fileExt);
+    $tempImage = tempnam(sys_get_temp_dir(), $fileName);
+    copy($file, $tempImage);
+    return response()->download($tempImage, $fileName);
 })->name('downloader');
