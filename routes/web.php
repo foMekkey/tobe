@@ -2345,4 +2345,4 @@ Route::group(['prefix' => 'student', 'middleware' => ['auth', 'checkRole']], fun
 Route::get('downloader/file/{file}', function ($file) {
     $fileExt = explode(".", $file)[-1];
     Response::download($file, time() . '.' . $fileExt);
-});
+})->name('downloader');
