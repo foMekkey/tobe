@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Response;
+use Illuminate\Http\Request;
 // Auth::routes();
 
 // Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.reset');
@@ -2342,7 +2343,9 @@ Route::group(['prefix' => 'student', 'middleware' => ['auth', 'checkRole']], fun
     });
 });
 
-Route::get('downloader/file/{file}', function ($file) {
+Route::get('downloader/file', function () {
+    $request = new Request;
+    $file = $request->filename;
     $fileExt = explode(".", $file)[-1];
     Response::download($file, time() . '.' . $fileExt);
 })->name('downloader');
