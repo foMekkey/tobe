@@ -67,7 +67,10 @@ class MissionController extends Controller
         $file = '';
         if (!$reply) {
             if (isset($request->file) ||  $request->file != null) {
-                $file = $request->file->store('missions');
+                $file = $request->file('file')->storePublicly(
+                    path: 'missions/students/files',
+                    options: 'contabo'
+                );;
             }
 
             $data = [
