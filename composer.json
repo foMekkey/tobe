@@ -25,6 +25,7 @@
         "laravelcollective/html": "^6.3",
         "league/flysystem-aws-s3-v3": "1.0.29",
         "maatwebsite/excel": "^3.1",
+        "sendgrid/sendgrid": "^8.1",
         "voku/portable-ascii": "*",
         "webmozart/assert": "^1.11",
         "yajra/laravel-datatables-buttons": "^4.13",

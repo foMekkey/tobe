@@ -64,6 +64,11 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+        // 'contabo' => [
+        //     'driver' => 'local',
+        //     'root' => public_path('/uploads'),
+        // ],
+
         'contabo' => [
             'driver' => 's3',
             'key' => env('CONTABO_ACCESS_KEY_ID'),

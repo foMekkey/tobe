@@ -76,6 +76,8 @@ class HomeController extends Controller
         $consultation->status = $request->status;
         if ($request->status == '2') {
             $consultation->suggested_date = $request->suggested_date;
+            $consultation->hours = $request->suggested_time;
+
             $msg = 'تم ارسال تعديل مقترح لموعد الإستشارة" ' . $consultation->subject . '"';
         }
         $consultation->save();
@@ -217,8 +219,71 @@ class HomeController extends Controller
         return redirect('newsletters')->with(['success' =>  __('pages.success-send_newsletter')]);
     }
 
-    public function markNotificationsAsRead()
+    /**
+     * Delete a contact message
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteContactMessage($id)
     {
-        \App\UserNotification::where('user_id', Auth::id())->update(['read_at' => \Carbon\Carbon::now()]);
+        $message = \App\ContactMessage::find($id);
+
+        if (!$message) {
+            return response()->json(['success' => false, 'message' => 'الرسالة غير موجودة'], 404);
+        }
+
+        $message->delete();
+
+        return response()->json(['success' => true, 'message' => 'تم حذف الرسالة بنجاح']);
+    }
+
+    /**
+     * Reply to a contact message
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function replyContactMessage(Request $request)
+    {
+        $validator = \Validator::make($request->all(), [
+            'id' => 'required|exists:contact_messages,id',
+            'reply' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
+        }
+
+        $message = \App\ContactMessage::find($request->id);
+
+        // Send email reply
+        $senderEmail = \App\SiteSetting::where('name', 'email')->first()->value;
+
+        \Mail::send('emails.contact-message-reply', [
+            'name' => $message->name,
+            'reply' => $request->reply,
+            'originalMessage' => $message->message
+        ], function ($mail) use ($message, $senderEmail) {
+            $mail->to($message->email)
+                ->from($senderEmail)
+                ->subject('الرد على رسالتك');
+        });
+
+        return response()->json(['success' => true, 'message' => 'تم إرسال الرد بنجاح']);
+    }
+
+    public function markNotificationAsRead($id)
+    {
+        $notification = \App\UserNotification::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if ($notification && !$notification->read_at) {
+            $notification->read_at = \Carbon\Carbon::now();
+            $notification->save();
+        }
+
+        return response()->json(['success' => true]);
     }
 }

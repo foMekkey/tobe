@@ -17,6 +17,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Response;
+use App\Exports\CoursesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CoursesController extends Controller
 {
@@ -64,11 +66,11 @@ class CoursesController extends Controller
             $stauts = 0;
         }
 
-
+        $storageDisk = env('FILESYSTEM_DRIVER', 'local');
         if (isset($coursesRequest->image) ||  $coursesRequest->image != null) {
             $image = $coursesRequest->file('image')->storePublicly(
                 path: 'courses/images',
-                options: 'contabo'
+                options: $storageDisk
             );
         } else {
             $image = 'courses/download.jpeg';
@@ -321,5 +323,9 @@ class CoursesController extends Controller
         $coursesGroup->save();
 
         return redirect()->back()->with('error', __('pages.success-join'));
+    }
+    public function export()
+    {
+        return Excel::download(new CoursesExport, 'courses_' . date('Y-m-d_H-i-s') . '.xlsx');
     }
 }

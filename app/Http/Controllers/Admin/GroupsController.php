@@ -15,6 +15,8 @@ use App\Http\Requests\GroupsRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Response;
+use App\Exports\GroupsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GroupsController extends Controller
 {
@@ -300,5 +302,10 @@ class GroupsController extends Controller
             ->rawColumns(['options', 'is_active'])
             ->setRowId('id')
             ->make(true);
+    }
+
+    public function export()
+    {
+        return Excel::download(new GroupsExport, 'groups_' . date('Y-m-d_H-i-s') . '.xlsx');
     }
 }

@@ -107,7 +107,7 @@
                                                         class="fa fa-times close_search"></span></a>
                                             </div>
                                         </li>
-                                        <li class="lang" style="display: none;"><a
+                                        <li class="lang"><a
                                                 href="{{ url('site/switch_language/' . (app()->getLocale() == 'en' ? 'ar' : 'en')) }}"><i
                                                     class="fas fa-globe-americas"></i>{{ __('site.other_lang') }}</a>
                                         </li>
@@ -310,11 +310,6 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="bottom_content">
-                            <p>
-                                {{ __('site.development_by') }}
-                                <a href="#"><img src="{{ asset('site_assets') }}/images/tqniaen-logo.png"></a>
-                                . {{ __('site.all_right_reserved') }}.
-                            </p>
                             <ul class="list-inline social_icons">
                                 <li><a href="{{ $settings['linkedin_link'] }}" target="_blank"><i
                                             class="fab fa-linkedin-in"></i></a></li>
@@ -339,9 +334,10 @@
     <script src="{{ asset('site_assets') }}/js/owl.carousel.min.js"></script>
     <script src="{{ asset('site_assets') }}/js/wow.min.js"></script>
     <script src="{{ asset('site_assets') }}/js/animate-number.js"></script>
-    <script src="{{ asset('site_assets') }}/js/script.js"></script>
+    <script src="{{ asset('site_assets') }}/js/script.js?{{ rand(1, 9999) }}"></script>
     <script src="{{ asset('site_assets') }}/js/jquery.validate.min.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 
     <script>
         @if (app()->getLocale() == 'ar')
@@ -404,6 +400,63 @@
                     setTimeout(function() {
                         $("#add_newsletter-alert").alert('close');
                     }, 10000);
+                }
+            });
+        });
+
+        function markNotificationAsRead(notificationId, event) {
+            // Don't interfere with links
+            if (event.target.tagName.toLowerCase() === 'a' || $(event.target).parents('a').length > 0) {
+                return;
+            }
+
+            // Prevent the default action
+            event.preventDefault();
+
+            $.ajax({
+                url: '{{ url('mark-notification-as-read') }}/' + notificationId,
+                type: 'GET',
+                success: function() {
+                    // Remove unread styling from this notification
+                    $('[data-notification-id="' + notificationId + '"]').removeClass('unread-notification');
+
+                    // Update the unread count
+                    var unreadCount = parseInt($('#unread-notifications-count').text());
+                    if (unreadCount > 1) {
+                        $('#unread-notifications-count').text(unreadCount - 1);
+                    } else {
+                        $('#unread-notifications-count').fadeOut(300, function() {
+                            $(this).remove();
+                        });
+                    }
+                },
+                error: function() {
+                    console.error('Failed to mark notification as read');
+                }
+            });
+        }
+
+        $(document).ready(function() {
+            // Mark notifications as read when dropdown is opened
+            $('#notifications-dropdown-toggle').on('click', function() {
+                // Only make the AJAX call if there are unread notifications
+                if ($('#unread-notifications-count').length > 0) {
+                    $.ajax({
+                        url: '{{ route('markNotificationsAsRead') }}',
+                        type: 'GET',
+                        success: function() {
+                            // Remove the unread count badge
+                            $('#unread-notifications-count').fadeOut(300, function() {
+                                $(this).remove();
+                            });
+
+                            // Remove the unread styling from notifications
+                            $('.unread-notification').removeClass('unread-notification');
+                        },
+                        error: function() {
+                            console.error('Failed to mark notifications as read');
+                        }
+                    });
                 }
             });
         });

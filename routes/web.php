@@ -1088,6 +1088,20 @@ Route::group(['prefix' => 'e_wallets', 'middleware' => ['auth', 'checkRole']], f
 });
 
 // banks group
+Route::get('banks/export', 'Admin\BanksController@export')->name('banks.export');
+Route::get('users/export', 'Admin\UsersController@export')->name('users.export');
+Route::get('courses/export', 'Admin\CoursesController@export')->name('courses.export');
+Route::get('groups/export', 'Admin\GroupsController@export')->name('groups.export');
+Route::get('categories-courses/export', 'Admin\CategoriesCoursesController@export')->name('categories-courses.export');
+Route::get('subscriptions/export', 'Admin\SubscriptionsController@export')->name('subscriptions.export');
+Route::get('admin/course-registrations/export', 'Admin\CourseRegistrationsController@export')->name('course-registrations.export');
+
+Route::get('export-trainees/{id}', [
+    'uses' => 'Admin\CohortController@exportTrainees',
+    'as' => 'cohorts.exportTrainees',
+    'title' => 'تصدير متدربي الفوج',
+]);
+
 Route::group(['prefix' => 'banks', 'middleware' => ['auth', 'checkRole']], function () {
 
     # banks index
@@ -1279,7 +1293,10 @@ Route::group(['prefix' => 'pages', 'middleware' => ['auth', 'checkRole']], funct
             'title' => __('pages.delete-page'),
         ]);*/
 });
+Route::get('mark-notification-as-read/{id}', 'HomeController@markNotificationAsRead')->name('markNotificationAsRead');
 
+Route::delete('contact-messages/{id}', 'HomeController@deleteContactMessage')->name('contact_messages.delete');
+Route::post('contact-messages/reply', 'HomeController@replyContactMessage')->name('contact_messages.reply');
 // contact_messages group
 Route::group(['prefix' => 'contact_messages', 'middleware' => ['auth', 'checkRole']], function () {
     # contact_messages index
@@ -2040,7 +2057,7 @@ Route::group(['prefix' => 'trainer', 'middleware' => ['auth', 'checkRole']], fun
 });
 
 
-Route::group(['prefix' => 'student', 'middleware' => ['auth', 'checkRole']], function () {
+Route::group(['prefix' => 'student', 'middleware' => ['auth']], function () {
 
     # users update
     Route::get('edit', [
@@ -2349,3 +2366,162 @@ Route::get('downloader/file', function () {
     copy($file, $tempImage);
     return response()->download($tempImage, $fileName);
 })->name('downloader');
+
+// Add this to your existing routes file within the admin middleware group
+
+// Cohorts Routes
+Route::group(['prefix' => 'cohorts', 'middleware' => ['auth', 'checkRole']], function () {
+    Route::get('/', [
+        'uses' => 'Admin\CohortController@index',
+        'as' => 'cohorts.index',
+        'title' => 'الأفواج التدريبية',
+        'child' => [
+            'cohorts.create',
+            'cohorts.store',
+            'cohorts.show',
+            'cohorts.edit',
+            'cohorts.update',
+            'cohorts.destroy',
+            'cohorts.getAvailableTrainees',
+            'cohorts.addTrainee',
+            'cohorts.removeTrainee'
+        ]
+    ]);
+
+    Route::get('create', [
+        'uses' => 'Admin\CohortController@create',
+        'as' => 'cohorts.create',
+        'title' => 'إضافة فوج جديد',
+    ]);
+
+    Route::post('store', [
+        'uses' => 'Admin\CohortController@store',
+        'as' => 'cohorts.store',
+        'title' => 'حفظ فوج جديد',
+    ]);
+
+    Route::get('show/{id}', [
+        'uses' => 'Admin\CohortController@show',
+        'as' => 'cohorts.show',
+        'title' => 'عرض تفاصيل الفوج',
+    ]);
+
+    Route::get('edit/{id}', [
+        'uses' => 'Admin\CohortController@edit',
+        'as' => 'cohorts.edit',
+        'title' => 'تعديل الفوج',
+    ]);
+
+    Route::post('update/{id}', [
+        'uses' => 'Admin\CohortController@update',
+        'as' => 'cohorts.update',
+        'title' => 'تحديث الفوج',
+    ]);
+
+    Route::get('delete/{id}', [
+        'uses' => 'Admin\CohortController@destroy',
+        'as' => 'cohorts.destroy',
+        'title' => 'حذف الفوج',
+    ]);
+
+    Route::get('get-available-trainees/{id}', [
+        'uses' => 'Admin\CohortController@getAvailableTrainees',
+        'as' => 'cohorts.getAvailableTrainees',
+        'title' => 'الحصول على المتدربين المتاحين',
+    ]);
+
+    Route::post('add-trainee/{id}', [
+        'uses' => 'Admin\CohortController@addTrainee',
+        'as' => 'cohorts.addTrainee',
+        'title' => 'إضافة متدرب للفوج',
+    ]);
+});
+Route::get('cohorts/remove-trainee/{cohortId?}/{userId?}', 'Admin\CohortController@removeTrainee')->name('cohorts.removeTrainee');
+
+Route::group(['prefix' => 'student', 'middleware' => ['auth']], function () {
+    // الروت الحالي لعرض صفحة التسجيل وإرسال البيانات
+    Route::match(['get', 'post'], 'courses/subscripe/{id?}', [
+        'uses' => 'Student\CoursesController@subscripe',
+        'as' => 'StudentSubscription',
+        'title' => __('pages.subscription'),
+    ]);
+
+    // روت لعرض طلبات التسجيل الخاصة بالطالب
+    Route::get('registrations', [
+        'uses' => 'Student\RegistrationsController@index',
+        'as' => 'student.registrations.index',
+        'title' => 'طلبات التسجيل الخاصة بي',
+    ]);
+
+    // روت لعرض تفاصيل طلب تسجيل معين
+    Route::get('registrations/show/{id}', [
+        'uses' => 'Student\RegistrationsController@show',
+        'as' => 'student.registrations.show',
+        'title' => 'تفاصيل طلب التسجيل',
+    ]);
+
+    // روت لإلغاء طلب تسجيل (إذا كان ما زال قيد المراجعة)
+    Route::get('registrations/cancel/{id}', [
+        'uses' => 'Student\RegistrationsController@cancel',
+        'as' => 'student.registrations.cancel',
+        'title' => 'إلغاء طلب التسجيل',
+    ]);
+});
+
+// روتات المسؤول لإدارة طلبات التسجيل
+Route::group(['prefix' => 'registrations', 'middleware' => ['auth', 'checkRole']], function () {
+    // عرض قائمة طلبات التسجيل
+    Route::get('/', [
+        'uses' => 'Admin\RegistrationsController@index',
+        'as' => 'registrations.index',
+        'title' => 'طلبات التسجيل',
+        'child' => [
+            'registrations.show',
+            'registrations.approve',
+            'registrations.reject',
+            'registrations.export',
+            'registrations.filter'
+        ]
+    ]);
+
+    // عرض تفاصيل طلب تسجيل
+    Route::get('/show/{id}', [
+        'uses' => 'Admin\RegistrationsController@show',
+        'as' => 'registrations.show',
+        'title' => 'عرض طلب تسجيل',
+    ]);
+
+    // قبول طلب تسجيل
+    Route::get('/approve/{id}', [
+        'uses' => 'Admin\RegistrationsController@approve',
+        'as' => 'registrations.approve',
+        'title' => 'قبول طلب تسجيل',
+    ]);
+
+    // رفض طلب تسجيل
+    Route::any('/reject/{id}', [
+        'uses' => 'Admin\RegistrationsController@reject',
+        'as' => 'registrations.reject',
+        'title' => 'رفض طلب تسجيل',
+    ]);
+
+    // تصدير طلبات التسجيل
+    Route::get('/export', [
+        'uses' => 'Admin\RegistrationsController@export',
+        'as' => 'registrations.export',
+        'title' => 'تصدير طلبات التسجيل',
+    ]);
+
+    // تصفية طلبات التسجيل
+    Route::post('/filter', [
+        'uses' => 'Admin\RegistrationsController@filter',
+        'as' => 'registrations.filter',
+        'title' => 'تصفية طلبات التسجيل',
+    ]);
+});
+
+Route::get('admin/cohorts/export', 'Admin\CohortController@export')->name('admin.cohorts.export');
+
+Route::get('account/activate/{token}/{email}', 'Site\UserController@activateAccount')->name('account.activate');
+Route::get('resend-activation', 'Site\UserController@showResendActivationForm')->name('resend.activation');
+Route::post('resend-activation', 'Site\UserController@resendActivation')->name('resend.activation.submit');

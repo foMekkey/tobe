@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Cohort;
+use App\Models\CourseRegistration;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -17,7 +19,24 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'l_name', 'f_name', 'user_name', 'email', 'password', 'bio', 'certificates', 'image', 'type', 'role', 'tags', 'status', 'points', 'badges_count', 'last_login_at', 'last_login_ip', 'email_verified_at'
+        'l_name',
+        'f_name',
+        'user_name',
+        'email',
+        'password',
+        'bio',
+        'certificates',
+        'image',
+        'type',
+        'role',
+        'tags',
+        'status',
+        'points',
+        'badges_count',
+        'last_login_at',
+        'last_login_ip',
+        'email_verified_at',
+        'activation_token',
     ];
 
     /**
@@ -26,7 +45,8 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -50,7 +70,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function permissions()
     {
-        return $this->roles->Permissions()->whereRaw("permissions not REGEXP 'get|update|destroy|datatable|post|add|store|edit|show|delete|send|surveys|site_|pages|contact|test|blog|consultations|news|lessons|replies|meeting|e_wallets|StudentSubscription|faqs|banks'")->distinct('permissions');
+        return $this->roles->Permissions()->whereRaw("permissions not REGEXP 'get|update|destroy|datatable|post|add|store|edit|show|delete|send|surveys|site_|pages|contact|test|blog|consultations|news|lessons|replies|meeting|e_wallets|StudentSubscription|faqs|banks|create|removeTrainee|approve|reject|filter|export|join_course'")->distinct('permissions');
     }
 
     public function groups()
@@ -91,5 +111,18 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getEditLinkAttribute()
     {
         return '<a href="' . url('users/edit/' . $this->id) . '" target="_blank">' . $this->user_name . '</a>';
+    }
+
+    public function cohorts()
+    {
+        return $this->belongsToMany(Cohort::class, 'cohort_trainees', 'user_id', 'cohort_id')
+            ->withTimestamps();
+    }
+    /**
+     * Get the course registrations for the user.
+     */
+    public function courseRegistrations()
+    {
+        return $this->hasMany(CourseRegistration::class);
     }
 }

@@ -98,6 +98,15 @@ class HomeController extends Controller
         $result = ContactMessage::insert($data);
 
         if ($result) {
+            // الحصول على رسالة الاتصال المدخلة حديثًا
+            $contactMessage = ContactMessage::where($data)->orderBy('id', 'desc')->first();
+
+            // إرسال إشعار للمسؤول
+            \App\Jobs\SendNewContactMessageNotification::dispatch($contactMessage);
+
+            // إرسال تأكيد للمرسل
+            \App\Jobs\SendContactMessageConfirmation::dispatch($contactMessage);
+
             return response()->json(['success' => true]);
         }
 
@@ -136,6 +145,8 @@ class HomeController extends Controller
         $result = Consultation::create($data);
 
         if ($result) {
+            \App\Jobs\SendNewConsultationNotification::dispatch($result);
+            \App\Jobs\SendConsultationConfirmation::dispatch($result);
             return response()->json(['success' => true]);
         }
 

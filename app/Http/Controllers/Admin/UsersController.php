@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 use App\Role;
 use App\Http\Controllers\Controller;
 use Response;
+use App\Exports\UsersExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UsersController extends Controller
 {
@@ -291,5 +293,10 @@ class UsersController extends Controller
         $files->update();
 
         return redirect()->back()->with(['success' =>  __('pages.success-add')]);
+    }
+
+    public function export()
+    {
+        return Excel::download(new UsersExport, 'users_' . date('Y-m-d_H-i-s') . '.xlsx');
     }
 }

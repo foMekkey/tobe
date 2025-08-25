@@ -22,9 +22,20 @@ use App\Bank;
 use App\E_Wallet;
 use Session;
 use Carbon\Carbon;
+use App\Models\Cohort;
+use App\Repositories\CourseRegistrationRepositoryInterface;
+
 
 class CoursesController extends Controller
 {
+    protected $registrationRepository;
+
+    public function __construct(
+        CourseRegistrationRepositoryInterface $registrationRepository
+    ) {
+        $this->registrationRepository = $registrationRepository;
+    }
+
     public function index()
     {
         $coursesInProgress = CoursesUser::where(['user_id' => auth()->id(), 'status' => 0])->count();
@@ -62,6 +73,45 @@ class CoursesController extends Controller
 
     public function subscripe($id)
     {
+        if (request()->isMethod('post')) {
+            try {
+                $validated = request()->validate([
+                    'cohort_id' => 'required|exists:cohorts,id',
+                    'full_name' => 'required|string|max:255',
+                    'birth_date' => 'required|date',
+                    'education' => 'required|string|max:255',
+                    'previous_courses' => 'nullable|string',
+                    'current_job' => 'required|string|max:255',
+                    'additional_tasks' => 'nullable|string',
+                    'join_date' => 'required|date',
+                    'special_skills' => 'nullable|string',
+                    'communication_problems' => 'nullable|string',
+                    'personal_problems' => 'nullable|string',
+                    'skills_to_develop' => 'nullable|string',
+                    'message_to_consultant' => 'nullable|string',
+                    'mobile_number' => 'required|string|max:20',
+                    'whatsapp_number' => 'nullable|string|max:20',
+                    'email' => 'required|email|max:255',
+                ]);
+
+                // إضافة معرف المستخدم والدورة
+                $validated['user_id'] = auth()->id();
+                $validated['course_id'] = $id;
+
+                // حفظ بيانات التسجيل باستخدام Repository
+                $registration = $this->registrationRepository->create($validated);
+
+                // إرسال إشعار للمسؤول
+                \App\Jobs\SendNewCourseRegistrationNotification::dispatch($registration);
+
+                // إرسال تأكيد للمستخدم
+                \App\Jobs\SendCourseRegistrationConfirmation::dispatch($registration);
+
+                return redirect()->route('StudentCourses')->with('success', 'تم تسجيل طلبك بنجاح. سيتم مراجعته والرد عليك قريباً.');
+            } catch (\Exception $e) {
+                return redirect()->back()->with('error', $e->getMessage())->withInput();
+            }
+        }
         $course_id = $id;
         if (auth()->user()) {
 
@@ -73,10 +123,21 @@ class CoursesController extends Controller
             ) {
                 return redirect()->back();
             }
+            $cohorts = Cohort::where('status', 1)
+                ->orderBy('start_date')
+                ->get();
+
+            $availableCohorts = $cohorts->filter(function ($cohort) {
+                return $cohort->hasAvailableSlots();
+            });
+
+
+            $existingRegistration = $this->registrationRepository->getByUserAndCourse(auth()->id(), $id);
+
             $banks = Bank::where('active', 1)->get();
             $e_wallets = E_Wallet::where('active', 1)->get();
             $course = Courses::find($id);
-            return view('students.courses.payment', compact('course', 'banks', 'e_wallets'));
+            return view('students.courses.payment', compact('course', 'banks', 'e_wallets', 'cohorts', 'availableCohorts', 'existingRegistration'));
         } else {
             return redirect()->back();
         }

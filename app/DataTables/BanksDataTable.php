@@ -58,9 +58,15 @@ class BanksDataTable  extends DataTable
                 'order'   => [[0, 'desc']],
                 "lengthMenu" => [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 'buttons' => [
-                    ['extend' => 'excel', 'text' => '<i class="fa fa-download"></i>Excel', 'className' => 'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
+                    [
+                        'extend' => 'collection',
+                        'text' => '<i class="fa fa-download"></i>Excel',
+                        'className' => 'dt-button buttons-copy buttons-html5 btn btn-default legitRipple',
+                        'action' => "function ( e, dt, node, config ) {
+                            window.location = '" . route('banks.export') . "';
+                        }"
+                    ],
                     ['extend' => 'print', 'text' => '<i class="fa fa-print"></i>Print', 'className' => 'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
-
                 ],
                 'language' => ['url' => asset('ar-datatable.json')],
             ]);

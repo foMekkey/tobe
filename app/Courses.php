@@ -4,13 +4,33 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use PHPUnit\TextUI\XmlConfiguration\Group;
+use App\Models\CourseRegistration;
 
 class Courses extends Model
 {
     protected $table = 'courses';
 
     protected $fillable = [
-        'user_id', 'category_id', 'lang', 'name', 'level', 'desc', 'content', 'price', 'status', 'image', 'tags', 'hide_from_catalog', 'start_date', 'end_date', 'duration', 'period_type', 'rules', 'complete_rules', 'created_at', 'updated_at'
+        'user_id',
+        'category_id',
+        'lang',
+        'name',
+        'level',
+        'desc',
+        'content',
+        'price',
+        'status',
+        'image',
+        'tags',
+        'hide_from_catalog',
+        'start_date',
+        'end_date',
+        'duration',
+        'period_type',
+        'rules',
+        'complete_rules',
+        'created_at',
+        'updated_at'
     ];
 
 
@@ -37,5 +57,17 @@ class Courses extends Model
     public function groups()
     {
         return $this->belongsToMany(Groups::class, 'courses_group', 'course_id', 'group_id');
+    }
+    public function cohorts()
+    {
+        return $this->hasMany(Cohort::class, 'course_id');
+    }
+
+    /**
+     * Get the registrations for the course.
+     */
+    public function registrations()
+    {
+        return $this->hasMany(CourseRegistration::class, 'course_id');
     }
 }

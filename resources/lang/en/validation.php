@@ -122,19 +122,21 @@ return [
         'name.ar'                       => 'Name In Arabic',
         'name.1'                       => 'Name In English',
         'name.en'                       => 'Name In English',
-        'description.0'                =>'Description In Arabic',
-        'description.1'                =>'Description In English',
-        'span.0'                       =>'Span In Arabic',
-        'span.1'                       =>'Span In English',
-        'contractid'                     =>'contract ',
-        'cemetery'=>' start trip',
-        'camp'=>' end trip ',
-        'featured_image'=>'image',
+        'description.0'                => 'Description In Arabic',
+        'description.1'                => 'Description In English',
+        'span.0'                       => 'Span In Arabic',
+        'span.1'                       => 'Span In English',
+        'contractid'                     => 'contract ',
+        'cemetery' => ' start trip',
+        'camp' => ' end trip ',
+        'featured_image' => 'image',
         'lastpassword'   => 'old password',
         'newpassword'   => 'new password',
-        'contracts'=>'contracts'
+        'contracts' => 'contracts'
 
 
     ],
+    'dates_overlap' => 'The dates you have selected overlap with an existing cohort.',
+    'cohort_full' => 'The cohort is full and cannot accept any more trainees.',
 
 ];

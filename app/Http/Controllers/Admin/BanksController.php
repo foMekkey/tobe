@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Bank;
 use App\DataTables\BanksDataTable;
 use App\Http\Requests\BankRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\BanksExport;
 use Response;
 
 class BanksController extends Controller
@@ -38,7 +41,7 @@ class BanksController extends Controller
      */
     public function store(BankRequest $BankRequest)
     {
-        $data = $BankRequest->only(['bank_name_ar', 'bank_name_en', 'acc_name_ar', 'acc_name_en', 'acc_num','iban','active']);
+        $data = $BankRequest->only(['bank_name_ar', 'bank_name_en', 'acc_name_ar', 'acc_name_en', 'acc_num', 'iban', 'active']);
         Bank::insert($data);
 
         return redirect('banks')->with(['success' =>  __('pages.success-add')]);
@@ -55,7 +58,7 @@ class BanksController extends Controller
     {
         $bank = Bank::find($id);
 
-        return  view('backend.banks.edit',compact('bank'));
+        return  view('backend.banks.edit', compact('bank'));
     }
 
     /**
@@ -66,24 +69,22 @@ class BanksController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'bank_name_ar'=>'required',
-            'bank_name_en'=>'required',
-            'acc_name_ar'=>'required',
-            'acc_name_en'=>'required',
-            'acc_num'=>'required',
-            'iban'=>'required',
-            'active'=>'required',
-            
+        $this->validate($request, [
+            'bank_name_ar' => 'required',
+            'bank_name_en' => 'required',
+            'acc_name_ar' => 'required',
+            'acc_name_en' => 'required',
+            'acc_num' => 'required',
+            'iban' => 'required',
+            'active' => 'required',
+
         ]);
-        
-        $data = $request->only(['bank_name_ar', 'bank_name_en', 'acc_name_ar', 'acc_name_en', 'acc_num','iban','active']);
-        
+
+        $data = $request->only(['bank_name_ar', 'bank_name_en', 'acc_name_ar', 'acc_name_en', 'acc_num', 'iban', 'active']);
+
         Bank::where('id', $id)->update($data);
 
         return redirect('banks')->with(['success' =>  __('pages.success-edit')]);
-
-
     }
 
     /**
@@ -103,7 +104,11 @@ class BanksController extends Controller
             return Response::json($id, '200');
         } else {
             return redirect()->back()->with('error', __('pages.success-delete'));
-
         }
+    }
+
+    public function export()
+    {
+        return Excel::download(new BanksExport, 'banks_' . date('Y-m-d_H-i-s') . '.xlsx');
     }
 }

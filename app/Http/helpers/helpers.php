@@ -43,15 +43,12 @@ function Permissions3()
             $output[$group] .= '<li><label class="kt-checkbox"><input type="checkbox" name="permissions[]"  value="' . $value->getName() . '"><span></span> </label><a href="#">' . $value->getAction()['title'] . '</a><br><ul>';
 
             foreach ($value->getAction()['child'] as $child) {
-
                 #foreach for sub links
-                //$routes = Route::getRoutes();
-
-                foreach ($routes as $value) {
-                    if ($value->getName() !== null && $value->getName() === $child) {
-                        $output[$group] .= '<li>' . $value->getAction()['title'];
+                foreach ($routes as $childValue) {
+                    if ($childValue->getName() !== null && $childValue->getName() === $child && isset($childValue->getAction()['title'])) {
+                        $output[$group] .= '<li>' . $childValue->getAction()['title'];
                         $output[$group] .= '<div class="kt-checkbox-single"><label class="kt-checkbox">';
-                        $output[$group] .= '<input type="checkbox" class="form-control" name="permissions[]" value="' . $value->getName() . '"> ';
+                        $output[$group] .= '<input type="checkbox" class="form-control" name="permissions[]" value="' . $childValue->getName() . '"> ';
                         $output[$group] .= ' <span></span> </label>';
                         $output[$group] .= ' </li>';
                     }
@@ -172,15 +169,17 @@ function EditPermissions3($id)
                 //$routes = Route::getRoutes();
                 foreach ($routes as $value) {
                     if ($value->getName() !== null && $value->getName() === $child) {
-                        $output[$group] .= '<li>' . $value->getAction()['title'];
-                        $output[$group] .= '<div class="kt-checkbox-single"><label class="kt-checkbox">';
-                        if (in_array($value->getName(), $arr)) {
-                            $output[$group] .= '<input type="checkbox" class="form-control" checked="" name="permissions[]" value="' . $value->getName() . '"> ';
-                        } else {
-                            $output[$group] .= '<input type="checkbox" class="form-control" name="permissions[]" value="' . $value->getName() . '"> ';
+                        if ($value->getName() !== null && $value->getName() === $child && isset($value->getAction()['title'])) {
+                            $output[$group] .= '<li>' . $value->getAction()['title'];
+                            $output[$group] .= '<div class="kt-checkbox-single"><label class="kt-checkbox">';
+                            if (in_array($value->getName(), $arr)) {
+                                $output[$group] .= '<input type="checkbox" class="form-control" checked="" name="permissions[]" value="' . $value->getName() . '"> ';
+                            } else {
+                                $output[$group] .= '<input type="checkbox" class="form-control" name="permissions[]" value="' . $value->getName() . '"> ';
+                            }
+                            $output[$group] .= ' <span></span> </label>';
+                            $output[$group] .= ' </li>';
                         }
-                        $output[$group] .= ' <span></span> </label>';
-                        $output[$group] .= ' </li>';
                     }
                 }
             }

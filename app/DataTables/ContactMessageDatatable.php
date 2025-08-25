@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\ContactMessage;
 use Yajra\DataTables\Services\DataTable;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Asset;
 
 class ContactMessageDatatable extends DataTable
 {
@@ -20,8 +21,20 @@ class ContactMessageDatatable extends DataTable
             ->editColumn('datetime', function ($query) {
                 return Carbon::parse($query->datetime)->format('Y-m-d');
             })
+            ->addColumn('action', function ($message) {
+                $replyBtn = '<a href="javascript:void(0)" class="btn btn-sm btn-primary reply-message" data-id="' . $message->id . '" data-email="' . $message->email . '" data-name="' . $message->name . '">
+                                <i class="fa fa-reply"></i> رد
+                            </a>';
+
+                $deleteBtn = '<a href="javascript:void(0)" class="btn btn-sm btn-danger delete-message" data-id="' . $message->id . '">
+                                <i class="fa fa-trash"></i> حذف
+                            </a>';
+
+                return '<div class="btn-group" role="group">' . $replyBtn . ' ' . $deleteBtn . '</div>';
+            })
             ->setRowId('id')
-            ->addIndexColumn();
+            ->addIndexColumn()
+            ->rawColumns(['action']);
     }
 
     /**
@@ -45,13 +58,17 @@ class ContactMessageDatatable extends DataTable
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
+            ->addAction(['width' => '150px', 'printable' => false, 'title' => 'الإجراءات'])
             ->parameters([
                 'dom'     => 'Blfrtip',
                 'responsive' => true,
                 'order'   => [[0, 'desc']],
                 "lengthMenu" => [[10, 25, 50, -1], [10, 25, 50, "All"]],
                 'language' => ['url' => asset('ar-datatable.json')],
-                'buttons' => []
+                'buttons' => [
+                    ['extend' => 'excel', 'text' => '<i class="fa fa-download"></i>Excel', 'className' => 'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
+                    ['extend' => 'print', 'text' => '<i class="fa fa-print"></i>Print', 'className' => 'dt-button buttons-copy buttons-html5 btn btn-default legitRipple'],
+                ]
             ]);
     }
 

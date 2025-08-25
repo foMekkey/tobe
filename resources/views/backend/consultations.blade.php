@@ -123,6 +123,13 @@
                             <label for="status" class="form-control-label">التاريخ:</label>
                             <input type="text" class="form-control" id="datepickerr" name="suggested_date" readonly />
                         </div>
+
+                        <div class="form-group" id="suggested_time" style="display: none; position: relative;">
+                            <label for="timepickerr" class="form-control-label">الوقت:</label>
+                            <input type="time" class="form-control" id="timepickerr" name="suggested_time">
+                            <span class="fa fa-clock"
+                                style="position: absolute; top: 65%; right: 15px; transform: translateY(-50%); cursor: pointer;"></span>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <input type="hidden" id="consult_id" name="consult_id" value="" />
@@ -154,6 +161,10 @@
     {!! $dataTable->scripts() !!}
 
     <script>
+        document.querySelector('.fa-clock').addEventListener('click', function() {
+            document.getElementById('timepickerr').showPicker?.();
+            document.getElementById('timepickerr').focus();
+        });
         $.fn.datepicker.dates['ar'] = {
             days: ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت", "الأحد"],
             daysShort: ["أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "جمعة", "سبت", "أحد"],
@@ -175,8 +186,10 @@
         $('#status').change(function() {
             if ($(this).val() == 2) {
                 $('#suggested_date').show();
+                $('#suggested_time').show();
             } else {
                 $('#suggested_date').hide();
+                $('#suggested_time').hide();
             }
             $('#consult_error').hide();
         });
@@ -185,6 +198,8 @@
             $('#consult_id').val($(this).data('rel'));
             $('#status').val('');
             $('#suggested_date').hide();
+            $('#suggested_time').hide();
+
         });
 
 
@@ -204,7 +219,8 @@
                     '_token': "{{ csrf_token() }}",
                     'id': $('#consult_id').val(),
                     'status': $('#status').val(),
-                    'suggested_date': $('#datepickerr').val()
+                    'suggested_date': $('#datepickerr').val(),
+                    'suggested_time': $('#suggested_time').val()
                 },
                 dataType: "json",
                 success: function(msg) {

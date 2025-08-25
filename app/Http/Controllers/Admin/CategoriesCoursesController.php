@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoriesCoursesRequest;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Exports\CategoriesCoursesExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Response;
 
 class CategoriesCoursesController extends Controller
@@ -78,5 +80,10 @@ class CategoriesCoursesController extends Controller
         } else {
             return redirect()->back()->with('error', __('success-delete'));
         }
+    }
+
+    public function export()
+    {
+        return Excel::download(new CategoriesCoursesExport, 'categories_' . date('Y-m-d_H-i-s') . '.xlsx');
     }
 }

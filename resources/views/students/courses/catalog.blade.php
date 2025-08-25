@@ -56,8 +56,7 @@
                                         alt="">
                                 </div>
                                 <div class="col-md-8 pull-right">
-                                    <a href="{{ route('showCourseDetailsStudent', $course->id) }}"
-                                        class="kt-widget5__title">
+                                    <a href="{{ url('/site/course/' . $course->id) }}" class="kt-widget5__title">
                                         <h3>{{ $course->name }}</h3>
                                     </a>
                                     <div class="kt-widget5__info">

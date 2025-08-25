@@ -1,0 +1,39 @@
+<?php
+
+namespace App\Mail;
+
+use App\User;
+use Illuminate\Bus\Queueable;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
+
+class NewUserRegistration extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public $user;
+    public $editUrl;
+
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+        $this->editUrl = url('/users/edit/' . $user->id);
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->subject('تسجيل مستخدم جديد - ' . config('app.name'))
+            ->view('emails.new-user-registration');
+    }
+}

@@ -16,6 +16,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Response;
+use App\Exports\SubscriptionsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SubscriptionsController extends Controller
 {
@@ -173,5 +175,10 @@ class SubscriptionsController extends Controller
         } else {
             return redirect()->back()->with('error', __('pages.success-delete'));
         }
+    }
+
+    public function export()
+    {
+        return Excel::download(new SubscriptionsExport, 'subscriptions_' . date('Y-m-d_H-i-s') . '.xlsx');
     }
 }
