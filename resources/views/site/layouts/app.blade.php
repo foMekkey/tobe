@@ -329,13 +329,13 @@
         </footer>
     @endif
 
-    <script src="{{ asset('site_assets') }}/js/jquery-3.2.0.js"></script>
-    <script src="{{ asset('site_assets') }}/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="{{ asset('site_assets') }}/js/owl.carousel.min.js"></script>
-    <script src="{{ asset('site_assets') }}/js/wow.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
     <script src="{{ asset('site_assets') }}/js/animate-number.js"></script>
     <script src="{{ asset('site_assets') }}/js/script.js?{{ rand(1, 9999) }}"></script>
-    <script src="{{ asset('site_assets') }}/js/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 

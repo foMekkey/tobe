@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\CategoiresCourses;
 use App\Courses;
 use App\User;
+use App\Community;
 use Yajra\DataTables\Services\DataTable;
 
 class CoursesDatatable extends DataTable
@@ -18,9 +19,29 @@ class CoursesDatatable extends DataTable
     public function dataTable($query)
     {
         return datatables($query)
+            ->editColumn('action', function ($query) {
+                $id = $query->id;
+                $actionButtons = view('backend.courses.action', compact('id'))->render();
 
-            ->editColumn('action', 'backend.courses.action')
+                // التحقق مما إذا كان الكورس له مجتمع بالفعل
+                $community = Community::where('type', 'course')
+                    ->where('reference_id', $query->id)
+                    ->first();
 
+                if ($community) {
+                    // إذا كان له مجتمع، أضف زر التعديل
+                    $communityButton = '<button type="button" class="btn btn-sm btn-info edit-community-btn" data-id="' . $query->id . '" data-community-id="' . $community->id . '" data-toggle="modal" data-target="#editCommunityModal">
+                        <i class="fa fa-edit"></i> تعديل المجتمع
+                    </button>';
+                } else {
+                    // إذا لم يكن له مجتمع، أضف زر الإضافة
+                    $communityButton = '<button type="button" class="btn btn-sm btn-primary add-community-btn" data-id="' . $query->id . '" data-toggle="modal" data-target="#addCommunityModal">
+                        <i class="fa fa-plus"></i> إضافة مجتمع
+                    </button>';
+                }
+
+                return $actionButtons . ' ' . $communityButton;
+            })
             ->editColumn('status', function ($query) {
                 if ($query->status == 1) {
                     return '<span class="kt-badge kt-badge--brand kt-badge--inline kt-badge--pill">فعال</span>';
@@ -40,13 +61,6 @@ class CoursesDatatable extends DataTable
 
                 return '';
             })
-            // ->editColumn('lang', function ($query) {
-            //     if ($query->lang == 'ar') {
-            //         return 'العربية';
-            //     } else {
-            //         return 'الإنجليزية';
-            //     }
-            // })
             ->rawColumns(['action', 'status', 'user_id'])
             ->setRowId('id')
             ->addIndexColumn();
@@ -101,7 +115,6 @@ class CoursesDatatable extends DataTable
     {
         $cols =  [
             'DT_RowIndex' => ['name' => 'id', 'data' => 'DT_RowIndex', 'title' => '#'],
-            // 'lang' => ['name' => 'lang', 'data' => 'lang', 'title' => __('pages.language')],
             'user_id' => ['name' => 'user_id', 'data' => 'user_id', 'title' => __('pages.author')],
             'name' => ['name' => 'name', 'data' => 'name', 'title' => __('pages.course-name')],
             'category_id' => ['name' => 'category_id', 'data' => 'category_id', 'title' => __('pages.category')],

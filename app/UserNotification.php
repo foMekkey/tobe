@@ -40,4 +40,10 @@ class UserNotification extends Model
 
         return '#';
     }
+
+    public function markAsRead()
+    {
+        $this->read_at = now();
+        return $this->save();
+    }
 }

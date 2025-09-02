@@ -25,6 +25,40 @@
     <link href="{{ asset('admin/assets/vendors/global/plugins.bundle.rtl.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin/assets/css/demo4/style.bundle.rtl.css') }}" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    <style>
+        /* Mobile Communities Icon Styling */
+        .kt-header-mobile__toolbar-topbar-item {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .kt-header-mobile__toolbar-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 34px;
+            height: 34px;
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+
+        .kt-header-mobile__toolbar-icon i {
+            font-size: 18px;
+            color: #ffffff;
+        }
+
+        .kt-header-mobile__toolbar-icon:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Adjust spacing between mobile toolbar items */
+        .kt-header-mobile__toolbar {
+            display: flex;
+            align-items: center;
+        }
+    </style>
 
     @yield('style')
 
@@ -53,7 +87,14 @@
             </span>
         </div>
         <div class="kt-header-mobile__toolbar">
-            {{-- <button class="kt-header-mobile__toolbar-topbar-toggler" id="kt_header_mobile_topbar_toggler"><i class="flaticon-more-1"></i></button> --}}
+            <!-- Begin: Communities Icon for Mobile -->
+            <div class="kt-header-mobile__toolbar-topbar-item">
+                <a href="{{ route('community.index') }}" class="kt-header-mobile__toolbar-icon">
+                    <i class="fa fa-users"></i>
+                </a>
+            </div>
+            <!-- End: Communities Icon for Mobile -->
+
             <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px">
                 <span class="kt-header__topbar-icon kt-pulse kt-pulse--light">
                     <svg xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink" width="24px"
@@ -75,6 +116,16 @@
                     @endif
                 </span>
             </div>
+            <!--begin: Communities Icon -->
+            <div class="kt-header__topbar-item kt-header__topbar-item--mobile-toggle">
+                <div class="kt-header__topbar-wrapper">
+                    <a href="{{ route('community.index') }}" class="community-icon-wrapper custom-tooltip"
+                        data-tooltip="مجتمع ToBe">
+                        <i class="fa fa-users community-icon"></i>
+                    </a>
+                </div>
+            </div>
+            <!--end: Communities Icon -->
             <div class="dropdown-menu dropdown-menu-fit dropdown-menu-right dropdown-menu-anim dropdown-menu-xl">
                 <form>
                     <!--begin: Head -->
@@ -119,8 +170,8 @@
             <button class="kt-header-mobile__toolbar-toggler" id="kt_header_mobile_toggler"><span></span></button>
         </div>
     </div>
-
     <!-- end:: Header Mobile -->
+
     <div class="kt-grid kt-grid--hor kt-grid--root">
         <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
             <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">

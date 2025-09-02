@@ -6,6 +6,7 @@ use App\Models\Cohort;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 use App\User;
+use App\Community;
 
 class CohortsDataTable extends DataTable
 {
@@ -19,7 +20,29 @@ class CohortsDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', 'admin.cohorts.datatables_actions')
+        return $dataTable->addColumn('action', function ($cohort) {
+            $id = $cohort->id;
+            $actionButtons = view('admin.cohorts.datatables_actions', compact('id'))->render();
+
+            // التحقق مما إذا كان الفوج له مجتمع بالفعل
+            $community = Community::where('type', 'cohort')
+                ->where('reference_id', $cohort->id)
+                ->first();
+
+            if ($community) {
+                // إذا كان له مجتمع، أضف زر التعديل
+                $communityButton = '<button type="button" class="btn btn-sm btn-info edit-community-btn" data-id="' . $cohort->id . '" data-community-id="' . $community->id . '" data-toggle="modal" data-target="#editCommunityModal">
+                    <i class="fa fa-edit"></i> تعديل المجتمع
+                </button>';
+            } else {
+                // إذا لم يكن له مجتمع، أضف زر الإضافة
+                $communityButton = '<button type="button" class="btn btn-sm btn-primary add-community-btn" data-id="' . $cohort->id . '" data-toggle="modal" data-target="#addCommunityModal">
+                    <i class="fa fa-plus"></i> إضافة مجتمع
+                </button>';
+            }
+
+            return $actionButtons . ' ' . $communityButton;
+        })
             ->editColumn('status', function ($cohort) {
                 return $cohort->status ? '<span class="kt-badge kt-badge--success kt-badge--inline">مفعل</span>' :
                     '<span class="kt-badge kt-badge--danger kt-badge--inline">غير مفعل</span>';

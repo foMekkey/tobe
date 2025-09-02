@@ -36,6 +36,17 @@
 
         <!-- begin:: Header Topbar -->
         <div class="kt-header__topbar kt-grid__item">
+            <!--begin: Communities Icon -->
+            <div class="kt-header__topbar-item kt-header__topbar-item--mobile-toggle">
+                <div class="kt-header__topbar-wrapper">
+                    <a href="{{ route('community.index') }}" class="community-icon-wrapper custom-tooltip"
+                        data-tooltip="مجتمع ToBe">
+                        <i class="fa fa-users community-icon"></i>
+                    </a>
+                </div>
+            </div>
+            <!--end: Communities Icon -->
+
             <!--begin: Notifications -->
             <div class="kt-header__topbar-item dropdown">
                 <div class="kt-header__topbar-wrapper" data-toggle="dropdown" data-offset="10px,0px"
@@ -165,6 +176,69 @@
 
             .unread-notification:hover {
                 background-color: rgba(93, 120, 255, 0.2);
+            }
+
+            /* Community Icon Styling */
+            .community-icon-wrapper {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+                padding: 0 15px;
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+
+            .community-icon {
+                font-size: 20px;
+                color: #74788d;
+                transition: all 0.3s;
+            }
+
+            .community-icon-wrapper:hover .community-icon {
+                color: #5d78ff;
+                transform: scale(1.1);
+            }
+
+            /* Add this to your existing <style> section in the navbar.blade.php file */
+
+            /* Make sure the community icon is visible on mobile */
+            @media (max-width: 1024px) {
+                .kt-header__topbar-item--mobile-toggle {
+                    display: flex !important;
+                }
+
+                .community-icon-wrapper {
+                    padding: 0 10px;
+                }
+
+                .community-icon {
+                    font-size: 18px;
+                }
+
+                /* Adjust tooltip position for mobile */
+                .custom-tooltip:hover:after {
+                    bottom: -25px;
+                    font-size: 10px;
+                    padding: 3px 8px;
+                }
+
+                .custom-tooltip:hover:before {
+                    bottom: -8px;
+                }
+            }
+
+            /* Ensure the topbar items are properly spaced on mobile */
+            @media (max-width: 767px) {
+                .kt-header__topbar {
+                    display: flex;
+                    justify-content: flex-end;
+                }
+
+                .kt-header__topbar-item {
+                    margin-left: 5px;
+                }
             }
         </style>
 

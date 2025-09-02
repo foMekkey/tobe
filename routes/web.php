@@ -2525,3 +2525,179 @@ Route::get('admin/cohorts/export', 'Admin\CohortController@export')->name('admin
 Route::get('account/activate/{token}/{email}', 'Site\UserController@activateAccount')->name('account.activate');
 Route::get('resend-activation', 'Site\UserController@showResendActivationForm')->name('resend.activation');
 Route::post('resend-activation', 'Site\UserController@resendActivation')->name('resend.activation.submit');
+
+
+// Community routes
+Route::group(['middleware' => 'auth', 'prefix' => 'community'], function () {
+    Route::get('group/{groupId}', 'CommunityController@index')->name('community.group');
+    Route::post('group/{groupId}/post', 'CommunityController@createPost')->name('community.post.create');
+    Route::post('post/{postId}/comment', 'CommunityController@addComment')->name('community.comment.add');
+    Route::post('post/{postId}/like', 'CommunityController@toggleLike')->name('community.like.toggle');
+});
+
+// Chat routes
+Route::group(['middleware' => 'auth', 'prefix' => 'chat'], function () {
+    Route::get('group/{groupId}', 'ChatController@groupChat')->name('chat.group');
+    Route::get('private/{userId}', 'ChatController@privateChat')->name('chat.private');
+    Route::post('send', 'ChatController@sendMessage')->name('chat.send');
+});
+
+// روتات المجتمعات
+Route::middleware(['auth'])->prefix('community')->name('community.')->group(function () {
+    // الصفحة الرئيسية للمجتمعات
+    Route::get('/', 'CommunityController@index')->name('index');
+
+    // عرض مجتمعات الكورسات
+    Route::get('/courses', 'CommunityController@courses')->name('courses');
+
+    // عرض مجتمعات الأفواج
+    Route::get('/cohorts', 'CommunityController@cohorts')->name('cohorts');
+
+    // عرض مجتمع معين
+    Route::get('/{id}', 'CommunityController@show')->name('show');
+
+    // عرض مجتمع كورس معين
+    Route::get('/course/{courseId}', 'CommunityController@course')->name('course');
+
+    // عرض مجتمع فوج معين
+    Route::get('/cohort/{cohortId}', 'CommunityController@cohort')->name('group');
+
+    // عرض الدردشة الخاصة بمجتمع معين
+    Route::get('/{id}/chat', 'CommunityController@chat')->name('chat');
+
+    // روتات المنشورات
+    Route::post('/post', 'PostController@store')->name('post.store');
+    Route::put('/post/{id}', 'PostController@update')->name('post.update');
+    Route::delete('/post/{id}', 'PostController@destroy')->name('post.destroy');
+    Route::post('/post/{id}/pin', 'PostController@togglePin')->name('post.pin');
+
+    // روتات التعليقات
+    Route::post('/comment', 'CommentController@store')->name('comment.store');
+    Route::put('/comment/{id}', 'CommentController@update')->name('comment.update');
+    Route::delete('/comment/{id}', 'CommentController@destroy')->name('comment.destroy');
+
+    // روتات الإعجابات
+    Route::post('/like', 'LikeController@toggle')->name('like.toggle');
+
+    // روتات الرسائل
+    Route::post('/message', 'MessageController@store')->name('message.store');
+    Route::get('/message/new', 'MessageController@getNewMessages')->name('message.new');
+});
+
+// مسارات المجتمعات
+Route::middleware(['auth'])->prefix('community')->name('community.')->group(function () {
+    Route::get('/', 'CommunityController@index')->name('index');
+    Route::get('/{id}', 'CommunityController@show')->name('show');
+    Route::get('/course/{courseId}', 'CommunityController@course')->name('group');
+    Route::get('/cohort/{cohortId}', 'CommunityController@cohort')->name('cohort');
+    Route::get('/{id}/chat', 'CommunityController@chat')->name('chat');
+
+    // مسارات المنشورات
+    Route::post('/post', 'PostController@store')->name('post.store');
+    Route::put('/post/{id}', 'PostController@update')->name('post.update');
+    Route::delete('/post/{id}', 'PostController@destroy')->name('post.delete');
+    Route::post('/post/{id}/pin', 'PostController@togglePin')->name('post.pin');
+
+    // مسارات التعليقات
+    Route::post('/comment', 'CommentController@store')->name('comment.store');
+    Route::put('/comment/{id}', 'CommentController@update')->name('comment.update');
+    Route::delete('/comment/{id}', 'CommentController@destroy')->name('comment.delete');
+
+    // مسارات الإعجابات
+    Route::post('/like', 'LikeController@toggle')->name('like.toggle');
+
+    // مسارات الرسائل
+    Route::post('/message', 'MessageController@store')->name('message.store');
+    Route::get('/message/new', 'MessageController@getNewMessages')->name('message.new');
+    Route::post('/message/read', 'MessageController@markAsRead')->name('message.read');
+});
+
+// إضافة مسارات المجتمعات
+Route::group(['prefix' => 'site', 'middleware' => ['auth']], function () {
+    // صفحة المجتمعات الرئيسية
+    Route::get('/communities', 'CommunityController@index')->name('community.index');
+
+    // عرض مجتمع معين
+    Route::get('/community/{id}', 'CommunityController@show')->name('community.show');
+
+    // إنشاء منشور جديد
+    Route::post('/community/{id}/post', 'CommunityController@storePost')->name('community.post.store');
+
+    // تعديل منشور
+    Route::get('/community/post/{id}/edit', 'CommunityController@editPost')->name('community.post.edit');
+    Route::put('/community/post/{id}', 'CommunityController@updatePost')->name('community.post.update');
+
+    // حذف منشور
+    Route::delete('/community/post/{id}', 'CommunityController@destroyPost')->name('community.post.destroy');
+
+    // تثبيت/إلغاء تثبيت منشور
+    Route::post('/community/post/{id}/pin', 'CommunityController@pinPost')->name('community.post.pin');
+
+    // الإعجاب بمنشور
+    Route::post('/community/post/{id}/like', 'CommunityController@likePost')->name('community.post.like');
+
+    // إضافة تعليق
+    Route::post('/community/comment', 'CommunityController@storeComment')->name('community.comment.store');
+
+    // تعديل تعليق
+    Route::get('/community/comment/{id}/edit', 'CommunityController@editComment')->name('community.comment.edit');
+    Route::put('/community/comment/{id}', 'CommunityController@updateComment')->name('community.comment.update');
+
+    // حذف تعليق
+    Route::delete('/community/comment/{id}', 'CommunityController@destroyComment')->name('community.comment.destroy');
+
+    // الإعجاب بتعليق
+    Route::post('/community/comment/{id}/like', 'CommunityController@likeComment')->name('community.comment.like');
+
+    // // صفحة الدردشة
+    // Route::get('/community/{id}/chat', 'CommunityController@chat')->name('community.chat');
+
+    // // إرسال رسالة في الدردشة
+    // Route::post('/community/{id}/chat/send', 'CommunityController@sendMessage')->name('community.chat.send');
+
+    // // الحصول على رسائل جديدة
+    Route::get('/community/{id}/chat/messages', 'CommunityController@getMessages')->name('community.chat.messages');
+
+    // // الحصول على المستخدمين المتصلين
+    // Route::get('/community/{id}/chat/online-users', 'CommunityController@getOnlineUsers')->name('community.chat.online-users');
+    Route::post('/message/read', 'MessageController@markAsRead')->name('message.read');
+});
+
+// تعليم الإشعارات كمقروءة
+Route::get('/mark-notification-as-read/{id}', 'NotificationController@markAsRead')->name('markNotificationAsRead');
+Route::get('/mark-notifications-as-read', 'NotificationController@markAllAsRead')->name('markNotificationsAsRead');
+Route::get('community/{community}/posts', 'CommunityController@loadMorePosts')->name('community.load-more-posts');
+
+// مسار تحديث حالة قراءة الإشعارات
+Route::middleware(['auth'])->group(function () {
+    Route::get('/mark-notification-as-read/{id}', function ($id) {
+        $notification = Auth::user()->notifications()->where('id', $id)->first();
+        if ($notification) {
+            $notification->markAsRead();
+        }
+        return response()->json(['success' => true]);
+    });
+
+    Route::get('/mark-all-notifications-as-read', function () {
+        Auth::user()->unreadNotifications->markAsRead();
+        return response()->json(['success' => true]);
+    })->name('markNotificationsAsRead');
+});
+
+Route::group(['prefix' => 'community', 'middleware' => ['auth']], function () {
+    Route::post('/store', 'CommunityController@store')->name('community.store');
+    Route::get('/{id}/edit', 'CommunityController@edit')->name('community.edit');
+    Route::put('/update', 'CommunityController@update')->name('community.update');
+});
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/community/{groupId}/chat', 'App\Http\Controllers\CommunityChatsController@index')->name('community.chat');
+    Route::post('/community/chat/send', 'App\Http\Controllers\CommunityChatsController@send')->name('community.chat.send');
+    Route::post('/community/chat/fetch', 'App\Http\Controllers\CommunityChatsController@fetch')->name('community.chat.fetch');
+});
+
+// General Community Routes
+Route::get('community/general', 'CommunityController@general')->name('community.general');
+Route::get('/community/posts', 'CommunityController@generalPosts')->name('community.posts');
+
+Route::post('community/post/{id}/toggle-public', 'CommunityController@togglePublicPost')->name('community.post.toggle-public');

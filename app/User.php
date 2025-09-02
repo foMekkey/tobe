@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Models\Cohort;
 use App\Models\CourseRegistration;
+use Cache;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -115,8 +116,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function cohorts()
     {
-        return $this->belongsToMany(Cohort::class, 'cohort_trainees', 'user_id', 'cohort_id')
-            ->withTimestamps();
+        return $this->belongsToMany(Cohort::class, 'cohort_trainees', 'user_id', 'cohort_id');
     }
     /**
      * Get the course registrations for the user.
@@ -124,5 +124,81 @@ class User extends Authenticatable implements MustVerifyEmail
     public function courseRegistrations()
     {
         return $this->hasMany(CourseRegistration::class);
+    }
+
+    /**
+     * الحصول على جميع المنشورات التي أنشأها المستخدم
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    /**
+     * الحصول على جميع التعليقات التي أنشأها المستخدم
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * الحصول على جميع الإعجابات التي قام بها المستخدم
+     */
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    /**
+     * الحصول على جميع الرسائل التي أرسلها المستخدم
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    /**
+     * الحصول على مجتمعات المستخدم
+     */
+    public function communities()
+    {
+        $communities = collect();
+
+        // الحصول على مجتمعات الكورسات
+        $courseCommunities = Community::where('type', 'course')
+            ->whereHas('course.users', function ($query) {
+                $query->where('users.id', $this->id);
+            })
+            ->orWhereHas('course', function ($query) {
+                $query->where('user_id', $this->id);
+            })
+            ->get();
+
+        $communities = $communities->merge($courseCommunities);
+
+        // الحصول على مجتمعات الأفواج
+        $cohortCommunities = Community::where('type', 'cohort')
+            ->whereHas('cohort.trainees', function ($query) {
+                $query->where('users.id', $this->id);
+            })
+            ->get();
+
+        $communities = $communities->merge($cohortCommunities);
+
+        return $communities;
+    }
+
+    /**
+     * تحديد ما إذا كان المستخدم متصل حالياً
+     */
+    public function getIsOnlineAttribute()
+    {
+        return Cache::has('user-online-' . $this->id);
+    }
+
+    public function getNameAttribute()
+    {
+        return $this->f_name . ' ' . $this->l_name;
     }
 }
